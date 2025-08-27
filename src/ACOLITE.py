@@ -1,9 +1,100 @@
 import numpy as np
 import scipy.stats
 import ee
+import os
 
+
+from functools import partial
+from datetime import datetime
 from typing import List, Tuple, Optional
 from acolite import ac, shared, aerlut
+from acolite.acolite import settings as settings_manager
+
+
+
+########################################################################
+# Water Quality
+########################################################################
+
+def add_spm_nechad2016_665(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 342.10, 'C' : 0.19563, 'red' : image.select('B4') }).rename('SPM_Nechad2016_665'))
+
+def add_spm_nechad2016_704(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 444.36, 'C' : 0.18753, 'red' : image.select('B5') }).rename('SPM_Nechad2016_704'))
+
+def add_spm_nechad2016_740(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1517.00, 'C' : 0.19736, 'red' : image.select('B6') }).rename('SPM_Nechad2016_739'))
+
+def add_tur_nechad2016_665(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 366.14, 'C' : 0.19563, 'red' : image.select('B4') }).rename('TUR_Nechad2016_665'))
+
+def add_tur_nechad2016_704(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 439.09, 'C' : 0.18753, 'red' : image.select('B5') }).rename('TUR_Nechad2016_704'))
+
+def add_tur_nechad2016_740(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1590.66, 'C' : 0.19736, 'red' : image.select('B6') }).rename('TUR_Nechad2016_739'))
+
+def add_chl_oc2(image : ee.Image) -> ee.Image:
+    A, B, C, D, E = 0.1977,-1.8117,1.9743,-2.5635,-0.7218 # TODO : interpolar B1 a las dimensiones de B2
+    x = image.expression('log( x / y )', {'x' : image.select('B2'), 'y' : image.select('B3') }).rename('x')
+    return image.addBands(image.expression('10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )', {'A' : A, 'B' : B, 'C' : C, 'D' : D, 'E' : E,
+                                                                                                         'x' : x }).rename('chl_oc2'))
+
+def add_chl_oc3(image : ee.Image) -> ee.Image:
+    A, B, C, D, E = 0.2412,-2.0546,1.1776,-0.5538,-0.4570 # TODO : interpolar B1 a las dimensiones de B2
+    x = image.expression('log( x / y )', {'x' : image.select('B2').max(image.select('B1')).rename('x'), 'y' : image.select('B3') }).rename('x')
+    return image.addBands(image.expression('10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )', {'A' : A, 'B' : B, 'C' : C, 'D' : D, 'E' : E,
+                                                                                                         'x' : x }).rename('chl_oc3'))
+
+def add_chl_re_mishra(image : ee.Image) -> ee.Image:
+    a, b, c = 14.039, 86.11, 194.325
+    ndci = image.normalizedDifference(['B5', 'B4']).rename('ndci')
+    return image.addBands(image.expression('a + b * ndci + c * ndci * ndci', {'a' : a, 'b' : b, 'c' : c, 'ndci' : ndci }).rename('chl_re_mishra'))
+
+def add_ndwi(image : ee.Image) -> ee.Image:
+    ndwi = image.normalizedDifference(['B3', 'B8']).rename('ndwi')
+    return image.addBands(ndwi)
+
+def add_zred(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('log(n * pi * blue) / log(n * pi * red)', {'n' : 1_000, 
+                                                                                       'pi' : float(np.pi), 
+                                                                                       'blue' : image.select('B2'),
+                                                                                       'red' : image.select('B4') }).rename('zred'))
+
+def add_zgreen(image : ee.Image) -> ee.Image:
+    return image.addBands(image.expression('log(n * pi * blue) / log(n * pi * green)', {'n' : 1_000, 
+                                                                                       'pi' : float(np.pi), 
+                                                                                       'blue' : image.select('B2'),
+                                                                                       'green' : image.select('B3') }).rename('zgreen'))
+
+def add_rrs(image : ee.Image) -> ee.image:
+    bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12']
+
+    for band in bands:
+        outname = f'Rrs_{band}'
+        image = image.addBands(image.select(band).divide(np.pi).rename(outname))
+
+    return image
+
+
+PRODUCTS = {
+    'spm_nechad2016' : add_spm_nechad2016_665,
+    'spm_nechad2016_704' : add_spm_nechad2016_704,
+    'spm_nechad2016_740' : add_spm_nechad2016_740,
+    'tur_nechad2016' : add_tur_nechad2016_665,
+    'tur_nechad2016_704' : add_tur_nechad2016_704,
+    'tur_nechad2016_740' : add_tur_nechad2016_740,
+    'chl_oc2' : add_chl_oc2,
+    'chl_oc3' : add_chl_oc3,
+    'chl_re_mishra' : add_chl_re_mishra,
+    'zred' : add_zred,
+    'zgreen' : add_zgreen,
+    'Rrs_*' : add_rrs
+}
+
+
+########################################################################
+
 
 
 def search_with_clouds(roi : ee.Geometry, start : str, end : str, collection : str = 'S2_HARMONIZED', tile : Optional[str] = None) -> ee.ImageCollection:
@@ -27,6 +118,79 @@ def search_with_clouds(roi : ee.Geometry, start : str, end : str, collection : s
 def add_cloud_probability(image : ee.Image) -> ee.Image:
     return image.addBands(ee.Image(image.get('s2cloudless')).select('probability'))
 
+
+def run_acolite(images : ee.ImageCollection, settings : str) -> Tuple[ee.ImageCollection, dict]:
+    settings = read_settings(settings)
+
+    images = prepare_l1_rrs(images)
+    images, settings = correct_l1(images.toList(images.size()), images.size().getInfo(), settings)
+
+    return images, settings
+
+
+def read_settings(settings : str) -> dict:
+    return settings_manager.parse('S2A_MSI', settings = settings)
+
+def prepare_l1_rrs(images : ee.ImageCollection) -> ee.ImageCollection:
+    return images.map(select_sentinel2_bands).map(to_rrs)
+
+def correct_l1(images : ee.List, size : int, settings : dict) -> Tuple[ee.ImageCollection, dict]:
+    corrected_images = []
+
+    if settings['aerosol_correction'] == 'dark_spectrum':
+        for index in range(size):
+            rhos, bands, glint_params = dask_spectrum_fitting(ee.Image(images.get(index)), settings)
+    
+            if settings['dsf_residual_glint_correction']:
+                if settings['dsf_residual_glint_correction_method'] == 'alternative':
+                    rhos = deglint_alternative(rhos, bands, glint_params)
+
+            corrected_images.append(rhos)
+        
+    return ee.ImageCollection.fromImages(corrected_images), settings
+
+def compute_water_quality(images, settings) -> ee.ImageCollection:
+    if settings['l2w_parameters']:
+        if isinstance(settings['l2w_parameters'], str):
+            settings['l2w_parameters'] = [settings['l2w_parameters']]
+
+        mask_non_water_by_SWIR1_modified = partial(mask_non_water_by_SWIR1, threshold = settings['l2w_mask_threshold'])
+        images = images.map(mask_non_water_by_SWIR1_modified)
+
+        for product in settings['l2w_parameters']:
+            images = images.map(PRODUCTS[product])
+
+    return images
+
+
+
+def get_ancillary_data(image, settings : dict) -> dict:
+    prepare_earthdata_credentials(settings)
+    iso_date, lon, lat = prepare_query(image)
+
+    anc = ac.ancillary.get(iso_date, lon, lat)
+
+    for data, default in [('uoz', 'uoz_default'), ('uwv', 'uwv_default'), 
+                          ('wind', 'wind_default'), ('pressure', 'pressure_default')]:
+        settings[data] = anc.get(data, settings.get(default)) 
+    
+    return settings
+
+def prepare_query(image):
+    coords = image.geometry().centroid().coordinates().getInfo()
+    iso_date = ee.Date(image.get('system:time_start')).format('YYYY-MM-dd HH:mm:ss').getInfo()
+
+    lon, lat = coords
+    return iso_date,lon,lat
+
+def prepare_earthdata_credentials(settings):
+    for k in ['EARTHDATA_u', 'EARTHDATA_p']:
+        kv = settings[k] if k in settings else ac.config[k]
+        if len(kv) == 0: continue
+        os.environ[k] = kv
+
+
+
 # L1
 def to_rrs(image : ee.Image) -> ee.Image:
     rrs = image.divide(10_000)
@@ -42,7 +206,13 @@ def to_rrs(image : ee.Image) -> ee.Image:
     rrs = rrs.set('raa', raa)
     rrs = rrs.set('PRODUCT_ID', ee.String(ee.String(image.get('PRODUCT_ID')).split('L1C').get(0)))
 
+    rrs = rrs.set('system:time_start', image.get('system:time_start'))
+
     return rrs
+
+def resample_to_10m(image : ee.Image) -> ee.Image:
+    return image.resample('bilinear').reproject(crs = image.select('B2').projection().crs(),
+                                                scale=10)
 
 def get_mean_band_angle(image : ee.Image, angle_name : str) -> ee.Number:
     bands = image.bandNames()
@@ -60,27 +230,33 @@ def get_mean_band_angle(image : ee.Image, angle_name : str) -> ee.Number:
 
 
 # L2
-def dask_spectrum_fitting(image : ee.Image) -> Tuple[ee.Image, List[str], dict]:
-    am, glint_ave, bands = select_lut(image)
-    
+def dask_spectrum_fitting(image : ee.Image, settings : dict) -> Tuple[ee.Image, List[str], dict]:
+    if settings['ancillary_data']:
+        settings = get_ancillary_data(image, settings)
+    else:
+        for data, default in [('uoz', 'uoz_default'), ('uwv', 'uwv_default'), ('wind', 'wind_default'), ('pressure', 'pressure_default')]:
+            settings[data] = settings.get(default)
+
+    am, glint_ave, bands = select_lut(image, settings)
     rhos = select_sentinel2_bands(l1r_to_l2r(image, am))
+
     return rhos, bands, glint_ave
 
-def select_lut(image : ee.Image, aot_skip_bands : List[str] = ['9', '10'], pencentil_idx : float = 0, nbands : int = 2) -> Tuple[dict, dict, List[str]]:
+def select_lut(image : ee.Image, settings : dict, aot_skip_bands : List[str] = ['9', '10', '11', '12']) -> Tuple[dict, dict, List[str]]:
     results = {}
-    percentiles = [0, 1, 5, 50, 95, 99, 100]
-    prc = image.reduceRegion(reducer = ee.Reducer.percentile(percentiles), bestEffort = True, maxPixels = 1e13).getInfo()
-    obands_rhot = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12']
-    prc_data = {p: {b: prc['{}_p{}'.format(b,p)] for b in obands_rhot} for p in percentiles}
+    
+    pdark = compute_pdark(image, settings)
 
     raa = image.get('raa').getInfo()
     vza = image.get('vza').getInfo()
     sza = image.get('sza').getInfo()
+
     sensor = 'S2A_MSI' if 'S2A' in image.get('PRODUCT_ID').getInfo() else 'S2B_MSI'
     
-    uoz = 0.3
-    uwv = 1.5
-    pressure = 1013.25
+    uoz = settings['uoz']
+    uwv = settings['uwv']
+    pressure = settings['pressure']
+    nbands = settings['dsf_nbands']
 
     lutd = aerlut.import_luts(sensor = sensor)
     rsrd = shared.rsr_dict(sensor = sensor)[sensor]
@@ -97,7 +273,9 @@ def select_lut(image : ee.Image, aot_skip_bands : List[str] = ['9', '10'], pence
             if b in aot_skip_bands: continue
 
             ret = lutd[lut]['rgi'][b]((pressure, lutd[lut]['ipd']['romix'], raa, vza, sza, lutd[lut]['meta']['tau']))
-            rhot = np.asarray([prc_data[p]['B{}'.format(b)] for p in percentiles])
+
+            rhot = np.asarray([pdark['B{}'.format(b)]])
+            
             rhot /= ttg['tt_gas'][b]
             taua = np.interp(rhot, ret, lutd[lut]['meta']['tau'])
             if taua_arr is None:
@@ -110,9 +288,9 @@ def select_lut(image : ee.Image, aot_skip_bands : List[str] = ['9', '10'], pence
             taua_bands.append(b)
 
         ## find aot value
-        bidx = np.argsort(taua_arr[:, pencentil_idx])
-        taua = np.nanmean(taua_arr[bidx[0: nbands], pencentil_idx])
-        taua_std = np.nanstd(taua_arr[bidx[0: nbands], pencentil_idx])
+        bidx = np.argsort(taua_arr[:, 0])
+        taua = np.nanmean(taua_arr[bidx[0: nbands], 0])
+        taua_std = np.nanstd(taua_arr[bidx[0: nbands], 0])
         taua_cv = taua_std/taua
         taua, taua_std, taua_cv*100
 
@@ -120,6 +298,8 @@ def select_lut(image : ee.Image, aot_skip_bands : List[str] = ['9', '10'], pence
         results[lut] = {'taua_bands': taua_bands, 'taua_arr': taua_arr, 'rhot_arr': rhot_arr,
                         'taua': taua, 'taua_std': taua_std, 'taua_cv': taua_cv,'bidx': bidx}
 
+    print(f'{results=}')
+    
     ## select LUT and aot
     sel_lut = None
     sel_aot = None
@@ -138,7 +318,7 @@ def select_lut(image : ee.Image, aot_skip_bands : List[str] = ['9', '10'], pence
                     for b in rsrd['rsr_bands']}
     am.update({'tg' : ttg['tt_gas']})
 
-    print(f'<{"-" * 100}>\nGeometry: {sza=}, {vza=}, {raa=}\nGases: {uwv=}, {uoz=}, {pressure=}\nLut: {sel_lut=}, {sel_aot=}\n<{"-" * 100}>')
+    print_summary(image, pdark, raa, vza, sza, uoz, uwv, pressure, sel_lut, sel_aot)
 
     model = int(sel_lut[-1])
     glint_wind = 20
@@ -149,22 +329,43 @@ def select_lut(image : ee.Image, aot_skip_bands : List[str] = ['9', '10'], pence
 
     return am, glint_ave, rsrd['rsr_bands']
 
-def compute_pdark(image : ee.Image, option : str, settings : dict):
+def print_summary(image, pdark, raa, vza, sza, uoz, uwv, pressure, sel_lut, sel_aot):
+    timestamp = image.get('system:time_start').getInfo()
+    iso_date = ee.Date(image.get('system:time_start')).format('YYYY-MM-dd HH:mm:ss').getInfo()
+
+    print('date,sza,vza,raa,uoz, uwv, pressure,1 darkest,2 darkest,3 darkest,4 darkest,5 darkest,6 darkest,7 darkest,8 darkest,8A darkest,LUT,aot')
+    values = [iso_date, f'{sza:.3f}', f'{vza:.3f}', f'{raa:.3f}', f'{uoz:.3f}', f'{uwv:.3f}', f'{pressure:.3f}', 
+              *[f"{pdark[f'B{band}']:.3f}" for band in [1, 2, 3, 4, 5, 6, 7, 8, '8A']], sel_lut, f'{sel_aot:.3f}']
+    print(f'{values}')
+
+def compute_pdark(image : ee.Image, settings : dict):
     obands_rhot = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12']
 
-    image_to_reduce = image.select(obands_rhot)
-    pdark_by_band = {}
-    if option == 'darkest':
-        percentiles = [0]
-        pdark_by_band = image_to_reduce.reduceRegion(reducer = ee.Reducer.percentile(percentiles), bestEffort = True, maxPixels = 1e13).getInfo()
-    elif option == 'percentile':
-        percentiles = [settings['dsf_percentile']]
-        pdark_by_band = image_to_reduce.reduceRegion(reducer = ee.Reducer.percentile(percentiles), bestEffort = True, maxPixels = 1e13).getInfo()
-    elif option == 'intercept':
-        data = image_to_reduce.reduceRegion(reducer=ee.Reducer.toList(), bestEffort = True, maxPixels=1e13)
-        indexes = np.arange(settings['dsf_intercept_pixels'])
+    image_to_reduce = image.updateMask(image.gt(0))
 
-        for band in obands_rhot:
+    pdark_by_band = {}
+    indexes = np.arange(settings['dsf_intercept_pixels'])
+
+    for band in obands_rhot:
+        if settings['dsf_spectrum_option'] == 'darkest':
+            band_data = image_to_reduce.select(band).reduceRegion(reducer = ee.Reducer.percentile([0]), 
+                                                     bestEffort = True, scale = 10, maxPixels = 1e8)
+            
+            if band_data:
+                pdark_by_band[band] = band_data.getInfo()[band]
+            else:
+                pdark_by_band[band] = 0.0
+
+        elif settings['dsf_spectrum_option'] == 'percentile':
+            band_data = image_to_reduce.select(band).reduceRegion(reducer = ee.Reducer.percentile([settings['dsf_percentile']]), 
+                                                     bestEffort = True, scale = 10, maxPixels = 1e8)
+            
+            if band_data:
+                pdark_by_band[band] = band_data.getInfo()[band]
+            else:
+                pdark_by_band[band] = 0.0
+        elif settings['dsf_spectrum_option'] == 'intercept':
+            data = image_to_reduce.select(band).reduceRegion(reducer = ee.Reducer.toList(), scale = 30, bestEffort = True, maxPixels = 1e8)
             band_data = data.get(band)
 
             if band_data:
@@ -173,6 +374,27 @@ def compute_pdark(image : ee.Image, option : str, settings : dict):
                 pdark_by_band[band] = intercept
             else:
                 pdark_by_band[band] = 0.0
+
+    # if settings['dsf_spectrum_option'] == 'darkest':
+    #     pdark_by_band = image_to_reduce.select(obands_rhot).reduceRegion(reducer = ee.Reducer.percentile([0]), 
+    #                                                  bestEffort = True, scale = 10, maxPixels = 1e8).getInfo()
+    #     print(pdark_by_band)
+    # elif settings['dsf_spectrum_option'] == 'percentile':
+    #     pdark_by_band = image_to_reduce.select(obands_rhot).reduceRegion(reducer = ee.Reducer.percentile([settings['dsf_percentile']]), 
+    #                                                  bestEffort = True, scale = 10, maxPixels = 1e8).getInfo()
+    # elif settings['dsf_spectrum_option'] == 'intercept':
+    #     indexes = np.arange(settings['dsf_intercept_pixels'])
+
+    #     for band in obands_rhot:
+    #         data = image_to_reduce.select(band).reduceRegion(reducer = ee.Reducer.toList(), scale = 30, bestEffort = True, maxPixels = 1e8)
+    #         band_data = data.get(band)
+
+    #         if band_data:
+    #             values = ee.List(band_data).sort().slice(0, settings['dsf_intercept_pixels']).getInfo()
+    #             slope, intercept, r, p, se = scipy.stats.linregress(indexes, values)
+    #             pdark_by_band[band] = intercept
+    #         else:
+    #             pdark_by_band[band] = 0.0
 
 
     return pdark_by_band
@@ -221,59 +443,6 @@ def deglint_alternative(image : ee.Image, bands : List[str], glint_ave : dict, g
         deglinted = deglinted.addBands(rhos)
 
     return deglinted
-
-
-# Water Quality
-def add_spm_nechad2016_665(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 342.10, 'C' : 0.19563, 'red' : image.select('B4') }).rename('SPM_Nechad2016_665'))
-
-def add_spm_nechad2016_704(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 444.36, 'C' : 0.18753, 'red' : image.select('B5') }).rename('SPM_Nechad2016_704'))
-
-def add_spm_nechad2016_739(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1517.00, 'C' : 0.19736, 'red' : image.select('B6') }).rename('SPM_Nechad2016_739'))
-
-def add_tur_nechad2016_665(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 366.14, 'C' : 0.19563, 'red' : image.select('B4') }).rename('TUR_Nechad2016_665'))
-
-def add_tur_nechad2016_704(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 439.09, 'C' : 0.18753, 'red' : image.select('B5') }).rename('TUR_Nechad2016_704'))
-
-def add_tur_nechad2016_739(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1590.66, 'C' : 0.19736, 'red' : image.select('B6') }).rename('TUR_Nechad2016_739'))
-
-def add_chl_oc2(image : ee.Image) -> ee.Image:
-    A, B, C, D, E = 0.1977,-1.8117,1.9743,-2.5635,-0.7218 # TODO : interpolar B1 a las dimensiones de B2
-    x = image.expression('log( x / y )', {'x' : image.select('B2'), 'y' : image.select('B3') }).rename('x')
-    return image.addBands(image.expression('10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )', {'A' : A, 'B' : B, 'C' : C, 'D' : D, 'E' : E,
-                                                                                                         'x' : x }).rename('chl_oc2'))
-
-def add_chl_oc3(image : ee.Image) -> ee.Image:
-    A, B, C, D, E = 0.2412,-2.0546,1.1776,-0.5538,-0.4570 # TODO : interpolar B1 a las dimensiones de B2
-    x = image.expression('log( x / y )', {'x' : image.select('B2').max(image.select('B1')).rename('x'), 'y' : image.select('B3') }).rename('x')
-    return image.addBands(image.expression('10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )', {'A' : A, 'B' : B, 'C' : C, 'D' : D, 'E' : E,
-                                                                                                         'x' : x }).rename('chl_oc3'))
-
-def add_chl_re_mishra(image : ee.Image) -> ee.Image:
-    a, b, c = 14.039, 86.11, 194.325
-    ndci = image.normalizedDifference(['B5', 'B4']).rename('ndci')
-    return image.addBands(image.expression('a + b * ndci + c * ndci * ndci', {'a' : a, 'b' : b, 'c' : c, 'ndci' : ndci }).rename('chl_re_mishra'))
-
-def add_ndwi(image : ee.Image) -> ee.Image:
-    ndwi = image.normalizedDifference(['B3', 'B8']).rename('ndwi')
-    return image.addBands(ndwi)
-
-def add_zred(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('log(n * pi * blue) / log(n * pi * red)', {'n' : 1_000, 
-                                                                                       'pi' : float(np.pi), 
-                                                                                       'blue' : image.select('B2'),
-                                                                                       'red' : image.select('B4') }).rename('zred'))
-
-def add_zgreen(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('log(n * pi * blue) / log(n * pi * green)', {'n' : 1_000, 
-                                                                                       'pi' : float(np.pi), 
-                                                                                       'blue' : image.select('B2'),
-                                                                                       'green' : image.select('B3') }).rename('zgreen'))
 
 
 # Bathymetry
