@@ -17,62 +17,62 @@ from acolite.acolite import settings as settings_manager
 ########################################################################
 
 def add_spm_nechad2016_665(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 342.10, 'C' : 0.19563, 'red' : image.select('B4') }).rename('SPM_Nechad2016_665'))
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 342.10, 'C' : 0.19563, 'red' : image.select('rhos_B4') }).rename('SPM_Nechad2016_665').toFloat())
 
 def add_spm_nechad2016_704(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 444.36, 'C' : 0.18753, 'red' : image.select('B5') }).rename('SPM_Nechad2016_704'))
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 444.36, 'C' : 0.18753, 'red' : image.select('rhos_B5') }).rename('SPM_Nechad2016_704').toFloat())
 
 def add_spm_nechad2016_740(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1517.00, 'C' : 0.19736, 'red' : image.select('B6') }).rename('SPM_Nechad2016_739'))
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1517.00, 'C' : 0.19736, 'red' : image.select('rhos_B6') }).rename('SPM_Nechad2016_739').toFloat())
 
 def add_tur_nechad2016_665(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 366.14, 'C' : 0.19563, 'red' : image.select('B4') }).rename('TUR_Nechad2016_665'))
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 366.14, 'C' : 0.19563, 'red' : image.select('rhos_B4') }).rename('TUR_Nechad2016_665').toFloat())
 
 def add_tur_nechad2016_704(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 439.09, 'C' : 0.18753, 'red' : image.select('B5') }).rename('TUR_Nechad2016_704'))
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 439.09, 'C' : 0.18753, 'red' : image.select('rhos_B5') }).rename('TUR_Nechad2016_704').toFloat())
 
 def add_tur_nechad2016_740(image : ee.Image) -> ee.Image:
-    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1590.66, 'C' : 0.19736, 'red' : image.select('B6') }).rename('TUR_Nechad2016_739'))
+    return image.addBands(image.expression('(A * red) / (1 - (red / C))', {'A' : 1590.66, 'C' : 0.19736, 'red' : image.select('rhos_B6') }).rename('TUR_Nechad2016_739').toFloat())
 
 def add_chl_oc2(image : ee.Image) -> ee.Image:
     A, B, C, D, E = 0.1977,-1.8117,1.9743,-2.5635,-0.7218 # TODO : interpolar B1 a las dimensiones de B2
-    x = image.expression('log( x / y )', {'x' : image.select('B2'), 'y' : image.select('B3') }).rename('x')
+    x = image.expression('log( x / y )', {'x' : image.select('rhos_B2'), 'y' : image.select('rhos_B3') }).rename('x')
     return image.addBands(image.expression('10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )', {'A' : A, 'B' : B, 'C' : C, 'D' : D, 'E' : E,
-                                                                                                         'x' : x }).rename('chl_oc2'))
+                                                                                                         'x' : x }).rename('chl_oc2').toFloat())
 
 def add_chl_oc3(image : ee.Image) -> ee.Image:
     A, B, C, D, E = 0.2412,-2.0546,1.1776,-0.5538,-0.4570 # TODO : interpolar B1 a las dimensiones de B2
-    x = image.expression('log( x / y )', {'x' : image.select('B2').max(image.select('B1')).rename('x'), 'y' : image.select('B3') }).rename('x')
+    x = image.expression('log( x / y )', {'x' : image.select('rhos_B2').max(image.select('rhos_B1')).rename('x'), 'y' : image.select('rhos_B3') }).rename('x')
     return image.addBands(image.expression('10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )', {'A' : A, 'B' : B, 'C' : C, 'D' : D, 'E' : E,
-                                                                                                         'x' : x }).rename('chl_oc3'))
+                                                                                                         'x' : x }).rename('chl_oc3').toFloat())
 
 def add_chl_re_mishra(image : ee.Image) -> ee.Image:
     a, b, c = 14.039, 86.11, 194.325
-    ndci = image.normalizedDifference(['B5', 'B4']).rename('ndci')
-    return image.addBands(image.expression('a + b * ndci + c * ndci * ndci', {'a' : a, 'b' : b, 'c' : c, 'ndci' : ndci }).rename('chl_re_mishra'))
+    ndci = image.normalizedDifference(['rhos_B5', 'rhos_B4']).rename('ndci')
+    return image.addBands(image.expression('a + b * ndci + c * ndci * ndci', {'a' : a, 'b' : b, 'c' : c, 'ndci' : ndci }).rename('chl_re_mishra').toFloat())
 
 def add_ndwi(image : ee.Image) -> ee.Image:
-    ndwi = image.normalizedDifference(['B3', 'B8']).rename('ndwi')
-    return image.addBands(ndwi)
+    ndwi = image.normalizedDifference(['Rrs_B3', 'Rrs_B8']).rename('ndwi')
+    return image.addBands(ndwi.toFloat())
 
 def add_zred(image : ee.Image) -> ee.Image:
     return image.addBands(image.expression('log(n * pi * blue) / log(n * pi * red)', {'n' : 1_000, 
                                                                                        'pi' : float(np.pi), 
-                                                                                       'blue' : image.select('B2'),
-                                                                                       'red' : image.select('B4') }).rename('zred'))
+                                                                                       'blue' : image.select('Rrs_B2'),
+                                                                                       'red' : image.select('Rrs_B4') }).rename('zred').toFloat())
 
 def add_zgreen(image : ee.Image) -> ee.Image:
     return image.addBands(image.expression('log(n * pi * blue) / log(n * pi * green)', {'n' : 1_000, 
                                                                                        'pi' : float(np.pi), 
-                                                                                       'blue' : image.select('B2'),
-                                                                                       'green' : image.select('B3') }).rename('zgreen'))
+                                                                                       'blue' : image.select('Rrs_B2'),
+                                                                                       'green' : image.select('Rrs_B3') }).rename('zgreen').toFloat())
 
 def add_rrs(image : ee.Image) -> ee.image:
     bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12']
 
     for band in bands:
         outname = f'Rrs_{band}'
-        image = image.addBands(image.select(band).divide(np.pi).rename(outname))
+        image = image.addBands(image.select(f'rhos_{band}').divide(np.pi).rename(outname).toFloat())
 
     return image
 
@@ -96,6 +96,14 @@ PRODUCTS = {
 ########################################################################
 
 
+
+def search(roi : ee.Geometry, start : str, end : str, collection : str = 'S2_HARMONIZED', tile : Optional[str] = None) -> ee.ImageCollection:
+    if tile is None:
+        sentinel2_l1 = ee.ImageCollection(f'COPERNICUS/{collection}').filterBounds(roi).filterDate(start, end)
+    else:
+        sentinel2_l1 = ee.ImageCollection(f'COPERNICUS/{collection}').filterBounds(roi).filterDate(start, end).filter(ee.Filter.stringContains('PRODUCT_ID', tile))
+
+    return sentinel2_l1
 
 def search_with_clouds(roi : ee.Geometry, start : str, end : str, collection : str = 'S2_HARMONIZED', tile : Optional[str] = None) -> ee.ImageCollection:
     if tile is None:
@@ -141,9 +149,8 @@ def correct_l1(images : ee.List, size : int, settings : dict) -> Tuple[ee.ImageC
         for index in range(size):
             rhos, bands, glint_params = dask_spectrum_fitting(ee.Image(images.get(index)), settings)
     
-            if settings['dsf_residual_glint_correction']:
-                if settings['dsf_residual_glint_correction_method'] == 'alternative':
-                    rhos = deglint_alternative(rhos, bands, glint_params)
+            if settings['dsf_residual_glint_correction'] and settings['dsf_residual_glint_correction_method'] == 'alternative':
+                rhos = deglint_alternative(rhos, bands, glint_params)
 
             corrected_images.append(rhos)
         
@@ -211,8 +218,7 @@ def to_rrs(image : ee.Image) -> ee.Image:
     return rrs
 
 def resample_to_10m(image : ee.Image) -> ee.Image:
-    return image.resample('bilinear').reproject(crs = image.select('B2').projection().crs(),
-                                                scale=10)
+    return image.resample('bilinear').reproject(image.select('B2').projection())
 
 def get_mean_band_angle(image : ee.Image, angle_name : str) -> ee.Number:
     bands = image.bandNames()
@@ -238,7 +244,7 @@ def dask_spectrum_fitting(image : ee.Image, settings : dict) -> Tuple[ee.Image, 
             settings[data] = settings.get(default)
 
     am, glint_ave, bands = select_lut(image, settings)
-    rhos = select_sentinel2_bands(l1r_to_l2r(image, am))
+    rhos = l1r_to_l2r(image, am)
 
     return rhos, bands, glint_ave
 
@@ -297,8 +303,6 @@ def select_lut(image : ee.Image, settings : dict, aot_skip_bands : List[str] = [
         ## store results
         results[lut] = {'taua_bands': taua_bands, 'taua_arr': taua_arr, 'rhot_arr': rhot_arr,
                         'taua': taua, 'taua_std': taua_std, 'taua_cv': taua_cv,'bidx': bidx}
-
-    print(f'{results=}')
     
     ## select LUT and aot
     sel_lut = None
@@ -317,8 +321,6 @@ def select_lut(image : ee.Image, settings : dict, aot_skip_bands : List[str] = [
         am[par] = {b: lutd[sel_lut]['rgi'][b]((pressure, lutd[sel_lut]['ipd'][par], raa, vza, sza, sel_aot))
                     for b in rsrd['rsr_bands']}
     am.update({'tg' : ttg['tt_gas']})
-
-    print_summary(image, pdark, raa, vza, sza, uoz, uwv, pressure, sel_lut, sel_aot)
 
     model = int(sel_lut[-1])
     glint_wind = 20
@@ -401,7 +403,7 @@ def compute_pdark(image : ee.Image, settings : dict):
 
 
 def l1r_to_l2r(image : ee.Image, am : dict) -> ee.Image:
-    l2r_rrs = ee.Image()
+    l2r_rrs = ee.Image().select([])
 
     romix = am['romix']
     dutott = am['dutott']
@@ -413,7 +415,8 @@ def l1r_to_l2r(image : ee.Image, am : dict) -> ee.Image:
         rhot_noatm = ee.Image().expression('(data / tg) - ppath', {'data' : image.select(band_name), 'tg' : tgas[band], 'ppath' : float(romix[band])}).rename(band_name)
         rhos = ee.Image().expression('(data) / (tdu + sa * data)', {'data' : rhot_noatm.select(band_name), 'tdu' : float(dutott[band]), 'sa' : float(astot[band])}).rename(band_name)
         rhos = mask_negative_reflectance(rhos, band_name)
-        l2r_rrs = l2r_rrs.addBands(rhos)
+        l2r_rrs = l2r_rrs.addBands(image.select(band_name).rename(f'rhot_{band_name}').toFloat())
+        l2r_rrs = l2r_rrs.addBands(rhos.rename(f'rhos_{band_name}').toFloat())
 
     return l2r_rrs
 
@@ -483,7 +486,7 @@ def mask_water_by_NDWI(image : ee.Image, threshold : float = 0) -> ee.Image:
     return image.updateMask(ndwi.gt(threshold))
 
 def mask_non_water_by_SWIR1(image : ee.Image, threshold : float = 0.05) -> ee.Image:
-    return image.updateMask( image.select('B11').lt(threshold) )
+    return image.updateMask( image.select('rhot_B11').lt(threshold) )
 
 def mask_negative_reflectance(image : ee.Image, band : str) -> ee.Image:
     return image.updateMask(image.select(band).gte(0)).rename(band)
