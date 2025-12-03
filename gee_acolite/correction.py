@@ -37,7 +37,13 @@ class ACOLITE(object):
                 rhos, bands, glint_params = self.dask_spectrum_fitting(ee.Image(images.get(index)), settings)
         
                 if settings['dsf_residual_glint_correction'] and settings['dsf_residual_glint_correction_method'] == 'alternative':
-                    rhos = self.deglint_alternative(rhos, bands, glint_params)
+                    rhos = self.deglint_alternative(rhos, 
+                                                    bands, 
+                                                    glint_params,
+                                                    glint_max=float(settings.get('glint_mask_rhos_threshold', 0.05)))
+
+                rhos = rhos.copyProperties(ee.Image(images.get(index)))
+                rhos = rhos.set('system:time_start', ee.Image(images.get(index)).get('system:time_start'))
 
                 corrected_images.append(rhos)
             
