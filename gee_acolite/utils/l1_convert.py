@@ -24,6 +24,9 @@ def DN_to_rrs(image : ee.Image) -> ee.Image:
 
     rrs = rrs.set('system:time_start', image.get('system:time_start'))
 
+    rrs = rrs.copyProperties(image)
+    rrs = rrs.set('system:time_start', image.get('system:time_start'))
+
     return rrs
 
 def get_mean_band_angle(image : ee.Image, angle_name : str) -> ee.Number:
