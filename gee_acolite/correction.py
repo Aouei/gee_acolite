@@ -236,23 +236,78 @@ class ACOLITE(object):
 
     def deglint_alternative(self, image : ee.Image, bands : List[str], 
                             glint_ave : dict, glint_min : float = 0, glint_max : float = 0.08) -> ee.Image:
-        deglinted = ee.Image()
-
-        g1 = image.select('rhos_B11')
-        g2 = image.select('rhos_B12')
-        glint = (g1.add(g2)).divide(2).rename('glint')
-        glintMask = glint.gt(glint_min).multiply(glint.lt(glint_max)).selfMask()
-        glint = glint.mask(glintMask)
-        glint = glint.unmask(0)
-
+        """
+        Alternative glint correction method based on ACOLITE's acolite_l2r.py implementation.
+        
+        This method:
+        1. Uses reference SWIR bands (B11, B12) to estimate observed glint
+        2. Computes average modeled surface reflectance (glint_ave) for reference bands
+        3. For each band, scales the observed glint by the ratio of:
+           - Modeled surface reflectance for current band
+           - Average modeled surface reflectance of reference bands
+        4. Subtracts the scaled glint from each band's rhos
+        
+        Parameters:
+        - image: Image with rhos bands
+        - bands: List of band numbers (as strings)
+        - glint_ave: Dict with modeled surface reflectance ratio per band
+        - glint_min: Minimum threshold for glint mask (default: 0)
+        - glint_max: Maximum threshold for glint mask (glint_mask_rhos_threshold)
+        """
+        
+        # Start with a copy of the original image to preserve all bands
+        deglinted = image
+        
+        # Reference bands for glint estimation (SWIR bands: B11=1610nm, B12=2190nm)
+        # These bands are sensitive to sun glint but have minimal water-leaving radiance
+        glint_ref_bands = ['rhos_B11', 'rhos_B12']
+        
+        # Step 1: Compute observed glint reference (gc_ref_mean in ACOLITE)
+        # Average of reference bands gives the observed glint signal
+        rhos_b11 = image.select('rhos_B11')
+        rhos_b12 = image.select('rhos_B12')
+        gc_ref_mean = (rhos_b11.add(rhos_b12)).divide(2).rename('gc_ref_mean')
+        
+        # Step 2: Compute average modeled surface reflectance for reference bands (gc_sur_mean in ACOLITE)
+        # This is the average of glint_ave values for B11 and B12
+        gc_sur_mean = (glint_ave['11'] + glint_ave['12']) / 2.0
+        
+        # Step 3: Create glint mask (gc_sub in ACOLITE)
+        # Only apply correction where observed glint is below threshold and positive
+        glint_mask = gc_ref_mean.gt(glint_min).And(gc_ref_mean.lt(glint_max))
+        
+        # Step 4: Apply band-specific glint correction
         for band in bands:
-            band_name = 'B' + band
+            band_name = 'rhos_B' + band
+            
+            # Skip if modeled surface reflectance is invalid
             if np.isinf(glint_ave[band]) or np.isnan(glint_ave[band]):
-                rhos = image.select(band_name)
-            else:
-                rhos = ee.Image().expression('rhos - (rhog * {})'.format(glint_ave[band]), {'rhos': image.select(band_name), 'rhog': glint.select('glint')})
-                
-            rhos = mask_negative_reflectance(rhos, band_name)
-            deglinted = deglinted.addBands(rhos)
-
+                continue
+            
+            # Compute current band glint (cur_rhog in ACOLITE):
+            # cur_rhog = gc_ref_mean * (surf_current_band / gc_sur_mean)
+            # 
+            # This scales the observed glint by the ratio of:
+            # - Modeled surface reflectance for current band (glint_ave[band])
+            # - Average modeled surface reflectance of reference bands (gc_sur_mean)
+            #
+            # The ratio accounts for spectral variation in surface reflectance
+            glint_ratio = glint_ave[band] / gc_sur_mean
+            cur_rhog = gc_ref_mean.multiply(glint_ratio).rename('cur_rhog')
+            
+            # Mask the glint correction to valid pixels
+            cur_rhog = cur_rhog.updateMask(glint_mask)
+            
+            # Apply glint correction: rhos_corrected = rhos_original - glint
+            rhos_corrected = image.select(band_name).subtract(cur_rhog)
+            
+            # Mask negative values (can occur in dark pixels or over-correction)
+            rhos_corrected = mask_negative_reflectance(rhos_corrected, band_name)
+            
+            # Replace the band in the output image (overwrite=True)
+            deglinted = deglinted.addBands(rhos_corrected, overwrite=True)
+        
+        # Optional: Write glint mean for visualization/validation
+        deglinted = deglinted.addBands(gc_ref_mean.rename('glint_mean'))
+        
         return deglinted
