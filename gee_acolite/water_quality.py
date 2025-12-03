@@ -12,9 +12,21 @@ def compute_water_mask(image: ee.Image, settings: dict) -> ee.Image:
                                              threshold = settings.get('l2w_mask_cirrus_threshold', 0.005)))
     
     for band in SENTINEL2_BANDS:
-        mask  = mask.updateMask( masks.toa_mask(image, 
+        mask = mask.updateMask( masks.toa_mask(image, 
                                                 f'rhot_{band}', 
                                                 settings.get('l2w_mask_high_toa_threshold', 0.3)) )
+        
+    if settings.get('s2_cloud_proba', False):
+        CLOUD_PROB_THRESHOLD = int(settings.get('s2_cloud_proba__cloud_threshold', 50))
+        NIR_DARK_THRESHOLD = float(settings.get('s2_cloud_proba__nir_dark_threshold', 0.15))
+        CLOUD_PROJ_DISTANCE = int(settings.get('s2_cloud_proba__cloud_proj_distance', 10))
+        BUFFER = int(settings.get('s2_cloud_proba__buffer', 50))
+        mask = mask.updateMask(masks.cld_shdw_mask(masks.add_cld_shdw_mask(image, 
+                                                                           CLOUD_PROB_THRESHOLD, 
+                                                                           NIR_DARK_THRESHOLD, 
+                                                                           CLOUD_PROJ_DISTANCE, 
+                                                                           BUFFER)))
+
     return mask
 
 def compute_water_bands(image: ee.Image, settings: dict) -> ee.Image:
