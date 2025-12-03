@@ -26,7 +26,7 @@ def add_cloud_bands(img : ee.Image, cloud_prob_threshold : float = 50) -> ee.Ima
         Imagen con banda 'clouds' añadida
     """
     # Obtener probabilidad de nubes (ya está como banda)
-    cld_prb = img.select('probability')
+    cld_prb = ee.Image(img.get('cloud_prob')).select('probability')
     
     # Máscara de nubes basada en umbral de probabilidad
     is_cloud = cld_prb.gt(cloud_prob_threshold).rename('clouds')
@@ -48,7 +48,7 @@ def add_shadow_bands(img : ee.Image, nir_dark_threshold : float = 0.15,
         Imagen con bandas 'dark_pixels', 'cloud_transform' y 'shadows' añadidas
     """
     # Píxeles oscuros en NIR (posibles sombras) - para L1C usar B8 directamente
-    dark_pixels = img.select('B8').lt(nir_dark_threshold * 10000).rename('dark_pixels')
+    dark_pixels = img.select('rhot_B8').lt(nir_dark_threshold * 10000).rename('dark_pixels')
     
     # Dirección de proyección de sombras
     shadow_azimuth = ee.Number(90).subtract(ee.Number(img.get('MEAN_SOLAR_AZIMUTH_ANGLE')))
@@ -99,7 +99,7 @@ def add_cld_shdw_mask(img : ee.Image, cloud_prob_threshold : float = 50,
     return img_cloud_shadow.addBands(is_cld_shdw)
 
 
-def apply_cld_shdw_mask(img : ee.Image) -> ee.Image:
+def cld_shdw_mask(img : ee.Image) -> ee.Image:
     """
     Aplica la máscara de nubes y sombras a la imagen
     
@@ -110,7 +110,4 @@ def apply_cld_shdw_mask(img : ee.Image) -> ee.Image:
         Imagen enmascarada con solo las bandas B* (bandas Sentinel-2)
     """
     # Obtener máscara
-    not_cld_shdw = img.select('cloudmask').Not()
-    
-    # Aplicar máscara y remover bandas temporales
-    return img.select(['B.*']).updateMask(not_cld_shdw)
+    return img.select('cloudmask').Not()
