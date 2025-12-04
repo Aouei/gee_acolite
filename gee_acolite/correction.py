@@ -66,42 +66,55 @@ class ACOLITE(object):
 
         return rhos, bands, glint_ave
     
-    def select_lut(self, image : ee.Image, settings : dict, aot_skip_bands : List[str] = ['9', '10', '11', '12']) -> Tuple[dict, dict, List[str]]:
+    def estimate_aot_per_lut(self, pdark: dict, lutd: dict, rsrd: dict, ttg: dict, 
+                             geometry: dict, settings: dict, 
+                             aot_skip_bands: List[str] = ['9', '10', '11', '12']) -> dict:
+        """
+        Estimate AOT for each LUT model using dark spectrum fitting.
+        
+        Parameters:
+        - pdark: Dark spectrum values per band
+        - lutd: LUT dictionary with atmospheric models
+        - rsrd: Relative spectral response dictionary
+        - ttg: Gas transmittance dictionary
+        - geometry: Dict with 'raa', 'vza', 'sza', 'pressure'
+        - settings: Processing settings
+        - aot_skip_bands: Bands to skip in AOT estimation
+        
+        Returns:
+        - results: Dict with AOT estimation results per LUT
+        """
         results = {}
-        
-        pdark = self.compute_pdark(image, settings)
-
-        raa = image.get('raa').getInfo()
-        vza = image.get('vza').getInfo()
-        sza = image.get('sza').getInfo()
-
-        sensor = 'S2A_MSI' if 'S2A' in image.get('PRODUCT_ID').getInfo() else 'S2B_MSI'
-        
-        uoz = settings['uoz']
-        uwv = settings['uwv']
-        pressure = settings['pressure']
         nbands = settings['dsf_nbands']
-
-        lutd = self.acolite.aerlut.import_luts(sensor = sensor)
-        rsrd = self.acolite.shared.rsr_dict(sensor = sensor)[sensor]
-        ttg = self.acolite.ac.gas_transmittance(sza, vza, pressure = pressure, uoz = uoz, uwv = uwv, rsr = rsrd['rsr'])
-        luti = self.acolite.aerlut.import_rsky_luts(models=[1,2], lutbase='ACOLITE-RSKY-202102-82W', sensor=sensor)
-
+        
+        raa = geometry['raa']
+        vza = geometry['vza']
+        sza = geometry['sza']
+        pressure = geometry['pressure']
+        
         for lut in lutd:
             taua_arr = None
             rhot_arr = None
             taua_bands = []
             
-            ## run through bands
+            # Run through bands to estimate AOT
             for b in rsrd['rsr_bands']:
-                if b in aot_skip_bands: continue
+                if b in aot_skip_bands: 
+                    continue
 
-                ret = lutd[lut]['rgi'][b]((pressure, lutd[lut]['ipd']['romix'], raa, vza, sza, lutd[lut]['meta']['tau']))
+                # Get path reflectance from LUT for this band
+                ret = lutd[lut]['rgi'][b]((pressure, lutd[lut]['ipd']['romix'], 
+                                          raa, vza, sza, lutd[lut]['meta']['tau']))
 
+                # Dark spectrum value for this band
                 rhot = np.asarray([pdark['B{}'.format(b)]])
                 
+                # Gas correction
                 rhot /= ttg['tt_gas'][b]
+                
+                # Interpolate AOT from observed rhot
                 taua = np.interp(rhot, ret, lutd[lut]['meta']['tau'])
+                
                 if taua_arr is None:
                     rhot_arr = 1.0 * rhot
                     taua_arr = 1.0 * taua
@@ -111,27 +124,55 @@ class ACOLITE(object):
 
                 taua_bands.append(b)
 
-            ## find aot value
+            # Aggregate AOT from darkest bands
             bidx = np.argsort(taua_arr[:, 0])
             taua = np.nanmean(taua_arr[bidx[0: nbands], 0])
             taua_std = np.nanstd(taua_arr[bidx[0: nbands], 0])
-            taua_cv = taua_std/taua
+            taua_cv = taua_std / taua
 
-            ## store results
-            results[lut] = {'taua_bands': taua_bands, 'taua_arr': taua_arr, 'rhot_arr': rhot_arr,
-                            'taua': taua, 'taua_std': taua_std, 'taua_cv': taua_cv,'bidx': bidx}
+            # Store results for this LUT
+            results[lut] = {
+                'taua_bands': taua_bands, 
+                'taua_arr': taua_arr, 
+                'rhot_arr': rhot_arr,
+                'taua': taua, 
+                'taua_std': taua_std, 
+                'taua_cv': taua_cv,
+                'bidx': bidx
+            }
         
-        ## Compute RMSD for model selection (min_drmsd method from ACOLITE)
-        ## This validates model predictions against observations
+        return results
+    
+    def select_best_model(self, results: dict, lutd: dict, geometry: dict, 
+                         settings: dict) -> Tuple[str, float, str, float]:
+        """
+        Select best atmospheric model based on selection criterion.
+        
+        Parameters:
+        - results: AOT estimation results per LUT from estimate_aot_per_lut
+        - lutd: LUT dictionary with atmospheric models
+        - geometry: Dict with 'raa', 'vza', 'sza', 'pressure'
+        - settings: Processing settings with selection method
+        
+        Returns:
+        - sel_lut: Selected LUT name
+        - sel_aot: Selected AOT value
+        - sel_par: Selection parameter name
+        - sel_val: Selection parameter value
+        """
         dsf_model_selection = settings.get('dsf_model_selection', 'min_drmsd')
         dsf_nbands_fit = settings.get('dsf_nbands_fit', 2)
         
+        pressure = geometry['pressure']
+        raa = geometry['raa']
+        vza = geometry['vza']
+        sza = geometry['sza']
+        
         if dsf_model_selection == 'min_drmsd':
+            # RMSD validation: compare predictions vs observations
             for lut in results:
-                # Get the bands to use for fitting (the darkest bands)
                 fit_band_indices = results[lut]['bidx'][0:dsf_nbands_fit]
                 
-                # Compute modeled path reflectance (rhop) for each fitting band at estimated AOT
                 rmsd_values = []
                 for fit_idx in fit_band_indices:
                     band = results[lut]['taua_bands'][fit_idx]
@@ -139,22 +180,22 @@ class ACOLITE(object):
                     # Observed rhot (gas corrected)
                     rhot_obs = results[lut]['rhot_arr'][fit_idx, 0]
                     
-                    # Modeled rhot using estimated AOT for this LUT
+                    # Modeled rhot using estimated AOT
                     rhot_model = lutd[lut]['rgi'][band]((pressure, lutd[lut]['ipd']['romix'], 
                                                          raa, vza, sza, results[lut]['taua']))
                     
-                    # Compute squared difference
+                    # Squared difference
                     rmsd_values.append((rhot_obs - rhot_model) ** 2)
                 
-                # Compute RMSD across fitting bands
+                # Compute RMSD
                 results[lut]['rmsd'] = np.sqrt(np.mean(rmsd_values))
             
             sel_par = 'rmsd'
+            
         elif dsf_model_selection == 'min_dtau':
-            # Alternative method: minimum delta tau between two darkest bands
+            # Minimum delta tau between two darkest bands
             for lut in results:
                 if len(results[lut]['taua_arr']) >= 2:
-                    # Absolute difference between AOT of two darkest bands
                     dtau = np.abs(results[lut]['taua_arr'][results[lut]['bidx'][0], 0] - 
                                   results[lut]['taua_arr'][results[lut]['bidx'][1], 0])
                     results[lut]['dtau'] = dtau
@@ -162,11 +203,12 @@ class ACOLITE(object):
                     results[lut]['dtau'] = np.inf
             
             sel_par = 'dtau'
+            
         else:
-            # Fallback to coefficient of variation
+            # Fallback: coefficient of variation
             sel_par = 'taua_cv'
         
-        ## select LUT and aot based on selection parameter
+        # Select LUT with minimum selection parameter
         sel_lut = None
         sel_aot = None
         sel_val = np.inf
@@ -177,20 +219,86 @@ class ACOLITE(object):
                 sel_aot = results[lut]['taua'] * 1.0
                 sel_lut = '{}'.format(lut)
         
+        return sel_lut, sel_aot, sel_par, sel_val
+    
+    def select_lut(self, image : ee.Image, settings : dict, aot_skip_bands : List[str] = ['9', '10', '11', '12']) -> Tuple[dict, dict, List[str]]:
+        """
+        Main function for LUT selection and atmospheric correction parameter computation.
+        
+        This function orchestrates:
+        1. Dark spectrum extraction
+        2. AOT estimation per LUT model
+        3. Model selection based on validation criterion
+        4. Computation of atmospheric correction parameters
+        
+        Parameters:
+        - image: Input ee.Image
+        - settings: Processing settings
+        - aot_skip_bands: Bands to skip in AOT estimation
+        
+        Returns:
+        - am: Atmospheric correction parameters (romix, dutott, astot, tg)
+        - glint_ave: Glint correction parameters per band
+        - bands: List of band names
+        """
+        # Extract dark spectrum
+        pdark = self.compute_pdark(image, settings)
+
+        # Get geometry and atmospheric parameters
+        raa = image.get('raa').getInfo()
+        vza = image.get('vza').getInfo()
+        sza = image.get('sza').getInfo()
+        
+        geometry = {
+            'raa': raa,
+            'vza': vza,
+            'sza': sza,
+            'pressure': settings['pressure']
+        }
+
+        # Get sensor and load LUTs
+        sensor = 'S2A_MSI' if 'S2A' in image.get('PRODUCT_ID').getInfo() else 'S2B_MSI'
+        
+        lutd = self.acolite.aerlut.import_luts(sensor=sensor)
+        rsrd = self.acolite.shared.rsr_dict(sensor=sensor)[sensor]
+        ttg = self.acolite.ac.gas_transmittance(sza, vza, 
+                                                pressure=settings['pressure'], 
+                                                uoz=settings['uoz'], 
+                                                uwv=settings['uwv'], 
+                                                rsr=rsrd['rsr'])
+        luti = self.acolite.aerlut.import_rsky_luts(models=[1,2], 
+                                                     lutbase='ACOLITE-RSKY-202102-82W', 
+                                                     sensor=sensor)
+
+        # Step 1: Estimate AOT for each LUT model
+        results = self.estimate_aot_per_lut(pdark, lutd, rsrd, ttg, geometry, 
+                                           settings, aot_skip_bands)
+        
+        # Step 2: Select best model
+        sel_lut, sel_aot, sel_par, sel_val = self.select_best_model(results, lutd, 
+                                                                     geometry, settings)
+        
         print(f'Selected model {sel_lut}: AOT={sel_aot:.3f}, {sel_par}={sel_val:.4e}')
 
+        # Step 3: Compute atmospheric correction parameters for selected model
         am = {}
         for par in lutd[sel_lut]['ipd']:
-            am[par] = {b: lutd[sel_lut]['rgi'][b]((pressure, lutd[sel_lut]['ipd'][par], raa, vza, sza, sel_aot))
+            am[par] = {b: lutd[sel_lut]['rgi'][b]((geometry['pressure'], 
+                                                   lutd[sel_lut]['ipd'][par], 
+                                                   raa, vza, sza, sel_aot))
                         for b in rsrd['rsr_bands']}
-        am.update({'tg' : ttg['tt_gas']})
+        am.update({'tg': ttg['tt_gas']})
 
+        # Step 4: Compute glint correction parameters
         model = int(sel_lut[-1])
         glint_wind = 20
         glint_bands = ['11', '12']
 
-        glint_dict = {b:luti[model]['rgi'][b]((raa, vza, sza, glint_wind, sel_aot)) for b in rsrd['rsr_bands']}
-        glint_ave = {b: glint_dict[b]/((glint_dict[glint_bands[0]]+glint_dict[glint_bands[1]])/2) for b in glint_dict}
+        glint_dict = {b: luti[model]['rgi'][b]((raa, vza, sza, glint_wind, sel_aot)) 
+                     for b in rsrd['rsr_bands']}
+        glint_ave = {b: glint_dict[b] / ((glint_dict[glint_bands[0]] + 
+                                         glint_dict[glint_bands[1]]) / 2) 
+                    for b in glint_dict}
 
         return am, glint_ave, rsrd['rsr_bands']
     
