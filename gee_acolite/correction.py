@@ -121,17 +121,63 @@ class ACOLITE(object):
             results[lut] = {'taua_bands': taua_bands, 'taua_arr': taua_arr, 'rhot_arr': rhot_arr,
                             'taua': taua, 'taua_std': taua_std, 'taua_cv': taua_cv,'bidx': bidx}
         
-        ## select LUT and aot
+        ## Compute RMSD for model selection (min_drmsd method from ACOLITE)
+        ## This validates model predictions against observations
+        dsf_model_selection = settings.get('dsf_model_selection', 'min_drmsd')
+        dsf_nbands_fit = settings.get('dsf_nbands_fit', 2)
+        
+        if dsf_model_selection == 'min_drmsd':
+            for lut in results:
+                # Get the bands to use for fitting (the darkest bands)
+                fit_band_indices = results[lut]['bidx'][0:dsf_nbands_fit]
+                
+                # Compute modeled path reflectance (rhop) for each fitting band at estimated AOT
+                rmsd_values = []
+                for fit_idx in fit_band_indices:
+                    band = results[lut]['taua_bands'][fit_idx]
+                    
+                    # Observed rhot (gas corrected)
+                    rhot_obs = results[lut]['rhot_arr'][fit_idx, 0]
+                    
+                    # Modeled rhot using estimated AOT for this LUT
+                    rhot_model = lutd[lut]['rgi'][band]((pressure, lutd[lut]['ipd']['romix'], 
+                                                         raa, vza, sza, results[lut]['taua']))
+                    
+                    # Compute squared difference
+                    rmsd_values.append((rhot_obs - rhot_model) ** 2)
+                
+                # Compute RMSD across fitting bands
+                results[lut]['rmsd'] = np.sqrt(np.mean(rmsd_values))
+            
+            sel_par = 'rmsd'
+        elif dsf_model_selection == 'min_dtau':
+            # Alternative method: minimum delta tau between two darkest bands
+            for lut in results:
+                if len(results[lut]['taua_arr']) >= 2:
+                    # Absolute difference between AOT of two darkest bands
+                    dtau = np.abs(results[lut]['taua_arr'][results[lut]['bidx'][0], 0] - 
+                                  results[lut]['taua_arr'][results[lut]['bidx'][1], 0])
+                    results[lut]['dtau'] = dtau
+                else:
+                    results[lut]['dtau'] = np.inf
+            
+            sel_par = 'dtau'
+        else:
+            # Fallback to coefficient of variation
+            sel_par = 'taua_cv'
+        
+        ## select LUT and aot based on selection parameter
         sel_lut = None
         sel_aot = None
         sel_val = np.inf
-        sel_par = 'taua_cv'
 
         for lut in results:
             if results[lut][sel_par] < sel_val:
                 sel_val = results[lut][sel_par] * 1.0
                 sel_aot = results[lut]['taua'] * 1.0
                 sel_lut = '{}'.format(lut)
+        
+        print(f'Selected model {sel_lut}: AOT={sel_aot:.3f}, {sel_par}={sel_val:.4e}')
 
         am = {}
         for par in lutd[sel_lut]['ipd']:
