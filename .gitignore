@@ -1,9 +1,37 @@
 *data*
-*env*
 *result*
 *jupyter*
-**pycache**
-*.txt
-*ACOLITE*
-*tests*
+**pycache__
 *build*
+.pypirc
+.env
+tests*
+# Directorio ACOLITE externo (no el código gee_acolite)
+ACOLITE/
+
+# Archivos de configuración específicos
+settings.txt
+environment.yml
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

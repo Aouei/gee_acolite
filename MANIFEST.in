@@ -1,0 +1,21 @@
+# Include README and LICENSE
+include README.md
+include LICENSE
+
+# Include requirements
+include requirements.txt
+
+# Include all Python files
+recursive-include gee_acolite *.py
+
+# Include data files if any
+recursive-include gee_acolite *.json
+recursive-include gee_acolite *.yaml
+
+# Exclude unwanted files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
+prune tests
+prune jupyters
+prune examples
