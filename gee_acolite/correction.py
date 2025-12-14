@@ -61,7 +61,19 @@ class ACOLITE(object):
             for data, default in [(key, f'{key}_default') for key in ['uoz', 'uwv', 'wind', 'pressure']]:
                 settings[data] = settings.get(default)
 
-        am, glint_ave, bands = self.select_lut(image, settings)
+        # Check if fixed AOT and LUT are provided
+        if settings.get('dsf_fixed_aot') is not None and settings.get('dsf_fixed_lut') is not None:
+            # Use fixed AOT and LUT (bypass dark spectrum fitting)
+            am, glint_ave, bands = self.compute_correction_with_fixed_aot(
+                image, 
+                float(settings['dsf_fixed_aot']), 
+                settings['dsf_fixed_lut'], 
+                settings
+            )
+        else:
+            # Normal dark spectrum fitting workflow
+            am, glint_ave, bands = self.select_lut(image, settings)
+        
         rhos = self.compute_rhos(image, am)
 
         return rhos, bands, glint_ave
@@ -248,7 +260,7 @@ class ACOLITE(object):
         raa = image.get('raa').getInfo()
         vza = image.get('vza').getInfo()
         sza = image.get('sza').getInfo()
-        
+
         geometry = {
             'raa': raa,
             'vza': vza,
@@ -279,6 +291,8 @@ class ACOLITE(object):
                                                                      geometry, settings)
         
         print(f'Selected model {sel_lut}: AOT={sel_aot:.3f}, {sel_par}={sel_val:.4e}')
+        print(f'  Geometry: SZA={geometry["sza"]:.2f}°, VZA={geometry["vza"]:.2f}°, RAA={geometry["raa"]:.2f}°')
+        print(f'  Pressure: {geometry["pressure"]:.2f} hPa')
 
         # Step 3: Compute atmospheric correction parameters for selected model
         am = {}
@@ -300,6 +314,92 @@ class ACOLITE(object):
                                          glint_dict[glint_bands[1]]) / 2) 
                     for b in glint_dict}
 
+        return am, glint_ave, rsrd['rsr_bands']
+    
+    def compute_correction_with_fixed_aot(self, image: ee.Image, aot: float, lut_name: str, 
+                                         settings: dict) -> Tuple[dict, dict, List[str]]:
+        """
+        Compute atmospheric correction parameters using fixed AOT and LUT.
+        
+        This function bypasses dark spectrum fitting and directly computes
+        correction parameters for a specified AOT and atmospheric model.
+        
+        Parameters:
+        - image: Input ee.Image (TOA reflectance)
+        - aot: Fixed aerosol optical thickness at 550nm
+        - lut_name: LUT name (e.g., 'ACOLITE-LUT-202110-MOD2')
+        - settings: Processing settings
+        
+        Returns:
+        - am: Atmospheric correction parameters (romix, dutott, astot, tg)
+        - glint_ave: Glint correction parameters per band
+        - bands: List of band names
+        """
+        # Extract geometry from image
+        raa = image.get('raa').getInfo()
+        vza = image.get('vza').getInfo()
+        sza = image.get('sza').getInfo()
+        
+        geometry = {
+            'raa': raa,
+            'vza': vza,
+            'sza': sza,
+            'pressure': settings['pressure']
+        }
+        
+        # Get sensor
+        sensor = 'S2A_MSI' if 'S2A' in image.get('PRODUCT_ID').getInfo() else 'S2B_MSI'
+        
+        # Load specified LUT
+        lutd = self.acolite.aerlut.import_luts(sensor=sensor)
+        
+        # Verify LUT exists
+        if lut_name not in lutd:
+            available_luts = list(lutd.keys())
+            raise ValueError(f"LUT '{lut_name}' not found. Available LUTs: {available_luts}")
+        
+        # Get RSR data
+        rsrd = self.acolite.shared.rsr_dict(sensor=sensor)[sensor]
+        pressure = settings['pressure']
+        uoz = settings['uoz']
+        uwv = settings['uwv']
+
+        # Compute gas transmittance
+        ttg = self.acolite.ac.gas_transmittance(sza, vza, 
+                                                pressure=pressure, 
+                                                uoz=uoz, 
+                                                uwv=uwv, 
+                                                rsr=rsrd['rsr'])
+        
+        # Load sky glint LUTs
+        luti = self.acolite.aerlut.import_rsky_luts(models=[1,2], 
+                                                     lutbase='ACOLITE-RSKY-202102-82W', 
+                                                     sensor=sensor)
+        
+        print(f'Using fixed AOT={aot:.3f} with LUT={lut_name}')
+        print(f'  Geometry: SZA={geometry["sza"]:.2f}°, VZA={geometry["vza"]:.2f}°, RAA={geometry["raa"]:.2f}°')
+        print(f'  Pressure: {geometry["pressure"]:.2f} hPa')
+        
+        # Compute atmospheric correction parameters for specified LUT and AOT
+        am = {}
+        for par in lutd[lut_name]['ipd']:
+            am[par] = {b: lutd[lut_name]['rgi'][b]((geometry['pressure'], 
+                                                     lutd[lut_name]['ipd'][par], 
+                                                     raa, vza, sza, aot))
+                        for b in rsrd['rsr_bands']}
+        am.update({'tg': ttg['tt_gas']})
+        
+        # Compute glint correction parameters
+        model = int(lut_name[-1])  # Extract model number from LUT name
+        glint_wind = 20
+        glint_bands = ['11', '12']
+        
+        glint_dict = {b: luti[model]['rgi'][b]((raa, vza, sza, glint_wind, aot)) 
+                     for b in rsrd['rsr_bands']}
+        glint_ave = {b: glint_dict[b] / ((glint_dict[glint_bands[0]] + 
+                                         glint_dict[glint_bands[1]]) / 2) 
+                    for b in glint_dict}
+        
         return am, glint_ave, rsrd['rsr_bands']
     
     def compute_pdark(self, image : ee.Image, settings : dict):
