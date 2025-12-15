@@ -26,8 +26,6 @@ enabling efficient processing of satellite imagery for water quality monitoring 
    :caption: Examples:
 
    examples/basic_usage
-   examples/water_quality
-   examples/batch_processing
 
 
 Features
