@@ -1,5 +1,5 @@
 ---
-title: 'GEE ACOLITE: Atmospheric Correction for Google Earth Engine'
+title: 'GEE ACOLITE: A python library to connect Google Earth Engine with ACOLITE'
 tags:
   - Python
   - remote sensing
