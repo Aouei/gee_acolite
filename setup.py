@@ -10,7 +10,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8") if (here / "
 
 setup(
     name="gee_acolite",
-    version="0.1.0",
+    version="1.0.0",
     author="Sergio",
     author_email="sergiohercar1@gmail.com",  # Cambiar por tu email
     description="ACOLITE atmospheric correction for Google Earth Engine",
