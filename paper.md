@@ -45,7 +45,7 @@ Researchers studying coastal and inland waters require accurate atmospheric corr
 - **Providing water quality products**: Direct computation of SPM, turbidity, chlorophyll-a, and bathymetric indices
 - **Supporting batch processing**: Efficient processing of multiple images with consistent settings
 
-The package is designed for aquatic remote sensing researchers, environmental monitoring agencies, and coastal zone managers who require accurate atmospheric correction for water quality assessment and monitoring.
+The library is designed for aquatic remote sensing researchers, environmental monitoring agencies, and coastal zone managers who require accurate atmospheric correction for water quality assessment and monitoring.
 
 # Implementation
 
@@ -57,7 +57,7 @@ The package is designed for aquatic remote sensing researchers, environmental mo
 4. **Residual correction**: Optional sun glint corrections
 5. **Water quality products**: Computation of derived products (SPM, chlorophyll, turbidity, bathymetry)
 
-The package maintains compatibility with ACOLITE's configuration system while adapting the algorithms for GEE's distributed computing environment. Processing can be configured through Python dictionaries or ACOLITE-compatible settings files.
+The library maintains compatibility with ACOLITE's configuration system while adapting the algorithms for GEE's distributed computing environment. Processing can be configured through Python dictionaries or ACOLITE-compatible settings files.
 
 # Features
 
@@ -102,7 +102,7 @@ corrected_images, corrected_settings = processor.correct(images)
 
 # Validation and Performance
 
-The package has been validated against standalone ACOLITE processing for Sentinel-2 imagery. \autoref{fig:spectral_comparison} compares mean remote sensing reflectance (Rrs) spectra from eight scenes over Ria Formosa using three atmospheric correction approaches: (1) GEE's Sen2Cor L2A, (2) standalone ACOLITE (Local ACOLITE-Fixed), and (3) GEE ACOLITE.
+The library has been validated against standalone ACOLITE processing for Sentinel-2 imagery. \autoref{fig:spectral_comparison} compares mean remote sensing reflectance (Rrs) spectra from eight scenes over Ria Formosa using three atmospheric correction approaches: (1) GEE's Sen2Cor L2A, (2) standalone ACOLITE (Local ACOLITE-Fixed), and (3) GEE ACOLITE.
 
 The results demonstrate similar spectral responses across all tested scenes, with GEE ACOLITE retrievals closely matching the standalone ACOLITE processing. Both ACOLITE implementations show consistent retrieval of water-leaving reflectance across the visible and near-infrared spectrum, with typical values ranging from 0.005 to 0.020 sr$^{-1}$. The agreement between GEE ACOLITE and local ACOLITE processing validates the correct implementation of the dark spectrum fitting algorithm within the Google Earth Engine framework. Minor differences between Sen2Cor and ACOLITE-based retrievals are expected due to fundamental differences in atmospheric correction approaches, with ACOLITE's dark spectrum fitting method being specifically optimized for aquatic applications.
 
@@ -114,10 +114,10 @@ Beyond spectral validation, \autoref{fig:sdb} demonstrates the application of GE
 
 # Availability
 
-The source code for `GEE ACOLITE` is available on GitHub at https://github.com/Aouei/gee_acolite under the GNU General Public License v3.0. Documentation, examples, and API reference are included in the repository. The package requires ACOLITE to be installed separately from https://github.com/acolite/acolite.
+The source code for `GEE ACOLITE` is available on GitHub at https://github.com/Aouei/gee_acolite under the GNU General Public License v3.0. Documentation, examples, and API reference are included in the repository. The library requires ACOLITE to be installed separately from https://github.com/acolite/acolite.
 
 # Acknowledgements
 
-This package builds upon the ACOLITE software developed by Dr. Quinten Vanhellemont and colleagues at the Royal Belgian Institute of Natural Sciences (RBINS). We acknowledge the Google Earth Engine team for providing the cloud computing platform.
+This library is based on an initial attempt by Dr. Vanhellemont to connect ACOLITE with Google Earth Engine, which served as inspiration and foundation for the current implementation. We acknowledge the Google Earth Engine team for providing the cloud computing platform.
 
 # References
