@@ -30,6 +30,7 @@ dependencies = [
     "earthengine-api>=0.1.350",
     "numpy>=1.20.0",
     "scipy>=1.7.0",
+    "netcdf4>=1.7.0",
 ]
 
 [project.urls]

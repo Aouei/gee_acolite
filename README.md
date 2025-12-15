@@ -28,42 +28,6 @@ cd gee_acolite
 pip install -e .
 ```
 
-## Quick Start
-
-```python
-import ee
-import acolite as ac
-from gee_acolite.correction_refactored import ACOLITE
-
-# Initialize Earth Engine
-ee.Initialize()
-
-# Define region and search for images
-roi = ee.Geometry.Point([-76.7, 38.2])
-images = ee.ImageCollection('COPERNICUS/S2_HARMONIZED') \
-    .filterBounds(roi) \
-    .filterDate('2023-06-01', '2023-06-30') \
-    .limit(5)
-
-# Configure processing settings
-settings = {
-    'aerosol_correction': 'dark_spectrum',
-    'dsf_aot_estimate': 'fixed',
-    'dsf_model_selection': 'min_drmsd',
-    'dsf_spectrum_option': 'darkest',
-    'uoz_default': 0.3,
-    'uwv_default': 1.5,
-    'pressure_default': 1013.25,
-    'l2w_parameters': ['spm_nechad2016', 'chl_oc2']
-}
-
-# Apply atmospheric correction
-processor = ACOLITE(ac, settings)
-corrected_images, final_settings = processor.correct(images)
-
-print(f"Processed {corrected_images.size().getInfo()} images")
-```
-
 ## Features
 
 ### Atmospheric Correction Methods
