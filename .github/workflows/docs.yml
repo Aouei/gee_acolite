@@ -1,0 +1,45 @@
+name: Build and Deploy Sphinx Documentation
+
+on:
+  push:
+    branches:
+      - docs
+  pull_request:
+    branches:
+      - docs
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sphinx sphinx-book-theme nbsphinx ipython
+        pip install -r requirements.txt || true
+        
+    - name: Build documentation
+      run: |
+        cd sphinx
+        sphinx-build -b html source build/html
+        
+    - name: Create .nojekyll file
+      run: touch sphinx/build/html/.nojekyll
+        
+    - name: Deploy to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/docs'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./sphinx/build/html
+        publish_branch: gh-pages
+        force_orphan: true
