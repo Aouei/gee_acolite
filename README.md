@@ -111,12 +111,6 @@ pip install -e .
 
 **Important:** ACOLITE is not available on PyPI and must be installed from source.
 
-## Documentation
-
-For detailed documentation and examples, see:
-- [Examples](examples/)
-- [API Reference](docs/)
-
 ## Contributing
 
 Contributions are welcome! Please:
