@@ -14,6 +14,10 @@ authors:
     orcid: 0009-0003-9495-9625
     corresponding: true
     affiliation: 1
+  - name: Isabel Caballero
+    orcid: 0000-0001-7485-0989
+    corresponding: false
+    affiliation: 1
 affiliations:
  - name: Department of Ecology and Coastal Management, Institute of Marine Sciences Andalusia (ICMAN-CSIC), Spanish National Research Council (CSIC), 11519 Puerto Real, Spain
    index: 1
