@@ -107,7 +107,11 @@ corrected_images, corrected_settings = processor.correct(images)
 
 # Validation and Performance
 
-TODO
+The package has been validated against standalone ACOLITE processing for Sentinel-2 imagery across various aquatic environments. \autoref{fig:spectral_comparison} shows a comparison of mean remote sensing reflectance (Rrs) spectra retrieved from eight Sentinel-2 scenes over the Ria Formosa using three different atmospheric correction approaches: (1) Google Earth Engine's native Sen2Cor Level-2A product, (2) standalone ACOLITE processing with fixed AOT mode (Local ACOLITE-Fixed), and (3) the GEE ACOLITE implementation presented here (GEE + ACOLITE-Fixed).
+
+The results demonstrate similar spectral responses across all tested scenes, with GEE ACOLITE retrievals closely matching the standalone ACOLITE processing. Both ACOLITE implementations show consistent retrieval of water-leaving reflectance across the visible and near-infrared spectrum, with typical values ranging from 0.005 to 0.020 sr$^{-1}$. The agreement between GEE ACOLITE and local ACOLITE processing validates the correct implementation of the dark spectrum fitting algorithm within the Google Earth Engine framework. Minor differences between Sen2Cor and ACOLITE-based retrievals are expected due to fundamental differences in atmospheric correction approaches, with ACOLITE's dark spectrum fitting method being specifically optimized for aquatic applications.
+
+![Comparison of mean remote sensing reflectance (Rrs) spectra from eight Sentinel-2 scenes over the Ria Formosa (Portugal) using three atmospheric correction methods: GEE Sen2Cor L2A, Local ACOLITE-Fixed, and GEE + ACOLITE-Fixed. The similar spectral responses validate the correct implementation of ACOLITE's dark spectrum fitting algorithm within Google Earth Engine.\label{fig:spectral_comparison}](figs/spectral_comparison.png)
 
 # Availability
 
