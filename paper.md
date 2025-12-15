@@ -72,9 +72,12 @@ Key features of `GEE ACOLITE` include:
 # Example usage
 
 ```python
+import sys
+sys.path.append(r'E:\acolites\20231023.0')
+
 import ee
 import acolite as ac
-from gee_acolite import ACOLITE
+from gee_acolite.correction import ACOLITE
 
 ee.Initialize()
 
