@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-Batch Processing
-================
-
-Process multiple images efficiently.
-
-.. code-block:: python
-
-   collection = search_images(aoi, '2023-01-01', '2023-12-31', 'sentinel2')
-   
-=======
 Batch Processing Example
 ========================
 
@@ -43,13 +32,10 @@ Processing Multiple Images
    print(f"Processing {collection.size().getInfo()} images")
    
    # Apply correction to all images
->>>>>>> d1148d8274bf86e59c80f80279b75d4845ad74c0
    def correct_image(image):
        return apply_acolite(image, aoi)
    
    corrected_collection = collection.map(correct_image)
-<<<<<<< HEAD
-=======
 
 Time Series Analysis
 --------------------
@@ -143,4 +129,3 @@ Creating Composite Images
        region=aoi
    )
    task.start()
->>>>>>> d1148d8274bf86e59c80f80279b75d4845ad74c0

@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-Basic Usage
-===========
-
-Complete atmospheric correction workflow.
-=======
 Basic Usage Example
 ===================
 
@@ -11,20 +5,10 @@ This example demonstrates the basic workflow of using gee_acolite for atmospheri
 
 Complete Workflow
 -----------------
->>>>>>> d1148d8274bf86e59c80f80279b75d4845ad74c0
 
 .. code-block:: python
 
    import ee
-<<<<<<< HEAD
-   from gee_acolite.utils.search import search_images
-   from gee_acolite.correction import apply_acolite
-   
-   ee.Initialize()
-   
-   aoi = ee.Geometry.Rectangle([-122.5, 37.5, -122.0, 38.0])
-   
-=======
    import gee_acolite
    from gee_acolite.utils.search import search_images
    from gee_acolite.correction import apply_acolite
@@ -36,7 +20,6 @@ Complete Workflow
    aoi = ee.Geometry.Rectangle([-122.5, 37.5, -122.0, 38.0])
    
    # Search for Sentinel-2 images
->>>>>>> d1148d8274bf86e59c80f80279b75d4845ad74c0
    collection = search_images(
        aoi=aoi,
        start_date='2023-06-01',
@@ -45,9 +28,6 @@ Complete Workflow
        max_cloud_cover=10
    )
    
-<<<<<<< HEAD
-   corrected = apply_acolite(collection.first(), aoi)
-=======
    print(f"Found {collection.size().getInfo()} images")
    
    # Get the first image
@@ -92,4 +72,3 @@ Visualization
    Map.centerObject(aoi, 10)
    Map.addLayer(corrected, vis_params, 'Corrected Image')
    Map
->>>>>>> d1148d8274bf86e59c80f80279b75d4845ad74c0
