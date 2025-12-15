@@ -66,7 +66,7 @@ Key features of `GEE ACOLITE` include:
 - **Multiple dark spectrum methods**: Darkest pixel, percentile-based, and linear regression intercept approaches
 - **Flexible model selection**: Three criteria for optimal atmospheric model selection
 - **Water quality parameters**: Built-in algorithms for SPM [@nechad2010], turbidity, chlorophyll-a [@oreilly1998; @oreilly2000], and bathymetry
-- **Cloud masking**: Integration with Sentinel-2 Cloud Probability [@sentinelhub]
+- **Cloud masking**: Integration with Sentinel-2 Cloud Probability
 - **Batch processing**: Efficient processing of image collections
 
 # Example usage
@@ -105,9 +105,9 @@ The results demonstrate similar spectral responses across all tested scenes, wit
 
 ![Comparison of mean remote sensing reflectance (Rrs) spectra from eight Sentinel-2 scenes over the Ria Formosa (Portugal) using three atmospheric correction methods: GEE Sen2Cor L2A, Local ACOLITE-Fixed, and GEE + ACOLITE-Fixed.\label{fig:spectral_comparison}](figs/spectral_comparison.png)
 
-Beyond spectral validation, \autoref{fig:sdb} demonstrates the application of GEE ACOLITE-corrected imagery for satellite-derived bathymetry (SDB) using Stumpf's ratio method. The results show that water quality products derived from GEE ACOLITE are suitable for subsequent environmental applications.
+Beyond spectral validation, \autoref{fig:sdb} demonstrates the application of GEE ACOLITE-corrected imagery for satellite-derived bathymetry (SDB) using Stumpf's ratio method [@stumpf2003]. The results show that water quality products derived from GEE ACOLITE are suitable for subsequent environmental applications.
 
-![Satellite-derived bathymetry (SDB) from Sentinel-2 imagery (2018-10-07) over Ria Formosa using Stumpf's green band ratio method applied to GEE ACOLITE-corrected reflectance.\label{fig:sdb}](figs/sdb.png)
+![Satellite-derived bathymetry (SDB) from Sentinel-2 imagery (2018-10-07) over Ria Formosa using Stumpf's green band ratio method [@stumpf2003] applied to GEE ACOLITE-corrected reflectance.\label{fig:sdb}](figs/sdb.png)
 
 # Availability
 
