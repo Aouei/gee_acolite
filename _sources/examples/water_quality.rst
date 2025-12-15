@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-Water Quality
-=============
-
-Calculate water quality parameters.
-
-.. code-block:: python
-
-   from gee_acolite.water_quality import calculate_chl_a, calculate_turbidity
-=======
 Water Quality Example
 =====================
 
@@ -29,15 +19,10 @@ Chlorophyll-a Concentration
    aoi = ee.Geometry.Point([-122.3, 37.8])
    image = ee.Image('COPERNICUS/S2/20230615T184919_20230615T185919_T10SEG')
    corrected = apply_acolite(image, aoi)
->>>>>>> d1148d8274bf86e59c80f80279b75d4845ad74c0
    
    # Calculate chlorophyll-a
    chl_a = calculate_chl_a(corrected)
    
-<<<<<<< HEAD
-   # Calculate turbidity
-   turbidity = calculate_turbidity(corrected)
-=======
    # Visualization
    vis_params = {
        'min': 0,
@@ -119,4 +104,3 @@ Batch Processing Multiple Parameters
        region=aoi
    )
    task.start()
->>>>>>> d1148d8274bf86e59c80f80279b75d4845ad74c0

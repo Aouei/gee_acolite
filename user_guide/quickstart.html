@@ -153,9 +153,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-
-
-
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
@@ -176,16 +173,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../examples/basic_usage.html">Complete atmospheric correction workflow.</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="../examples/water_quality.html">Chlorophyll-a Concentration</a></li>
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="../examples/batch_processing.html">Processing Multiple Images</a></li>
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../examples/basic_usage.html">Basic Usage Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/water_quality.html">Water Quality Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/batch_processing.html">Batch Processing Example</a></li>
 </ul>
 
     </div>
@@ -351,56 +341,36 @@ document.write(`
                   
   <section id="quick-start">
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h1>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Basic atmospheric correction example.
-=======
-This guide will help you get started with gee_acolite.</p>
+<p>This guide will help you get started with gee_acolite.</p>
 <section id="basic-usage">
 <h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h2>
-<p>Here’s a simple example of how to use gee_acolite for atmospheric correction:
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
+<p>Here’s a simple example of how to use gee_acolite for atmospheric correction:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gee_acolite</span>
+
+<span class="c1"># Initialize Earth Engine</span>
+<span class="n">ee</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
+
+<span class="c1"># Define your area of interest</span>
+<span class="n">aoi</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">([</span><span class="o">-</span><span class="mf">122.5</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.0</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">])</span>
+
+<span class="c1"># Search for Sentinel-2 imagery</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.utils.search</span><span class="w"> </span><span class="kn">import</span> <span class="n">search_images</span>
+<span class="n">images</span> <span class="o">=</span> <span class="n">search_images</span><span class="p">(</span>
+    <span class="n">aoi</span><span class="o">=</span><span class="n">aoi</span><span class="p">,</span>
+    <span class="n">start_date</span><span class="o">=</span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">,</span>
+    <span class="n">end_date</span><span class="o">=</span><span class="s1">&#39;2023-12-31&#39;</span><span class="p">,</span>
+    <span class="n">sensor</span><span class="o">=</span><span class="s1">&#39;sentinel2&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Apply atmospheric correction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.correction</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_acolite</span>
+<span class="n">corrected</span> <span class="o">=</span> <span class="n">apply_acolite</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">first</span><span class="p">(),</span> <span class="n">aoi</span><span class="p">)</span>
+
+<span class="c1"># View the result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corrected</span><span class="o">.</span><span class="n">bandNames</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">())</span>
 </pre></div>
 </div>
-<dl class="simple">
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p>from gee_acolite.utils.search import search_images
-from gee_acolite.correction import apply_acolite</p>
-</dd>
-</dl>
-<blockquote>
-<div><p># Initialize Earth Engine
-ee.Initialize()</p>
-</div></blockquote>
-<dl>
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p># Define area of interest
-aoi = ee.Geometry.Rectangle([-122.5, 37.5, -122.0, 38.0])</p>
-<p># Search for images</p>
-</dd>
-</dl>
-<blockquote>
-<div><p># Search for Sentinel-2 imagery
-from gee_acolite.utils.search import search_images</p>
-</div></blockquote>
-<dl>
-<dt>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</dt><dd><dl class="simple">
-<dt>images = search_images(</dt><dd><p>aoi=aoi,
-start_date=’2023-01-01’,
-end_date=’2023-12-31’,
-sensor=’sentinel2’</p>
-</dd>
-</dl>
-<p>)</p>
-</dd>
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p># Apply correction
-corrected = apply_acolite(images.first(), aoi)</p>
-</dd>
-</dl>
-<blockquote>
-<div><p>corrected = apply_acolite(images.first(), aoi)</p>
-<p># View the result
-print(corrected.bandNames().getInfo())</p>
-</div></blockquote>
 </section>
 <section id="water-quality-analysis">
 <h2>Water Quality Analysis<a class="headerlink" href="#water-quality-analysis" title="Link to this heading">#</a></h2>
@@ -428,11 +398,10 @@ print(corrected.bandNames().getInfo())</p>
 <section id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Check out the <a class="reference internal" href="../examples/basic_usage.html"><span class="doc">Complete atmospheric correction workflow.</span></a> for more detailed examples</p></li>
+<li><p>Check out the <a class="reference internal" href="../examples/basic_usage.html"><span class="doc">Basic Usage Example</span></a> for more detailed examples</p></li>
 <li><p>Explore the <a class="reference internal" href="../modules/correction.html"><span class="doc">Correction Module</span></a> API documentation</p></li>
 <li><p>Learn about <a class="reference internal" href="../modules/water_quality.html"><span class="doc">Water Quality Module</span></a> parameters</p></li>
 </ul>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
 </section>
 </section>
 

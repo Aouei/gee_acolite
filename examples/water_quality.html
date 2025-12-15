@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Chlorophyll-a Concentration &#8212; gee_acolite 1.0.0 documentation</title>
+    <title>Water Quality Example &#8212; gee_acolite 1.0.0 documentation</title>
   
   
   
@@ -45,8 +45,8 @@
     <link rel="canonical" href="https://aouei.github.io/gee_acolite/examples/water_quality.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Processing Multiple Images" href="batch_processing.html" />
-    <link rel="prev" title="Complete atmospheric correction workflow." href="basic_usage.html" />
+    <link rel="next" title="Batch Processing Example" href="batch_processing.html" />
+    <link rel="prev" title="Basic Usage Example" href="basic_usage.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -153,9 +153,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Installation</a></li>
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/quickstart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
@@ -176,16 +173,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Complete atmospheric correction workflow.</a></li>
-
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chlorophyll-a Concentration</a></li>
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="batch_processing.html">Processing Multiple Images</a></li>
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage Example</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Water Quality Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch_processing.html">Batch Processing Example</a></li>
 </ul>
 
     </div>
@@ -324,7 +314,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Chlorophyll-a Concentration</h1>
+    <h1>Water Quality Example</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -334,12 +324,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Chlorophyll-a Concentration</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#turbidity">Turbidity</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#suspended-particulate-matter">Suspended Particulate Matter</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-multiple-parameters">Batch Processing Multiple Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chlorophyll-a-concentration">Chlorophyll-a Concentration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turbidity">Turbidity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suspended-particulate-matter">Suspended Particulate Matter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-multiple-parameters">Batch Processing Multiple Parameters</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -350,16 +339,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Water Quality
-=============</p>
-<p>Calculate water quality parameters.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.water_quality</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_chl_a</span><span class="p">,</span> <span class="n">calculate_turbidity</span>
-</pre></div>
-</div>
+  <section id="water-quality-example">
+<h1>Water Quality Example<a class="headerlink" href="#water-quality-example" title="Link to this heading">#</a></h1>
 <p>Calculate water quality parameters from atmospherically corrected imagery.</p>
 <section id="chlorophyll-a-concentration">
-<h1>Chlorophyll-a Concentration<a class="headerlink" href="#chlorophyll-a-concentration" title="Link to this heading">#</a></h1>
+<h2>Chlorophyll-a Concentration<a class="headerlink" href="#chlorophyll-a-concentration" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.correction</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_acolite</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.water_quality</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_chl_a</span>
@@ -371,30 +355,23 @@ Water Quality
 <span class="n">aoi</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">([</span><span class="o">-</span><span class="mf">122.3</span><span class="p">,</span> <span class="mf">37.8</span><span class="p">])</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;COPERNICUS/S2/20230615T184919_20230615T185919_T10SEG&#39;</span><span class="p">)</span>
 <span class="n">corrected</span> <span class="o">=</span> <span class="n">apply_acolite</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">aoi</span><span class="p">)</span>
+
+<span class="c1"># Calculate chlorophyll-a</span>
+<span class="n">chl_a</span> <span class="o">=</span> <span class="n">calculate_chl_a</span><span class="p">(</span><span class="n">corrected</span><span class="p">)</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">vis_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">&#39;palette&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="s1">&#39;lime&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">Map</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">chl_a</span><span class="p">,</span> <span class="n">vis_params</span><span class="p">,</span> <span class="s1">&#39;Chlorophyll-a (μg/L)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
-<blockquote>
-<div><p># Calculate chlorophyll-a
-chl_a = calculate_chl_a(corrected)</p>
-</div></blockquote>
-<dl class="simple">
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p># Calculate turbidity
-turbidity = calculate_turbidity(corrected)</p>
-</dd>
-</dl>
-<blockquote>
-<div><blockquote>
-<div><p>‘min’: 0,
-‘max’: 10,
-‘palette’: [‘blue’, ‘cyan’, ‘lime’, ‘yellow’, ‘red’]</p>
-</div></blockquote>
-<p>}</p>
-<p>Map.addLayer(chl_a, vis_params, ‘Chlorophyll-a (μg/L)’)</p>
-</div></blockquote>
 </section>
 <section id="turbidity">
-<h1>Turbidity<a class="headerlink" href="#turbidity" title="Link to this heading">#</a></h1>
+<h2>Turbidity<a class="headerlink" href="#turbidity" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.water_quality</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_turbidity</span>
 
 <span class="c1"># Calculate turbidity</span>
@@ -412,7 +389,7 @@ turbidity = calculate_turbidity(corrected)</p>
 </div>
 </section>
 <section id="suspended-particulate-matter">
-<h1>Suspended Particulate Matter<a class="headerlink" href="#suspended-particulate-matter" title="Link to this heading">#</a></h1>
+<h2>Suspended Particulate Matter<a class="headerlink" href="#suspended-particulate-matter" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.water_quality</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_spm</span>
 
 <span class="c1"># Calculate SPM</span>
@@ -430,7 +407,7 @@ turbidity = calculate_turbidity(corrected)</p>
 </div>
 </section>
 <section id="batch-processing-multiple-parameters">
-<h1>Batch Processing Multiple Parameters<a class="headerlink" href="#batch-processing-multiple-parameters" title="Link to this heading">#</a></h1>
+<h2>Batch Processing Multiple Parameters<a class="headerlink" href="#batch-processing-multiple-parameters" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.water_quality</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">calculate_chl_a</span><span class="p">,</span>
     <span class="n">calculate_turbidity</span><span class="p">,</span>
@@ -462,7 +439,7 @@ turbidity = calculate_turbidity(corrected)</p>
 <span class="n">task</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
+</section>
 </section>
 
 
@@ -482,7 +459,7 @@ turbidity = calculate_turbidity(corrected)</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Complete atmospheric correction workflow.</p>
+        <p class="prev-next-title">Basic Usage Example</p>
       </div>
     </a>
     <a class="right-next"
@@ -490,7 +467,7 @@ turbidity = calculate_turbidity(corrected)</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Processing Multiple Images</p>
+        <p class="prev-next-title">Batch Processing Example</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -510,12 +487,11 @@ turbidity = calculate_turbidity(corrected)</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Chlorophyll-a Concentration</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#turbidity">Turbidity</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#suspended-particulate-matter">Suspended Particulate Matter</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-multiple-parameters">Batch Processing Multiple Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chlorophyll-a-concentration">Chlorophyll-a Concentration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turbidity">Turbidity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suspended-particulate-matter">Suspended Particulate Matter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-multiple-parameters">Batch Processing Multiple Parameters</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

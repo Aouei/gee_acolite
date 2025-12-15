@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Complete atmospheric correction workflow. &#8212; gee_acolite 1.0.0 documentation</title>
+    <title>Basic Usage Example &#8212; gee_acolite 1.0.0 documentation</title>
   
   
   
@@ -45,7 +45,7 @@
     <link rel="canonical" href="https://aouei.github.io/gee_acolite/examples/basic_usage.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Chlorophyll-a Concentration" href="water_quality.html" />
+    <link rel="next" title="Water Quality Example" href="water_quality.html" />
     <link rel="prev" title="Search Module" href="../modules/utils.search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -153,9 +153,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Installation</a></li>
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/quickstart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
@@ -176,16 +173,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Complete atmospheric correction workflow.</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="water_quality.html">Chlorophyll-a Concentration</a></li>
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="batch_processing.html">Processing Multiple Images</a></li>
-
-
-
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Basic Usage Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="water_quality.html">Water Quality Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch_processing.html">Batch Processing Example</a></li>
 </ul>
 
     </div>
@@ -324,7 +314,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Complete atmospheric correction workflow.</h1>
+    <h1>Basic Usage Example</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -334,14 +324,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Complete atmospheric correction workflow.</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage-example">Basic Usage Example</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-workflow">Complete Workflow</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -352,75 +337,57 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Basic Usage
-===========</p>
-<section id="complete-atmospheric-correction-workflow">
-<h1>Complete atmospheric correction workflow.<a class="headerlink" href="#complete-atmospheric-correction-workflow" title="Link to this heading">#</a></h1>
-</section>
-<section id="basic-usage-example">
+  <section id="basic-usage-example">
 <h1>Basic Usage Example<a class="headerlink" href="#basic-usage-example" title="Link to this heading">#</a></h1>
 <p>This example demonstrates the basic workflow of using gee_acolite for atmospheric correction.</p>
 <section id="complete-workflow">
 <h2>Complete Workflow<a class="headerlink" href="#complete-workflow" title="Link to this heading">#</a></h2>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gee_acolite</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.utils.search</span><span class="w"> </span><span class="kn">import</span> <span class="n">search_images</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.correction</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_acolite</span>
+
+<span class="c1"># Initialize Earth Engine</span>
+<span class="n">ee</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
+
+<span class="c1"># Define area of interest (example: San Francisco Bay)</span>
+<span class="n">aoi</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">([</span><span class="o">-</span><span class="mf">122.5</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.0</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">])</span>
+
+<span class="c1"># Search for Sentinel-2 images</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">search_images</span><span class="p">(</span>
+    <span class="n">aoi</span><span class="o">=</span><span class="n">aoi</span><span class="p">,</span>
+    <span class="n">start_date</span><span class="o">=</span><span class="s1">&#39;2023-06-01&#39;</span><span class="p">,</span>
+    <span class="n">end_date</span><span class="o">=</span><span class="s1">&#39;2023-06-30&#39;</span><span class="p">,</span>
+    <span class="n">sensor</span><span class="o">=</span><span class="s1">&#39;sentinel2&#39;</span><span class="p">,</span>
+    <span class="n">max_cloud_cover</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="n">collection</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span><span class="si">}</span><span class="s2"> images&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get the first image</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+<span class="c1"># Apply ACOLITE atmospheric correction</span>
+<span class="n">corrected</span> <span class="o">=</span> <span class="n">apply_acolite</span><span class="p">(</span>
+    <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+    <span class="n">aoi</span><span class="o">=</span><span class="n">aoi</span><span class="p">,</span>
+    <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;Rrs&#39;</span>  <span class="c1"># Remote sensing reflectance</span>
+<span class="p">)</span>
+
+<span class="c1"># Export the result</span>
+<span class="n">task</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">Export</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">toDrive</span><span class="p">(</span>
+    <span class="n">image</span><span class="o">=</span><span class="n">corrected</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;acolite_corrected&#39;</span><span class="p">,</span>
+    <span class="n">folder</span><span class="o">=</span><span class="s1">&#39;GEE_exports&#39;</span><span class="p">,</span>
+    <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">region</span><span class="o">=</span><span class="n">aoi</span><span class="p">,</span>
+    <span class="n">maxPixels</span><span class="o">=</span><span class="mf">1e13</span>
+<span class="p">)</span>
+<span class="n">task</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Export started!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl>
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p>from gee_acolite.utils.search import search_images
-from gee_acolite.correction import apply_acolite</p>
-<p>ee.Initialize()</p>
-<p>aoi = ee.Geometry.Rectangle([-122.5, 37.5, -122.0, 38.0])</p>
-</dd>
-</dl>
-<blockquote>
-<div><p>from gee_acolite.correction import apply_acolite</p>
-<p># Initialize Earth Engine
-ee.Initialize()</p>
-<p># Define area of interest (example: San Francisco Bay)
-aoi = ee.Geometry.Rectangle([-122.5, 37.5, -122.0, 38.0])</p>
-<p># Search for Sentinel-2 images</p>
-</div></blockquote>
-<dl>
-<dt>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</dt><dd><dl class="simple">
-<dt>collection = search_images(</dt><dd><p>aoi=aoi,
-start_date=’2023-06-01’,
-end_date=’2023-06-30’,
-sensor=’sentinel2’,
-max_cloud_cover=10</p>
-</dd>
-</dl>
-<p>)</p>
-</dd>
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p>corrected = apply_acolite(collection.first(), aoi)</p>
-</dd>
-</dl>
-<blockquote>
-<div><p># Get the first image
-image = collection.first()</p>
-<p># Apply ACOLITE atmospheric correction
-corrected = apply_acolite(</p>
-<blockquote>
-<div><p>image=image,
-aoi=aoi,
-output_format=’Rrs’  # Remote sensing reflectance</p>
-</div></blockquote>
-<p>)</p>
-<p># Export the result
-task = ee.batch.Export.image.toDrive(</p>
-<blockquote>
-<div><p>image=corrected,
-description=’acolite_corrected’,
-folder=’GEE_exports’,
-scale=10,
-region=aoi,
-maxPixels=1e13</p>
-</div></blockquote>
-<p>)
-task.start()</p>
-<p>print(“Export started!”)</p>
-</div></blockquote>
 </section>
 <section id="visualization">
 <h2>Visualization<a class="headerlink" href="#visualization" title="Link to this heading">#</a></h2>
@@ -440,7 +407,6 @@ task.start()</p>
 <span class="n">Map</span>
 </pre></div>
 </div>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
 </section>
 </section>
 
@@ -469,7 +435,7 @@ task.start()</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Chlorophyll-a Concentration</p>
+        <p class="prev-next-title">Water Quality Example</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -489,14 +455,9 @@ task.start()</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Complete atmospheric correction workflow.</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage-example">Basic Usage Example</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-workflow">Complete Workflow</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>

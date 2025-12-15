@@ -153,9 +153,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Installation</a></li>
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
@@ -176,16 +173,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../examples/basic_usage.html">Complete atmospheric correction workflow.</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="../examples/water_quality.html">Chlorophyll-a Concentration</a></li>
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="../examples/batch_processing.html">Processing Multiple Images</a></li>
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../examples/basic_usage.html">Basic Usage Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/water_quality.html">Water Quality Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/batch_processing.html">Batch Processing Example</a></li>
 </ul>
 
     </div>
@@ -334,23 +324,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Installation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-github">Install from GitHub</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#main-dependencies-installed-automatically">Main dependencies installed automatically:</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-pypi">Install from PyPI</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#authenticate-with-google-earth-engine">Authenticate with Google Earth Engine:</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-google-earth-engine">Setting up Google Earth Engine</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#head">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</a></li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -367,14 +346,9 @@ document.write(`
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Python &gt;= 3.8</p></li>
+<li><p>Google Earth Engine account and authentication</p></li>
+<li><p>ACOLITE (must be installed via conda)</p></li>
 </ul>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-* Google Earth Engine account
-* ACOLITE (included)
-=======
-* Google Earth Engine account and authentication
-* ACOLITE (included in the package)
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
 </section>
 <section id="install-from-github">
 <h2>Install from GitHub<a class="headerlink" href="#install-from-github" title="Link to this heading">#</a></h2>
@@ -383,13 +357,7 @@ document.write(`
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Dependencies
-————</p>
 </section>
-</section>
-<section id="main-dependencies-installed-automatically">
-<h1>Main dependencies installed automatically:<a class="headerlink" href="#main-dependencies-installed-automatically" title="Link to this heading">#</a></h1>
 <section id="install-from-pypi">
 <h2>Install from PyPI<a class="headerlink" href="#install-from-pypi" title="Link to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>gee_acolite
@@ -398,8 +366,7 @@ Dependencies
 </section>
 <section id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">#</a></h2>
-<p>The main dependencies will be installed automatically:
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
+<p>The main dependencies will be installed automatically:</p>
 <ul class="simple">
 <li><p>earthengine-api</p></li>
 <li><p>numpy</p></li>
@@ -407,28 +374,17 @@ Dependencies
 <li><p>xarray</p></li>
 <li><p>rasterio</p></li>
 </ul>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Google Earth Engine Setup
-————————–</p>
 </section>
-</section>
-<section id="authenticate-with-google-earth-engine">
-<h1>Authenticate with Google Earth Engine:<a class="headerlink" href="#authenticate-with-google-earth-engine" title="Link to this heading">#</a></h1>
 <section id="setting-up-google-earth-engine">
 <h2>Setting up Google Earth Engine<a class="headerlink" href="#setting-up-google-earth-engine" title="Link to this heading">#</a></h2>
-<p>Before using gee_acolite, you need to authenticate with Google Earth Engine:
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
+<p>Before using gee_acolite, you need to authenticate with Google Earth Engine:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
 <span class="n">ee</span><span class="o">.</span><span class="n">Authenticate</span><span class="p">()</span>
 <span class="n">ee</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>For more information, visit the <a class="reference external" href="https://developers.google.com/earth-engine/guides/python_install">Google Earth Engine documentation</a>.</p>
 </section>
-</section>
-<section id="head">
-<h1>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<a class="headerlink" href="#head" title="Link to this heading">#</a></h1>
-<p>For more information, visit the <a class="reference external" href="https://developers.google.com/earth-engine/guides/python_install">Google Earth Engine documentation</a>.
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1148d8274bf86e59c80f80279b75d4845ad74c0</p>
 </section>
 
 
@@ -476,23 +432,12 @@ Google Earth Engine Setup
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Installation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-github">Install from GitHub</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#main-dependencies-installed-automatically">Main dependencies installed automatically:</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-pypi">Install from PyPI</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#authenticate-with-google-earth-engine">Authenticate with Google Earth Engine:</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-google-earth-engine">Setting up Google Earth Engine</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#head">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</a></li>
-</ul>
-
   </nav></div>
 
 </div></div>
