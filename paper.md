@@ -35,14 +35,7 @@ Google Earth Engine (GEE) [@gorelick2017] is a cloud-based platform that provide
 
 # Statement of need
 
-Researchers studying coastal and inland waters require accurate atmospheric correction to derive water quality parameters such as suspended particulate matter (SPM), chlorophyll-a concentration, and turbidity. Current workflows typically involve:
-
-1. Manually downloading Sentinel-2 Level-1C scenes
-2. Processing each scene individually with ACOLITE
-3. Managing large volumes of intermediate files
-4. Combining results for spatial or temporal analysis
-
-This approach is time-consuming, storage-intensive, and challenging to scale for regional or global studies. While GEE provides Level-2A surface reflectance products, these are generated using the Sen2Cor algorithm [@louis2016], which is designed for land applications and may not adequately account for adjacency effects, sun glint, and other factors critical for accurate aquatic remote sensing [@warren2019].
+Researchers studying coastal and inland waters require accurate atmospheric correction to derive water quality parameters. Current workflows involve manually downloading scenes, processing individually with ACOLITE, managing large intermediate files, and combining results—an approach that is time-consuming and challenging to scale. While GEE provides Level-2A products via Sen2Cor [@louis2016], these are optimized for land applications and may not adequately account for adjacency effects, sun glint, and other factors critical for aquatic remote sensing [@warren2019].
 
 `GEE ACOLITE` addresses these limitations by:
 
@@ -71,11 +64,10 @@ The package maintains compatibility with ACOLITE's configuration system while ad
 Key features of `GEE ACOLITE` include:
 
 - **Multiple dark spectrum methods**: Darkest pixel, percentile-based, and linear regression intercept approaches
-- **Flexible model selection**: Three criteria for selecting optimal atmospheric model (minimum RMSD, minimum delta-tau, coefficient of variation)
-- **Water quality parameters**: Built-in algorithms for SPM [@nechad2010], turbidity, chlorophyll-a [@oreilly1998; @oreilly2000], and pseudo-satellite derived bathymetry
-- **Cloud masking**: Integration with Sentinel-2 Cloud Probability dataset [@sentinelhub]
+- **Flexible model selection**: Three criteria for optimal atmospheric model selection
+- **Water quality parameters**: Built-in algorithms for SPM [@nechad2010], turbidity, chlorophyll-a [@oreilly1998; @oreilly2000], and bathymetry
+- **Cloud masking**: Integration with Sentinel-2 Cloud Probability [@sentinelhub]
 - **Batch processing**: Efficient processing of image collections
-- **Configurable processing**: Comprehensive settings for atmospheric parameters, correction methods, and output products
 
 # Example usage
 
@@ -111,7 +103,7 @@ The package has been validated against standalone ACOLITE processing for Sentine
 
 The results demonstrate similar spectral responses across all tested scenes, with GEE ACOLITE retrievals closely matching the standalone ACOLITE processing. Both ACOLITE implementations show consistent retrieval of water-leaving reflectance across the visible and near-infrared spectrum, with typical values ranging from 0.005 to 0.020 sr$^{-1}$. The agreement between GEE ACOLITE and local ACOLITE processing validates the correct implementation of the dark spectrum fitting algorithm within the Google Earth Engine framework. Minor differences between Sen2Cor and ACOLITE-based retrievals are expected due to fundamental differences in atmospheric correction approaches, with ACOLITE's dark spectrum fitting method being specifically optimized for aquatic applications.
 
-![Comparison of mean remote sensing reflectance (Rrs) spectra from eight Sentinel-2 scenes over the Ria Formosa (Portugal) using three atmospheric correction methods: GEE Sen2Cor L2A, Local ACOLITE-Fixed, and GEE + ACOLITE-Fixed. The similar spectral responses validate the correct implementation of ACOLITE's dark spectrum fitting algorithm within Google Earth Engine.\label{fig:spectral_comparison}](figs/spectral_comparison.png)
+![Comparison of mean remote sensing reflectance (Rrs) spectra from eight Sentinel-2 scenes over the Ria Formosa (Portugal) using three atmospheric correction methods: GEE Sen2Cor L2A, Local ACOLITE-Fixed, and GEE + ACOLITE-Fixed.\label{fig:spectral_comparison}](figs/spectral_comparison.png)
 
 # Availability
 
