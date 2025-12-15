@@ -6,7 +6,7 @@ Google Earth Engine workflows with Sentinel-2 imagery.
 
 Main Features:
 - Dark spectrum fitting atmospheric correction
-- AOT estimation (fixed and tiled geometry)
+- AOT estimation (fixed geometry)
 - Water quality parameter computation
 - Cloud masking integration
 

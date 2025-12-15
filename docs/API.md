@@ -267,7 +267,7 @@ print(BAND_BY_SCALE)
 settings = {
     # Correction method
     'aerosol_correction': 'dark_spectrum',
-    'dsf_aot_estimate': 'fixed',  # or 'tiled'
+    'dsf_aot_estimate': 'fixed',
     
     # Dark spectrum options
     'dsf_spectrum_option': 'darkest',  # 'darkest', 'percentile', 'intercept'
@@ -321,10 +321,7 @@ pip install -e .
 
 ### `ee.ee_exception.EEException: User memory limit exceeded`
 
-**Solution:** Reduce processing area or use tiled processing:
-```python
-settings = {'dsf_aot_estimate': 'tiled'}
-```
+**Solution:** Reduce processing area size or filter to fewer images.
 
 ### Negative reflectance values
 

@@ -7,7 +7,7 @@ ACOLITE atmospheric correction implementation for Google Earth Engine (GEE).
 This package provides atmospheric correction for Sentinel-2 imagery using the ACOLITE dark spectrum fitting method, optimized for Google Earth Engine workflows. It includes:
 
 - **Dark Spectrum Fitting**: Multiple methods (darkest, percentile, intercept)
-- **AOT Estimation**: Fixed and tiled geometry modes
+- **AOT Estimation**: Fixed geometry mode
 - **Atmospheric Correction**: Full LUT-based correction
 - **Water Quality Parameters**: SPM, turbidity, chlorophyll, bathymetry indices
 - **Cloud Masking**: Integration with Sentinel-2 Cloud Probability
@@ -69,7 +69,6 @@ print(f"Processed {corrected_images.size().getInfo()} images")
 ### Atmospheric Correction Methods
 
 - **Fixed Geometry**: Single AOT estimation for entire image
-- **Tiled Geometry**: Spatial AOT variation with interpolation
 - **Dark Spectrum Options**:
   - `darkest`: Use minimum values
   - `percentile`: Use Nth percentile
