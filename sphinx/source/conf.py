@@ -8,8 +8,8 @@ sys.path.insert(0, os.path.abspath('../..'))
 project = 'gee_acolite'
 copyright = '2025, Sergio Heredia'
 author = 'Sergio Heredia'
-release = '1.0.0'
-version = '1.0.0'
+release = '1.0.1'
+version = '1.0.1'
 
 # Sphinx extensions
 extensions = [

@@ -27,7 +27,7 @@ bibliography: paper.bib
 
 # Summary
 
-Atmospheric correction is a critical preprocessing step in aquatic remote sensing, required to retrieve accurate water-leaving reflectance from satellite imagery. The ACOLITE (Atmospheric Correction for OLI 'lite') software [@vanhellemont2019; @vanhellemont2021] has become a widely-used tool for atmospheric correction of aquatic imagery, particularly for its dark spectrum fitting (DSF) algorithm. However, ACOLITE operates on individual downloaded scenes, limiting its scalability for large-scale or time-series analyses.
+Atmospheric correction is a critical preprocessing step in aquatic remote sensing, required to retrieve accurate water-leaving reflectance from satellite imagery. The ACOLITE (Atmospheric Correction for OLI 'lite') software [@vanhellemont2019; @vanhellemont2021] has become a widely-used tool for atmospheric correction of aquatic imagery, particularly for its dark spectrum fitting (DSF) algorithm. However, ACOLITE operates on downloaded scenes, limiting its scalability for large-scale or time-series analyses.
 
 Google Earth Engine (GEE) [@gorelick2017] is a cloud-based platform that provides access to petabytes of satellite imagery and enables planetary-scale geospatial analysis. While GEE offers built-in atmospheric correction products for Sentinel-2 (Level-2A), these are optimized for terrestrial applications and often underperform in coastal and inland water environments where adjacency effects and complex atmospheric conditions are prevalent.
 
@@ -35,11 +35,11 @@ Google Earth Engine (GEE) [@gorelick2017] is a cloud-based platform that provide
 
 # Statement of need
 
-Researchers studying coastal and inland waters require accurate atmospheric correction to derive water quality parameters. Current workflows involve manually downloading scenes, processing individually with ACOLITE, managing large intermediate files, and combining results—an approach that is time-consuming and challenging to scale. While GEE provides Level-2A products via Sen2Cor [@louis2016], these are optimized for land applications and may not adequately account for adjacency effects, sun glint, and other factors critical for aquatic remote sensing [@warren2019].
+Researchers studying coastal and inland waters require accurate atmospheric correction to derive water quality parameters. Current workflows involve manually downloading scenes, processing with ACOLITE, managing large intermediate files, and combining results, that is time-consuming and challenging to scale. While GEE provides Level-2A products via Sen2Cor [@louis2016], these are optimized for land applications and may not adequately account for adjacency effects, sun glint, and other factors critical for aquatic remote sensing [@warren2019].
 
 `GEE ACOLITE` addresses these limitations by:
 
-- **Implementing DSF correction in GEE**: Enabling ACOLITE's proven dark spectrum fitting algorithm within GEE's cloud infrastructure 
+- **Implementing DSF correction in GEE**: Enabling ACOLITE's dark spectrum fitting algorithm within GEE's cloud infrastructure 
 - **Eliminating data download requirements**: Processing occurs entirely within GEE, accessing imagery directly from the archive
 - **Enabling scalable analysis**: Users can process entire image collections across large spatial and temporal extents
 - **Providing water quality products**: Direct computation of SPM, turbidity, chlorophyll-a, and bathymetric indices
@@ -119,5 +119,8 @@ The source code for `GEE ACOLITE` is available on GitHub at https://github.com/A
 # Acknowledgements
 
 This library is based on an initial attempt by Dr. Vanhellemont to connect ACOLITE with Google Earth Engine, which served as inspiration and foundation for the current implementation. We acknowledge the Google Earth Engine team for providing the cloud computing platform.
+
+# Funding
+This project has been financially supported by the Grant CNS2023-143630 funded by MICIU/AEI/10.13039/501100011033 and by European Union Next Generation EU/PRTR.
 
 # References
