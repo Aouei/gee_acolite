@@ -1,0 +1,1226 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gee_acolite.correction &#8212; gee_acolite 1.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=423d4ce3"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gee_acolite/correction';</script>
+    <link rel="canonical" href="https://aouei.github.io/gee_acolite/_modules/gee_acolite/correction.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">gee_acolite 1.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide/installation.html">Installation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../modules/correction.html">Correction Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/water_quality.html">Water Quality Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/bathymetry.html">Bathymetry Module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../modules/utils.html">Utils Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/utils.l1_convert.html">L1 Convert Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/utils.masks.html">Masks Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/utils.search.html">Search Module</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../examples/basic_usage.html">Basic Usage Example</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for gee_acolite.correction</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Atmospheric correction using ACOLITE Dark Spectrum Fitting.</span>
+
+<span class="sd">This module implements the ACOLITE atmospheric correction method adapted for</span>
+<span class="sd">Google Earth Engine workflows with Sentinel-2 imagery. It provides dark spectrum</span>
+<span class="sd">fitting for aerosol optical thickness (AOT) estimation and atmospheric correction.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.utils.l1_convert</span><span class="w"> </span><span class="kn">import</span> <span class="n">l1_to_rrs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.utils.masks</span><span class="w"> </span><span class="kn">import</span> <span class="n">mask_negative_reflectance</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.water_quality</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_water_bands</span>
+
+
+<div class="viewcode-block" id="ACOLITE">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ACOLITE</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ACOLITE atmospheric correction for Google Earth Engine.</span>
+<span class="sd">    </span>
+<span class="sd">    This class implements the ACOLITE Dark Spectrum Fitting (DSF) atmospheric</span>
+<span class="sd">    correction method optimized for Google Earth Engine with Sentinel-2 imagery.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    acolite : ModuleType</span>
+<span class="sd">        ACOLITE module imported from the ACOLITE package.</span>
+<span class="sd">    settings : str or dict</span>
+<span class="sd">        Path to settings file or dictionary with processing settings.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    acolite : ModuleType</span>
+<span class="sd">        Reference to ACOLITE module.</span>
+<span class="sd">    settings : dict</span>
+<span class="sd">        Parsed processing settings.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import acolite as ac</span>
+<span class="sd">    &gt;&gt;&gt; from gee_acolite import ACOLITE</span>
+<span class="sd">    &gt;&gt;&gt; ac_gee = ACOLITE(ac, &#39;config/settings.txt&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; corrected_images, settings = ac_gee.correct(image_collection)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acolite</span><span class="p">:</span> <span class="n">ModuleType</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span> <span class="o">=</span> <span class="n">acolite</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__load_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__load_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load and parse ACOLITE settings.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        settings : str or dict</span>
+<span class="sd">            Path to settings file or dictionary with settings.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Parsed settings dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># return self.acolite.acolite.settings.load(settings)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;S2A_MSI&#39;</span><span class="p">,</span> <span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="ACOLITE.correct">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.correct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">correct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply atmospheric correction to image collection.</span>
+<span class="sd">        </span>
+<span class="sd">        Main entry point for atmospheric correction processing. Converts L1C</span>
+<span class="sd">        top-of-atmosphere (TOA) reflectance to surface reflectance using the</span>
+<span class="sd">        ACOLITE Dark Spectrum Fitting method.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        images : ee.ImageCollection</span>
+<span class="sd">            Collection of Sentinel-2 L1C images.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        corrected_images : ee.ImageCollection</span>
+<span class="sd">            Atmospherically corrected images with surface reflectance bands.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings used for correction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">l1_to_rrs</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s2_target_res&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1_to_l2</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">toList</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">size</span><span class="p">()),</span> <span class="n">images</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">images</span><span class="p">,</span> <span class="n">settings</span></div>
+
+    
+
+<div class="viewcode-block" id="ACOLITE.l1_to_l2">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.l1_to_l2">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">l1_to_l2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">List</span><span class="p">,</span> <span class="n">size</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">settings</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert L1 TOA reflectance to L2 surface reflectance.</span>
+<span class="sd">        </span>
+<span class="sd">        Processes each image in the collection through atmospheric correction</span>
+<span class="sd">        and optionally applies residual glint correction and water quality</span>
+<span class="sd">        parameter computation.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        images : ee.List</span>
+<span class="sd">            List of ee.Image objects (L1C TOA reflectance).</span>
+<span class="sd">        size : int</span>
+<span class="sd">            Number of images in the list.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings including correction parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        corrected_images : ee.ImageCollection</span>
+<span class="sd">            Collection of atmospherically corrected images.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">corrected_images</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;aerosol_correction&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;dark_spectrum&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+                <span class="n">rhos</span><span class="p">,</span> <span class="n">bands</span><span class="p">,</span> <span class="n">glint_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dask_spectrum_fitting</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">index</span><span class="p">)),</span> <span class="n">settings</span><span class="p">)</span>
+        
+                <span class="k">if</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_residual_glint_correction&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_residual_glint_correction_method&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;alternative&#39;</span><span class="p">:</span>
+                    <span class="n">rhos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deglint_alternative</span><span class="p">(</span><span class="n">rhos</span><span class="p">,</span> 
+                                                    <span class="n">bands</span><span class="p">,</span> 
+                                                    <span class="n">glint_params</span><span class="p">,</span>
+                                                    <span class="n">glint_max</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;glint_mask_rhos_threshold&#39;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)))</span>
+
+                <span class="n">rhos</span> <span class="o">=</span> <span class="n">rhos</span><span class="o">.</span><span class="n">copyProperties</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">index</span><span class="p">)))</span>
+                <span class="n">rhos</span> <span class="o">=</span> <span class="n">rhos</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;system:time_start&#39;</span><span class="p">,</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">index</span><span class="p">))</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;system:time_start&#39;</span><span class="p">))</span>
+
+                <span class="n">corrected_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rhos</span><span class="p">)</span>
+            
+        <span class="n">corrected_images</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="o">.</span><span class="n">fromImages</span><span class="p">(</span><span class="n">corrected_images</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;l2w_parameters&#39;</span><span class="p">]:</span>
+            <span class="n">corrected_images</span> <span class="o">=</span> <span class="n">corrected_images</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">compute_water_bands</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">))</span>
+            
+        <span class="k">return</span> <span class="n">corrected_images</span><span class="p">,</span> <span class="n">settings</span></div>
+
+    
+<div class="viewcode-block" id="ACOLITE.dask_spectrum_fitting">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.dask_spectrum_fitting">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dask_spectrum_fitting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform dark spectrum fitting atmospheric correction.</span>
+<span class="sd">        </span>
+<span class="sd">        Main workflow for dark spectrum fitting (DSF). Retrieves ancillary data,</span>
+<span class="sd">        selects optimal atmospheric model (LUT), estimates AOT, and computes</span>
+<span class="sd">        surface reflectance.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Input image with TOA reflectance.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        rhos : ee.Image</span>
+<span class="sd">            Surface reflectance image.</span>
+<span class="sd">        bands : list of str</span>
+<span class="sd">            List of band names processed.</span>
+<span class="sd">        glint_ave : dict</span>
+<span class="sd">            Glint correction parameters per band.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ancillary_data&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ancillary_data</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">default</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">key</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">_default&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;uoz&#39;</span><span class="p">,</span> <span class="s1">&#39;uwv&#39;</span><span class="p">,</span> <span class="s1">&#39;wind&#39;</span><span class="p">,</span> <span class="s1">&#39;pressure&#39;</span><span class="p">]]:</span>
+                <span class="n">settings</span><span class="p">[</span><span class="n">data</span><span class="p">]</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="c1"># Check if fixed AOT and LUT are provided</span>
+        <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dsf_fixed_aot&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dsf_fixed_lut&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Use fixed AOT and LUT (bypass dark spectrum fitting)</span>
+            <span class="n">am</span><span class="p">,</span> <span class="n">glint_ave</span><span class="p">,</span> <span class="n">bands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_correction_with_fixed_aot</span><span class="p">(</span>
+                <span class="n">image</span><span class="p">,</span> 
+                <span class="nb">float</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_fixed_aot&#39;</span><span class="p">]),</span> 
+                <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_fixed_lut&#39;</span><span class="p">],</span> 
+                <span class="n">settings</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Normal dark spectrum fitting workflow</span>
+            <span class="n">am</span><span class="p">,</span> <span class="n">glint_ave</span><span class="p">,</span> <span class="n">bands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_lut</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+        
+        <span class="n">rhos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_rhos</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">am</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rhos</span><span class="p">,</span> <span class="n">bands</span><span class="p">,</span> <span class="n">glint_ave</span></div>
+
+    
+<div class="viewcode-block" id="ACOLITE.estimate_aot_per_lut">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.estimate_aot_per_lut">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">estimate_aot_per_lut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pdark</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">lutd</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">rsrd</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">ttg</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> 
+                             <span class="n">geometry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> 
+                             <span class="n">aot_skip_bands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Estimate aerosol optical thickness (AOT) for each LUT model.</span>
+<span class="sd">        </span>
+<span class="sd">        Uses dark spectrum fitting to estimate AOT at 550nm for each atmospheric</span>
+<span class="sd">        model in the LUT dictionary. The method finds AOT values that best match</span>
+<span class="sd">        observed dark spectrum reflectance with modeled path reflectance.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pdark : dict</span>
+<span class="sd">            Dark spectrum values per band (e.g., {&#39;B1&#39;: 0.05, &#39;B2&#39;: 0.04, ...}).</span>
+<span class="sd">        lutd : dict</span>
+<span class="sd">            Look-up table dictionary with atmospheric models.</span>
+<span class="sd">        rsrd : dict</span>
+<span class="sd">            Relative spectral response dictionary for the sensor.</span>
+<span class="sd">        ttg : dict</span>
+<span class="sd">            Gas transmittance values per band.</span>
+<span class="sd">        geometry : dict</span>
+<span class="sd">            Viewing geometry with keys &#39;raa&#39;, &#39;vza&#39;, &#39;sza&#39;, &#39;pressure&#39;.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings including &#39;dsf_nbands&#39;.</span>
+<span class="sd">        aot_skip_bands : list of str, optional</span>
+<span class="sd">            Band numbers to skip in AOT estimation (default: [&#39;9&#39;, &#39;10&#39;, &#39;11&#39;, &#39;12&#39;]).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        results : dict</span>
+<span class="sd">            Dictionary with AOT estimation results per LUT model.</span>
+<span class="sd">            Each entry contains: &#39;taua&#39;, &#39;taua_std&#39;, &#39;taua_cv&#39;, &#39;taua_bands&#39;,</span>
+<span class="sd">            &#39;taua_arr&#39;, &#39;rhot_arr&#39;, &#39;bidx&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">nbands</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_nbands&#39;</span><span class="p">]</span>
+        
+        <span class="n">raa</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;raa&#39;</span><span class="p">]</span>
+        <span class="n">vza</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;vza&#39;</span><span class="p">]</span>
+        <span class="n">sza</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;sza&#39;</span><span class="p">]</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">lut</span> <span class="ow">in</span> <span class="n">lutd</span><span class="p">:</span>
+            <span class="n">taua_arr</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">rhot_arr</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">taua_bands</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="c1"># Run through bands to estimate AOT</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr_bands&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">aot_skip_bands</span><span class="p">:</span> 
+                    <span class="k">continue</span>
+
+                <span class="c1"># Get path reflectance from LUT for this band</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;rgi&#39;</span><span class="p">][</span><span class="n">b</span><span class="p">]((</span><span class="n">pressure</span><span class="p">,</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;ipd&#39;</span><span class="p">][</span><span class="s1">&#39;romix&#39;</span><span class="p">],</span> 
+                                          <span class="n">raa</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> <span class="n">sza</span><span class="p">,</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;meta&#39;</span><span class="p">][</span><span class="s1">&#39;tau&#39;</span><span class="p">]))</span>
+
+                <span class="c1"># Dark spectrum value for this band</span>
+                <span class="n">rhot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">pdark</span><span class="p">[</span><span class="s1">&#39;B</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">)]])</span>
+                
+                <span class="c1"># Gas correction</span>
+                <span class="n">rhot</span> <span class="o">/=</span> <span class="n">ttg</span><span class="p">[</span><span class="s1">&#39;tt_gas&#39;</span><span class="p">][</span><span class="n">b</span><span class="p">]</span>
+                
+                <span class="c1"># Interpolate AOT from observed rhot</span>
+                <span class="n">taua</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">rhot</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;meta&#39;</span><span class="p">][</span><span class="s1">&#39;tau&#39;</span><span class="p">])</span>
+                
+                <span class="k">if</span> <span class="n">taua_arr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">rhot_arr</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">rhot</span>
+                    <span class="n">taua_arr</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">taua</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">rhot_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">rhot_arr</span><span class="p">,</span> <span class="n">rhot</span><span class="p">))</span>
+                    <span class="n">taua_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">taua_arr</span><span class="p">,</span> <span class="n">taua</span><span class="p">))</span>
+
+                <span class="n">taua_bands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+            <span class="c1"># Aggregate AOT from darkest bands</span>
+            <span class="n">bidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">taua_arr</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">taua</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">taua_arr</span><span class="p">[</span><span class="n">bidx</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="n">nbands</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">taua_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">taua_arr</span><span class="p">[</span><span class="n">bidx</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="n">nbands</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">taua_cv</span> <span class="o">=</span> <span class="n">taua_std</span> <span class="o">/</span> <span class="n">taua</span>
+
+            <span class="c1"># Store results for this LUT</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;taua_bands&#39;</span><span class="p">:</span> <span class="n">taua_bands</span><span class="p">,</span> 
+                <span class="s1">&#39;taua_arr&#39;</span><span class="p">:</span> <span class="n">taua_arr</span><span class="p">,</span> 
+                <span class="s1">&#39;rhot_arr&#39;</span><span class="p">:</span> <span class="n">rhot_arr</span><span class="p">,</span>
+                <span class="s1">&#39;taua&#39;</span><span class="p">:</span> <span class="n">taua</span><span class="p">,</span> 
+                <span class="s1">&#39;taua_std&#39;</span><span class="p">:</span> <span class="n">taua_std</span><span class="p">,</span> 
+                <span class="s1">&#39;taua_cv&#39;</span><span class="p">:</span> <span class="n">taua_cv</span><span class="p">,</span>
+                <span class="s1">&#39;bidx&#39;</span><span class="p">:</span> <span class="n">bidx</span>
+            <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">results</span></div>
+
+    
+<div class="viewcode-block" id="ACOLITE.select_best_model">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.select_best_model">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_best_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">lutd</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">geometry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> 
+                         <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select the best atmospheric model from AOT estimation results.</span>
+<span class="sd">        </span>
+<span class="sd">        Evaluates multiple atmospheric models and selects the one that best</span>
+<span class="sd">        fits the observed data based on the specified selection criterion</span>
+<span class="sd">        (e.g., minimum RMSD, minimum delta tau, or coefficient of variation).</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        results : dict</span>
+<span class="sd">            AOT estimation results per LUT from estimate_aot_per_lut.</span>
+<span class="sd">        lutd : dict</span>
+<span class="sd">            Look-up table dictionary with atmospheric models.</span>
+<span class="sd">        geometry : dict</span>
+<span class="sd">            Viewing geometry with keys &#39;raa&#39;, &#39;vza&#39;, &#39;sza&#39;, &#39;pressure&#39;.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings including &#39;dsf_model_selection&#39; and &#39;dsf_nbands_fit&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sel_lut : str</span>
+<span class="sd">            Selected LUT name (e.g., &#39;ACOLITE-LUT-202110-MOD1&#39;).</span>
+<span class="sd">        sel_aot : float</span>
+<span class="sd">            Selected AOT value at 550nm.</span>
+<span class="sd">        sel_par : str</span>
+<span class="sd">            Selection parameter name used (&#39;rmsd&#39;, &#39;dtau&#39;, or &#39;taua_cv&#39;).</span>
+<span class="sd">        sel_val : float</span>
+<span class="sd">            Value of the selection parameter for the chosen model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dsf_model_selection</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dsf_model_selection&#39;</span><span class="p">,</span> <span class="s1">&#39;min_drmsd&#39;</span><span class="p">)</span>
+        <span class="n">dsf_nbands_fit</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dsf_nbands_fit&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+        <span class="n">raa</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;raa&#39;</span><span class="p">]</span>
+        <span class="n">vza</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;vza&#39;</span><span class="p">]</span>
+        <span class="n">sza</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;sza&#39;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">dsf_model_selection</span> <span class="o">==</span> <span class="s1">&#39;min_drmsd&#39;</span><span class="p">:</span>
+            <span class="c1"># RMSD validation: compare predictions vs observations</span>
+            <span class="k">for</span> <span class="n">lut</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">fit_band_indices</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;bidx&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">dsf_nbands_fit</span><span class="p">]</span>
+                
+                <span class="n">rmsd_values</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">fit_idx</span> <span class="ow">in</span> <span class="n">fit_band_indices</span><span class="p">:</span>
+                    <span class="n">band</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;taua_bands&#39;</span><span class="p">][</span><span class="n">fit_idx</span><span class="p">]</span>
+                    
+                    <span class="c1"># Observed rhot (gas corrected)</span>
+                    <span class="n">rhot_obs</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;rhot_arr&#39;</span><span class="p">][</span><span class="n">fit_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                    
+                    <span class="c1"># Modeled rhot using estimated AOT</span>
+                    <span class="n">rhot_model</span> <span class="o">=</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;rgi&#39;</span><span class="p">][</span><span class="n">band</span><span class="p">]((</span><span class="n">pressure</span><span class="p">,</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;ipd&#39;</span><span class="p">][</span><span class="s1">&#39;romix&#39;</span><span class="p">],</span> 
+                                                         <span class="n">raa</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> <span class="n">sza</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;taua&#39;</span><span class="p">]))</span>
+                    
+                    <span class="c1"># Squared difference</span>
+                    <span class="n">rmsd_values</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">rhot_obs</span> <span class="o">-</span> <span class="n">rhot_model</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+                
+                <span class="c1"># Compute RMSD</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;rmsd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rmsd_values</span><span class="p">))</span>
+            
+            <span class="n">sel_par</span> <span class="o">=</span> <span class="s1">&#39;rmsd&#39;</span>
+            
+        <span class="k">elif</span> <span class="n">dsf_model_selection</span> <span class="o">==</span> <span class="s1">&#39;min_dtau&#39;</span><span class="p">:</span>
+            <span class="c1"># Minimum delta tau between two darkest bands</span>
+            <span class="k">for</span> <span class="n">lut</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;taua_arr&#39;</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">dtau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;taua_arr&#39;</span><span class="p">][</span><span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;bidx&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> 
+                                  <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;taua_arr&#39;</span><span class="p">][</span><span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;bidx&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;dtau&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtau</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;dtau&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            
+            <span class="n">sel_par</span> <span class="o">=</span> <span class="s1">&#39;dtau&#39;</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Fallback: coefficient of variation</span>
+            <span class="n">sel_par</span> <span class="o">=</span> <span class="s1">&#39;taua_cv&#39;</span>
+        
+        <span class="c1"># Select LUT with minimum selection parameter</span>
+        <span class="n">sel_lut</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">sel_aot</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">sel_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+        <span class="k">for</span> <span class="n">lut</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="n">sel_par</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">sel_val</span><span class="p">:</span>
+                <span class="n">sel_val</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="n">sel_par</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
+                <span class="n">sel_aot</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">lut</span><span class="p">][</span><span class="s1">&#39;taua&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
+                <span class="n">sel_lut</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lut</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">sel_lut</span><span class="p">,</span> <span class="n">sel_aot</span><span class="p">,</span> <span class="n">sel_par</span><span class="p">,</span> <span class="n">sel_val</span></div>
+
+    
+<div class="viewcode-block" id="ACOLITE.select_lut">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.select_lut">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_lut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">aot_skip_bands</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select optimal LUT and compute atmospheric correction parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Main orchestration function for the dark spectrum fitting workflow:</span>
+<span class="sd">        </span>
+<span class="sd">        1. Extracts dark spectrum from the image</span>
+<span class="sd">        2. Estimates AOT for each atmospheric model</span>
+<span class="sd">        3. Selects the best model based on validation criterion</span>
+<span class="sd">        4. Computes atmospheric correction parameters (path reflectance, transmittance, spherical albedo, gas transmittance)</span>
+<span class="sd">        5. Computes glint correction parameters</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Input image with TOA reflectance and geometry metadata.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings.</span>
+<span class="sd">        aot_skip_bands : list of str, optional</span>
+<span class="sd">            Band numbers to skip in AOT estimation (default: [&#39;9&#39;, &#39;10&#39;, &#39;11&#39;, &#39;12&#39;]).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        am : dict</span>
+<span class="sd">            Atmospheric correction parameters with keys &#39;romix&#39;, &#39;dutott&#39;, </span>
+<span class="sd">            &#39;astot&#39;, &#39;tg&#39;. Each contains per-band values.</span>
+<span class="sd">        glint_ave : dict</span>
+<span class="sd">            Glint correction parameters per band (surface reflectance ratios).</span>
+<span class="sd">        bands : list of str</span>
+<span class="sd">            List of band names processed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract dark spectrum</span>
+        <span class="n">pdark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_pdark</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+
+        <span class="c1"># Get geometry and atmospheric parameters</span>
+        <span class="n">raa</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;raa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+        <span class="n">vza</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vza&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+        <span class="n">sza</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sza&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+
+        <span class="n">geometry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;raa&#39;</span><span class="p">:</span> <span class="n">raa</span><span class="p">,</span>
+            <span class="s1">&#39;vza&#39;</span><span class="p">:</span> <span class="n">vza</span><span class="p">,</span>
+            <span class="s1">&#39;sza&#39;</span><span class="p">:</span> <span class="n">sza</span><span class="p">,</span>
+            <span class="s1">&#39;pressure&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Get sensor and load LUTs</span>
+        <span class="n">sensor</span> <span class="o">=</span> <span class="s1">&#39;S2A_MSI&#39;</span> <span class="k">if</span> <span class="s1">&#39;S2A&#39;</span> <span class="ow">in</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PRODUCT_ID&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;S2B_MSI&#39;</span>
+        
+        <span class="n">lutd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">aerlut</span><span class="o">.</span><span class="n">import_luts</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)</span>
+        <span class="n">rsrd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">rsr_dict</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)[</span><span class="n">sensor</span><span class="p">]</span>
+        <span class="n">ttg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">gas_transmittance</span><span class="p">(</span><span class="n">sza</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> 
+                                                <span class="n">pressure</span><span class="o">=</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">],</span> 
+                                                <span class="n">uoz</span><span class="o">=</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;uoz&#39;</span><span class="p">],</span> 
+                                                <span class="n">uwv</span><span class="o">=</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;uwv&#39;</span><span class="p">],</span> 
+                                                <span class="n">rsr</span><span class="o">=</span><span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr&#39;</span><span class="p">])</span>
+        <span class="n">luti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">aerlut</span><span class="o">.</span><span class="n">import_rsky_luts</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> 
+                                                     <span class="n">lutbase</span><span class="o">=</span><span class="s1">&#39;ACOLITE-RSKY-202102-82W&#39;</span><span class="p">,</span> 
+                                                     <span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)</span>
+
+        <span class="c1"># Step 1: Estimate AOT for each LUT model</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimate_aot_per_lut</span><span class="p">(</span><span class="n">pdark</span><span class="p">,</span> <span class="n">lutd</span><span class="p">,</span> <span class="n">rsrd</span><span class="p">,</span> <span class="n">ttg</span><span class="p">,</span> <span class="n">geometry</span><span class="p">,</span> 
+                                           <span class="n">settings</span><span class="p">,</span> <span class="n">aot_skip_bands</span><span class="p">)</span>
+        
+        <span class="c1"># Step 2: Select best model</span>
+        <span class="n">sel_lut</span><span class="p">,</span> <span class="n">sel_aot</span><span class="p">,</span> <span class="n">sel_par</span><span class="p">,</span> <span class="n">sel_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_best_model</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">lutd</span><span class="p">,</span> 
+                                                                     <span class="n">geometry</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Selected model </span><span class="si">{</span><span class="n">sel_lut</span><span class="si">}</span><span class="s1">: AOT=</span><span class="si">{</span><span class="n">sel_aot</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">sel_par</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">sel_val</span><span class="si">:</span><span class="s1">.4e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Geometry: SZA=</span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;sza&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">°, VZA=</span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;vza&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">°, RAA=</span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;raa&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">°&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Pressure: </span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;pressure&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> hPa&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Step 3: Compute atmospheric correction parameters for selected model</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">lutd</span><span class="p">[</span><span class="n">sel_lut</span><span class="p">][</span><span class="s1">&#39;ipd&#39;</span><span class="p">]:</span>
+            <span class="n">am</span><span class="p">[</span><span class="n">par</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="n">lutd</span><span class="p">[</span><span class="n">sel_lut</span><span class="p">][</span><span class="s1">&#39;rgi&#39;</span><span class="p">][</span><span class="n">b</span><span class="p">]((</span><span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">],</span> 
+                                                   <span class="n">lutd</span><span class="p">[</span><span class="n">sel_lut</span><span class="p">][</span><span class="s1">&#39;ipd&#39;</span><span class="p">][</span><span class="n">par</span><span class="p">],</span> 
+                                                   <span class="n">raa</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> <span class="n">sza</span><span class="p">,</span> <span class="n">sel_aot</span><span class="p">))</span>
+                        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr_bands&#39;</span><span class="p">]}</span>
+        <span class="n">am</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;tg&#39;</span><span class="p">:</span> <span class="n">ttg</span><span class="p">[</span><span class="s1">&#39;tt_gas&#39;</span><span class="p">]})</span>
+
+        <span class="c1"># Step 4: Compute glint correction parameters</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sel_lut</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">glint_wind</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="n">glint_bands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">]</span>
+
+        <span class="n">glint_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="n">luti</span><span class="p">[</span><span class="n">model</span><span class="p">][</span><span class="s1">&#39;rgi&#39;</span><span class="p">][</span><span class="n">b</span><span class="p">]((</span><span class="n">raa</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> <span class="n">sza</span><span class="p">,</span> <span class="n">glint_wind</span><span class="p">,</span> <span class="n">sel_aot</span><span class="p">))</span> 
+                     <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr_bands&#39;</span><span class="p">]}</span>
+        <span class="n">glint_ave</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="n">glint_dict</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">/</span> <span class="p">((</span><span class="n">glint_dict</span><span class="p">[</span><span class="n">glint_bands</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> 
+                                         <span class="n">glint_dict</span><span class="p">[</span><span class="n">glint_bands</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> 
+                    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">glint_dict</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">am</span><span class="p">,</span> <span class="n">glint_ave</span><span class="p">,</span> <span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr_bands&#39;</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="ACOLITE.compute_correction_with_fixed_aot">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.compute_correction_with_fixed_aot">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_correction_with_fixed_aot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">aot</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">lut_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                                         <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute atmospheric correction parameters using fixed AOT and LUT.</span>
+<span class="sd">        </span>
+<span class="sd">        Alternative to dark spectrum fitting. Directly computes atmospheric</span>
+<span class="sd">        correction parameters for a user-specified AOT value and atmospheric</span>
+<span class="sd">        model. Useful for sensitivity analysis or when AOT is known a priori.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Input image with TOA reflectance and geometry metadata.</span>
+<span class="sd">        aot : float</span>
+<span class="sd">            Fixed aerosol optical thickness at 550nm.</span>
+<span class="sd">        lut_name : str</span>
+<span class="sd">            LUT name (e.g., &#39;ACOLITE-LUT-202110-MOD2&#39;).</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings including pressure, ozone, water vapor.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        am : dict</span>
+<span class="sd">            Atmospheric correction parameters with keys &#39;romix&#39;, &#39;dutott&#39;,</span>
+<span class="sd">            &#39;astot&#39;, &#39;tg&#39;. Each contains per-band values.</span>
+<span class="sd">        glint_ave : dict</span>
+<span class="sd">            Glint correction parameters per band.</span>
+<span class="sd">        bands : list of str</span>
+<span class="sd">            List of band names processed.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If specified LUT name is not found in available LUTs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract geometry from image</span>
+        <span class="n">raa</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;raa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+        <span class="n">vza</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vza&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+        <span class="n">sza</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sza&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+        
+        <span class="n">geometry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;raa&#39;</span><span class="p">:</span> <span class="n">raa</span><span class="p">,</span>
+            <span class="s1">&#39;vza&#39;</span><span class="p">:</span> <span class="n">vza</span><span class="p">,</span>
+            <span class="s1">&#39;sza&#39;</span><span class="p">:</span> <span class="n">sza</span><span class="p">,</span>
+            <span class="s1">&#39;pressure&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+        
+        <span class="c1"># Get sensor</span>
+        <span class="n">sensor</span> <span class="o">=</span> <span class="s1">&#39;S2A_MSI&#39;</span> <span class="k">if</span> <span class="s1">&#39;S2A&#39;</span> <span class="ow">in</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PRODUCT_ID&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;S2B_MSI&#39;</span>
+        
+        <span class="c1"># Load specified LUT</span>
+        <span class="n">lutd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">aerlut</span><span class="o">.</span><span class="n">import_luts</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)</span>
+        
+        <span class="c1"># Verify LUT exists</span>
+        <span class="k">if</span> <span class="n">lut_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lutd</span><span class="p">:</span>
+            <span class="n">available_luts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">lutd</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LUT &#39;</span><span class="si">{</span><span class="n">lut_name</span><span class="si">}</span><span class="s2">&#39; not found. Available LUTs: </span><span class="si">{</span><span class="n">available_luts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Get RSR data</span>
+        <span class="n">rsrd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">rsr_dict</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)[</span><span class="n">sensor</span><span class="p">]</span>
+        <span class="n">pressure</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+        <span class="n">uoz</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;uoz&#39;</span><span class="p">]</span>
+        <span class="n">uwv</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;uwv&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Compute gas transmittance</span>
+        <span class="n">ttg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">gas_transmittance</span><span class="p">(</span><span class="n">sza</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> 
+                                                <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span> 
+                                                <span class="n">uoz</span><span class="o">=</span><span class="n">uoz</span><span class="p">,</span> 
+                                                <span class="n">uwv</span><span class="o">=</span><span class="n">uwv</span><span class="p">,</span> 
+                                                <span class="n">rsr</span><span class="o">=</span><span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr&#39;</span><span class="p">])</span>
+        
+        <span class="c1"># Load sky glint LUTs</span>
+        <span class="n">luti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">aerlut</span><span class="o">.</span><span class="n">import_rsky_luts</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> 
+                                                     <span class="n">lutbase</span><span class="o">=</span><span class="s1">&#39;ACOLITE-RSKY-202102-82W&#39;</span><span class="p">,</span> 
+                                                     <span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using fixed AOT=</span><span class="si">{</span><span class="n">aot</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> with LUT=</span><span class="si">{</span><span class="n">lut_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Geometry: SZA=</span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;sza&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">°, VZA=</span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;vza&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">°, RAA=</span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;raa&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">°&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Pressure: </span><span class="si">{</span><span class="n">geometry</span><span class="p">[</span><span class="s2">&quot;pressure&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> hPa&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Compute atmospheric correction parameters for specified LUT and AOT</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut_name</span><span class="p">][</span><span class="s1">&#39;ipd&#39;</span><span class="p">]:</span>
+            <span class="n">am</span><span class="p">[</span><span class="n">par</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="n">lutd</span><span class="p">[</span><span class="n">lut_name</span><span class="p">][</span><span class="s1">&#39;rgi&#39;</span><span class="p">][</span><span class="n">b</span><span class="p">]((</span><span class="n">geometry</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">],</span> 
+                                                     <span class="n">lutd</span><span class="p">[</span><span class="n">lut_name</span><span class="p">][</span><span class="s1">&#39;ipd&#39;</span><span class="p">][</span><span class="n">par</span><span class="p">],</span> 
+                                                     <span class="n">raa</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> <span class="n">sza</span><span class="p">,</span> <span class="n">aot</span><span class="p">))</span>
+                        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr_bands&#39;</span><span class="p">]}</span>
+        <span class="n">am</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;tg&#39;</span><span class="p">:</span> <span class="n">ttg</span><span class="p">[</span><span class="s1">&#39;tt_gas&#39;</span><span class="p">]})</span>
+        
+        <span class="c1"># Compute glint correction parameters</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lut_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Extract model number from LUT name</span>
+        <span class="n">glint_wind</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="n">glint_bands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">]</span>
+        
+        <span class="n">glint_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="n">luti</span><span class="p">[</span><span class="n">model</span><span class="p">][</span><span class="s1">&#39;rgi&#39;</span><span class="p">][</span><span class="n">b</span><span class="p">]((</span><span class="n">raa</span><span class="p">,</span> <span class="n">vza</span><span class="p">,</span> <span class="n">sza</span><span class="p">,</span> <span class="n">glint_wind</span><span class="p">,</span> <span class="n">aot</span><span class="p">))</span> 
+                     <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr_bands&#39;</span><span class="p">]}</span>
+        <span class="n">glint_ave</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="n">glint_dict</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">/</span> <span class="p">((</span><span class="n">glint_dict</span><span class="p">[</span><span class="n">glint_bands</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> 
+                                         <span class="n">glint_dict</span><span class="p">[</span><span class="n">glint_bands</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> 
+                    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">glint_dict</span><span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">am</span><span class="p">,</span> <span class="n">glint_ave</span><span class="p">,</span> <span class="n">rsrd</span><span class="p">[</span><span class="s1">&#39;rsr_bands&#39;</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="ACOLITE.compute_pdark">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.compute_pdark">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_pdark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute dark spectrum values from an image.</span>
+<span class="sd">        </span>
+<span class="sd">        Extracts dark pixel reflectance values for each band using one of</span>
+<span class="sd">        three methods: darkest pixels (0th percentile), percentile-based,</span>
+<span class="sd">        or linear intercept method.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Input image with TOA reflectance.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings including &#39;dsf_spectrum_option&#39;, </span>
+<span class="sd">            &#39;dsf_percentile&#39;, &#39;dsf_intercept_pixels&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pdark_by_band : dict</span>
+<span class="sd">            Dictionary with dark spectrum values per band (e.g., {&#39;B1&#39;: 0.05, ...}).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obands_rhot</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B6&#39;</span><span class="p">,</span> <span class="s1">&#39;B7&#39;</span><span class="p">,</span> <span class="s1">&#39;B8&#39;</span><span class="p">,</span> <span class="s1">&#39;B8A&#39;</span><span class="p">,</span> <span class="s1">&#39;B9&#39;</span><span class="p">,</span> <span class="s1">&#39;B10&#39;</span><span class="p">,</span> <span class="s1">&#39;B11&#39;</span><span class="p">,</span> <span class="s1">&#39;B12&#39;</span><span class="p">]</span>
+
+        <span class="n">image_to_reduce</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="n">pdark_by_band</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_intercept_pixels&#39;</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">obands_rhot</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dsf_spectrum_option&#39;</span><span class="p">,</span> <span class="s1">&#39;darkest&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;darkest&#39;</span><span class="p">:</span>
+                <span class="n">band_data</span> <span class="o">=</span> <span class="n">image_to_reduce</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">reduceRegion</span><span class="p">(</span><span class="n">reducer</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">percentile</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> 
+                                                        <span class="n">bestEffort</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">maxPixels</span> <span class="o">=</span> <span class="mf">1e8</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">band_data</span><span class="p">:</span>
+                    <span class="n">pdark_by_band</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_data</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()[</span><span class="n">band</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pdark_by_band</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">elif</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dsf_spectrum_option&#39;</span><span class="p">,</span> <span class="s1">&#39;darkest&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;percentile&#39;</span><span class="p">:</span>
+                <span class="n">band_data</span> <span class="o">=</span> <span class="n">image_to_reduce</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">reduceRegion</span><span class="p">(</span><span class="n">reducer</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">percentile</span><span class="p">([</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_percentile&#39;</span><span class="p">]]),</span> 
+                                                        <span class="n">bestEffort</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">maxPixels</span> <span class="o">=</span> <span class="mf">1e8</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">band_data</span><span class="p">:</span>
+                    <span class="n">pdark_by_band</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_data</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()[</span><span class="n">band</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pdark_by_band</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">elif</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dsf_spectrum_option&#39;</span><span class="p">,</span> <span class="s1">&#39;darkest&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;intercept&#39;</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">image_to_reduce</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">reduceRegion</span><span class="p">(</span><span class="n">reducer</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">toList</span><span class="p">(),</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">bestEffort</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">maxPixels</span> <span class="o">=</span> <span class="mf">1e8</span><span class="p">)</span>
+                <span class="n">band_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">band</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">band_data</span><span class="p">:</span>
+                    <span class="n">values</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">band_data</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;dsf_intercept_pixels&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+                    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">se</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+                    <span class="n">pdark_by_band</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">intercept</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pdark_by_band</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">return</span> <span class="n">pdark_by_band</span></div>
+
+    
+<div class="viewcode-block" id="ACOLITE.compute_rhos">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.compute_rhos">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_rhos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">am</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute surface reflectance from TOA reflectance.</span>
+<span class="sd">        </span>
+<span class="sd">        Applies atmospheric correction using computed atmospheric parameters</span>
+<span class="sd">        to derive surface reflectance. Also adds TOA reflectance bands to</span>
+<span class="sd">        the output image.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Input image with TOA reflectance bands.</span>
+<span class="sd">        am : dict</span>
+<span class="sd">            Atmospheric correction parameters with keys &#39;romix&#39; (path reflectance),</span>
+<span class="sd">            &#39;dutott&#39; (total upward transmittance), &#39;astot&#39; (spherical albedo),</span>
+<span class="sd">            &#39;tg&#39; (gas transmittance).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        l2r_rrs : ee.Image</span>
+<span class="sd">            Image with both TOA reflectance (rhot_*) and surface reflectance</span>
+<span class="sd">            (rhos_*) bands.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">l2r_rrs</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">([])</span>
+
+        <span class="n">romix</span> <span class="o">=</span> <span class="n">am</span><span class="p">[</span><span class="s1">&#39;romix&#39;</span><span class="p">]</span>
+        <span class="n">dutott</span> <span class="o">=</span> <span class="n">am</span><span class="p">[</span><span class="s1">&#39;dutott&#39;</span><span class="p">]</span>
+        <span class="n">astot</span> <span class="o">=</span> <span class="n">am</span><span class="p">[</span><span class="s1">&#39;astot&#39;</span><span class="p">]</span>
+        <span class="n">tgas</span> <span class="o">=</span> <span class="n">am</span><span class="p">[</span><span class="s1">&#39;tg&#39;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">romix</span><span class="p">:</span>
+            <span class="n">band_name</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span> <span class="o">+</span> <span class="n">band</span>
+            <span class="n">rhot_noatm</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">()</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(data / tg) - ppath&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band_name</span><span class="p">),</span> <span class="s1">&#39;tg&#39;</span> <span class="p">:</span> <span class="n">tgas</span><span class="p">[</span><span class="n">band</span><span class="p">],</span> <span class="s1">&#39;ppath&#39;</span> <span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">romix</span><span class="p">[</span><span class="n">band</span><span class="p">])})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">band_name</span><span class="p">)</span>
+            <span class="n">rhos</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">()</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(data) / (tdu + sa * data)&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span> <span class="p">:</span> <span class="n">rhot_noatm</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band_name</span><span class="p">),</span> <span class="s1">&#39;tdu&#39;</span> <span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">dutott</span><span class="p">[</span><span class="n">band</span><span class="p">]),</span> <span class="s1">&#39;sa&#39;</span> <span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">astot</span><span class="p">[</span><span class="n">band</span><span class="p">])})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">band_name</span><span class="p">)</span>
+            <span class="n">rhos</span> <span class="o">=</span> <span class="n">mask_negative_reflectance</span><span class="p">(</span><span class="n">rhos</span><span class="p">,</span> <span class="n">band_name</span><span class="p">)</span>
+            <span class="n">l2r_rrs</span> <span class="o">=</span> <span class="n">l2r_rrs</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band_name</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rhot_</span><span class="si">{</span><span class="n">band_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">())</span>
+            <span class="n">l2r_rrs</span> <span class="o">=</span> <span class="n">l2r_rrs</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">rhos</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rhos_</span><span class="si">{</span><span class="n">band_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">l2r_rrs</span></div>
+
+
+
+<div class="viewcode-block" id="ACOLITE.get_ancillary_data">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.get_ancillary_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ancillary_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve ancillary atmospheric data from NASA Earthdata.</span>
+<span class="sd">        </span>
+<span class="sd">        Fetches ozone, water vapor, wind speed, and surface pressure data</span>
+<span class="sd">        from NASA GMAO or NCEP reanalysis products for the image location</span>
+<span class="sd">        and acquisition time.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Input image with geometry and timestamp.</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Processing settings including Earthdata credentials and default values.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Updated settings with ancillary data values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_earthdata_credentials</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="n">iso_date</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_query</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="n">anc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">ancillary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iso_date</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">default</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;uoz&#39;</span><span class="p">,</span> <span class="s1">&#39;uoz_default&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;uwv&#39;</span><span class="p">,</span> <span class="s1">&#39;uwv_default&#39;</span><span class="p">),</span> 
+                            <span class="p">(</span><span class="s1">&#39;wind&#39;</span><span class="p">,</span> <span class="s1">&#39;wind_default&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;pressure_default&#39;</span><span class="p">)]:</span>
+            <span class="n">settings</span><span class="p">[</span><span class="n">data</span><span class="p">]</span> <span class="o">=</span> <span class="n">anc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">default</span><span class="p">))</span> 
+        
+        <span class="k">return</span> <span class="n">settings</span></div>
+
+
+<div class="viewcode-block" id="ACOLITE.prepare_query">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.prepare_query">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">prepare_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract location and timestamp from image for ancillary data query.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Input image with geometry and timestamp metadata.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        iso_date : str</span>
+<span class="sd">            ISO formatted date string.</span>
+<span class="sd">        lon : float</span>
+<span class="sd">            Longitude of image centroid.</span>
+<span class="sd">        lat : float</span>
+<span class="sd">            Latitude of image centroid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">centroid</span><span class="p">()</span><span class="o">.</span><span class="n">coordinates</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+        <span class="n">iso_date</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;system:time_start&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;YYYY-MM-dd HH:mm:ss&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+
+        <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">coords</span>
+        <span class="k">return</span> <span class="n">iso_date</span><span class="p">,</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span></div>
+
+
+<div class="viewcode-block" id="ACOLITE.prepare_earthdata_credentials">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.prepare_earthdata_credentials">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">prepare_earthdata_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set NASA Earthdata credentials as environment variables.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Settings dictionary potentially containing &#39;EARTHDATA_u&#39; and &#39;EARTHDATA_p&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        settings : dict</span>
+<span class="sd">            Input settings dictionary (unchanged).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;EARTHDATA_u&#39;</span><span class="p">,</span> <span class="s1">&#39;EARTHDATA_p&#39;</span><span class="p">]:</span>
+            <span class="n">kv</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">settings</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">acolite</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">kv</span>
+        
+        <span class="k">return</span> <span class="n">settings</span></div>
+
+
+
+<div class="viewcode-block" id="ACOLITE.deglint_alternative">
+<a class="viewcode-back" href="../../modules/correction.html#gee_acolite.correction.ACOLITE.deglint_alternative">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deglint_alternative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">bands</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> 
+                            <span class="n">glint_ave</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">glint_min</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">glint_max</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.08</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove residual sun glint from surface reflectance image.</span>
+<span class="sd">        </span>
+<span class="sd">        Alternative glint correction method based on ACOLITE&#39;s implementation.</span>
+<span class="sd">        Uses SWIR bands (B11, B12) as reference to estimate and remove glint</span>
+<span class="sd">        contamination. The glint signal is spectrally scaled based on modeled</span>
+<span class="sd">        surface reflectance ratios.</span>
+<span class="sd">        </span>
+<span class="sd">        Workflow:</span>
+<span class="sd">        1. Computes observed glint as average of SWIR reference bands (B11, B12)</span>
+<span class="sd">        2. Calculates average modeled surface reflectance for reference bands</span>
+<span class="sd">        3. For each band, scales observed glint by ratio of modeled reflectances</span>
+<span class="sd">        4. Subtracts scaled glint from surface reflectance</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image : ee.Image</span>
+<span class="sd">            Image with surface reflectance (rhos_*) bands.</span>
+<span class="sd">        bands : list of str</span>
+<span class="sd">            List of band numbers to correct (as strings, e.g., [&#39;1&#39;, &#39;2&#39;, ...]).</span>
+<span class="sd">        glint_ave : dict</span>
+<span class="sd">            Modeled surface reflectance ratios per band.</span>
+<span class="sd">        glint_min : float, optional</span>
+<span class="sd">            Minimum threshold for glint mask (default: 0).</span>
+<span class="sd">        glint_max : float, optional</span>
+<span class="sd">            Maximum threshold for glint mask (default: 0.08).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        deglinted : ee.Image</span>
+<span class="sd">            Image with glint-corrected surface reflectance bands.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># Start with a copy of the original image to preserve all bands</span>
+        <span class="n">deglinted</span> <span class="o">=</span> <span class="n">image</span>
+        
+        <span class="c1"># Reference bands for glint estimation (SWIR bands: B11=1610nm, B12=2190nm)</span>
+        <span class="c1"># These bands are sensitive to sun glint but have minimal water-leaving radiance</span>
+        <span class="n">glint_ref_bands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rhos_B11&#39;</span><span class="p">,</span> <span class="s1">&#39;rhos_B12&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># Step 1: Compute observed glint reference (gc_ref_mean in ACOLITE)</span>
+        <span class="c1"># Average of reference bands gives the observed glint signal</span>
+        <span class="n">rhos_b11</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B11&#39;</span><span class="p">)</span>
+        <span class="n">rhos_b12</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B12&#39;</span><span class="p">)</span>
+        <span class="n">gc_ref_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">rhos_b11</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">rhos_b12</span><span class="p">))</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;gc_ref_mean&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Step 2: Compute average modeled surface reflectance for reference bands (gc_sur_mean in ACOLITE)</span>
+        <span class="c1"># This is the average of glint_ave values for B11 and B12</span>
+        <span class="n">gc_sur_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">glint_ave</span><span class="p">[</span><span class="s1">&#39;11&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">glint_ave</span><span class="p">[</span><span class="s1">&#39;12&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.0</span>
+        
+        <span class="c1"># Step 3: Create glint mask (gc_sub in ACOLITE)</span>
+        <span class="c1"># Only apply correction where observed glint is below threshold and positive</span>
+        <span class="n">glint_mask</span> <span class="o">=</span> <span class="n">gc_ref_mean</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="n">glint_min</span><span class="p">)</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="n">gc_ref_mean</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">glint_max</span><span class="p">))</span>
+        
+        <span class="c1"># Step 4: Apply band-specific glint correction</span>
+        <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">bands</span><span class="p">:</span>
+            <span class="n">band_name</span> <span class="o">=</span> <span class="s1">&#39;rhos_B&#39;</span> <span class="o">+</span> <span class="n">band</span>
+            
+            <span class="c1"># Skip if modeled surface reflectance is invalid</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">glint_ave</span><span class="p">[</span><span class="n">band</span><span class="p">])</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">glint_ave</span><span class="p">[</span><span class="n">band</span><span class="p">]):</span>
+                <span class="k">continue</span>
+            
+            <span class="c1"># Compute current band glint (cur_rhog in ACOLITE):</span>
+            <span class="c1"># cur_rhog = gc_ref_mean * (surf_current_band / gc_sur_mean)</span>
+            <span class="c1"># </span>
+            <span class="c1"># This scales the observed glint by the ratio of:</span>
+            <span class="c1"># - Modeled surface reflectance for current band (glint_ave[band])</span>
+            <span class="c1"># - Average modeled surface reflectance of reference bands (gc_sur_mean)</span>
+            <span class="c1">#</span>
+            <span class="c1"># The ratio accounts for spectral variation in surface reflectance</span>
+            <span class="n">glint_ratio</span> <span class="o">=</span> <span class="n">glint_ave</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">/</span> <span class="n">gc_sur_mean</span>
+            <span class="n">cur_rhog</span> <span class="o">=</span> <span class="n">gc_ref_mean</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">glint_ratio</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;cur_rhog&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Mask the glint correction to valid pixels</span>
+            <span class="n">cur_rhog</span> <span class="o">=</span> <span class="n">cur_rhog</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">glint_mask</span><span class="p">)</span>
+            
+            <span class="c1"># Apply glint correction: rhos_corrected = rhos_original - glint</span>
+            <span class="n">rhos_corrected</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band_name</span><span class="p">)</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">cur_rhog</span><span class="p">)</span>
+            
+            <span class="c1"># Mask negative values (can occur in dark pixels or over-correction)</span>
+            <span class="n">rhos_corrected</span> <span class="o">=</span> <span class="n">mask_negative_reflectance</span><span class="p">(</span><span class="n">rhos_corrected</span><span class="p">,</span> <span class="n">band_name</span><span class="p">)</span>
+            
+            <span class="c1"># Replace the band in the output image (overwrite=True)</span>
+            <span class="n">deglinted</span> <span class="o">=</span> <span class="n">deglinted</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">rhos_corrected</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="c1"># Optional: Write glint mean for visualization/validation</span>
+        <span class="n">deglinted</span> <span class="o">=</span> <span class="n">deglinted</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">gc_ref_mean</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;glint_mean&#39;</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">deglinted</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sergio Heredia
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Sergio Heredia.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

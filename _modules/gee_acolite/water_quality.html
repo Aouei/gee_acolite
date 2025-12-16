@@ -1,0 +1,789 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gee_acolite.water_quality &#8212; gee_acolite 1.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=423d4ce3"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gee_acolite/water_quality';</script>
+    <link rel="canonical" href="https://aouei.github.io/gee_acolite/_modules/gee_acolite/water_quality.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">gee_acolite 1.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide/installation.html">Installation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../modules/correction.html">Correction Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/water_quality.html">Water Quality Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/bathymetry.html">Bathymetry Module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../modules/utils.html">Utils Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/utils.l1_convert.html">L1 Convert Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/utils.masks.html">Masks Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/utils.search.html">Search Module</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../examples/basic_usage.html">Basic Usage Example</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for gee_acolite.water_quality</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Water quality parameter computation and masking.</span>
+
+<span class="sd">This module provides functions to compute various water quality parameters</span>
+<span class="sd">from atmospherically corrected satellite imagery, including:</span>
+<span class="sd">- Suspended particulate matter (SPM)</span>
+<span class="sd">- Turbidity</span>
+<span class="sd">- Chlorophyll-a concentration</span>
+<span class="sd">- Satellite-derived bathymetry (SDB)</span>
+<span class="sd">- Remote sensing reflectance (Rrs)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">gee_acolite.utils.masks</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">masks</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.sensors.sentinel2</span><span class="w"> </span><span class="kn">import</span> <span class="n">SENTINEL2_BANDS</span>
+
+
+<div class="viewcode-block" id="compute_water_mask">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.compute_water_mask">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_water_mask</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a comprehensive water mask for quality control.</span>
+<span class="sd">    </span>
+<span class="sd">    Combines multiple masking criteria to identify valid water pixels:</span>
+<span class="sd">    - Water/land classification</span>
+<span class="sd">    - Cirrus cloud contamination</span>
+<span class="sd">    - High TOA reflectance (clouds, bright targets)</span>
+<span class="sd">    - Optional cloud probability mask</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Atmospherically corrected image with TOA and surface reflectance bands.</span>
+<span class="sd">    settings : dict</span>
+<span class="sd">        Processing settings including mask thresholds.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Binary mask where valid water pixels = 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">masks</span><span class="o">.</span><span class="n">non_water</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> 
+                           <span class="n">threshold</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;l2w_mask_threshold&#39;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">))</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">masks</span><span class="o">.</span><span class="n">cirrus_mask</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> 
+                                             <span class="n">threshold</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;l2w_mask_cirrus_threshold&#39;</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">)))</span>
+    
+    <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">SENTINEL2_BANDS</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span> <span class="n">masks</span><span class="o">.</span><span class="n">toa_mask</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> 
+                                                <span class="sa">f</span><span class="s1">&#39;rhot_</span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+                                                <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;l2w_mask_high_toa_threshold&#39;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">))</span> <span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s2_cloud_proba&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">CLOUD_PROB_THRESHOLD</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s2_cloud_proba__cloud_threshold&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+        <span class="n">NIR_DARK_THRESHOLD</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s2_cloud_proba__nir_dark_threshold&#39;</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">))</span>
+        <span class="n">CLOUD_PROJ_DISTANCE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s2_cloud_proba__cloud_proj_distance&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+        <span class="n">BUFFER</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s2_cloud_proba__buffer&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">masks</span><span class="o">.</span><span class="n">cld_shdw_mask</span><span class="p">(</span><span class="n">masks</span><span class="o">.</span><span class="n">add_cld_shdw_mask</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> 
+                                                                           <span class="n">CLOUD_PROB_THRESHOLD</span><span class="p">,</span> 
+                                                                           <span class="n">NIR_DARK_THRESHOLD</span><span class="p">,</span> 
+                                                                           <span class="n">CLOUD_PROJ_DISTANCE</span><span class="p">,</span> 
+                                                                           <span class="n">BUFFER</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">mask</span></div>
+
+
+<div class="viewcode-block" id="compute_water_bands">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.compute_water_bands">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_water_bands</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute water quality parameters and add them as bands.</span>
+<span class="sd">    </span>
+<span class="sd">    Applies water mask and computes selected water quality parameters</span>
+<span class="sd">    based on settings configuration.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Atmospherically corrected image with surface reflectance bands.</span>
+<span class="sd">    settings : dict</span>
+<span class="sd">        Processing settings including &#39;l2w_parameters&#39; list.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Input image with added water quality parameter bands.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">compute_water_mask</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;l2w_parameters&#39;</span><span class="p">]:</span>
+        <span class="n">new_band</span> <span class="o">=</span> <span class="n">PRODUCTS</span><span class="p">[</span><span class="n">product</span><span class="p">](</span><span class="n">image</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_band</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">new_band</span> <span class="o">=</span> <span class="p">[</span><span class="n">band</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">new_band</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_band</span> <span class="o">=</span> <span class="n">new_band</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">new_band</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">image</span></div>
+
+
+
+<div class="viewcode-block" id="spm_nechad2016_665">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.spm_nechad2016_665">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">spm_nechad2016_665</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute suspended particulate matter using Nechad et al. (2016) algorithm at 665nm.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance band &#39;rhos_B4&#39; (red band at 665nm).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        SPM concentration in mg/L.</span>
+<span class="sd">    </span>
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Nechad et al. (2016). Calibration and validation of a generic multisensor</span>
+<span class="sd">    algorithm for mapping of total suspended matter in turbid waters.</span>
+<span class="sd">    Remote Sensing of Environment, 159, 139-152.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(A * red) / (1 - (red / C))&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mf">342.10</span><span class="p">,</span>
+                                                            <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mf">0.19563</span><span class="p">,</span> 
+                                                            <span class="s1">&#39;red&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B4&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;SPM_Nechad2016_665&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="spm_nechad2016_704">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.spm_nechad2016_704">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">spm_nechad2016_704</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute suspended particulate matter using Nechad et al. (2016) algorithm at 704nm.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance band &#39;rhos_B5&#39; (red edge at 704nm).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        SPM concentration in mg/L.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(A * red) / (1 - (red / C))&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mf">444.36</span><span class="p">,</span>
+                                                            <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mf">0.18753</span><span class="p">,</span> 
+                                                            <span class="s1">&#39;red&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B5&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;SPM_Nechad2016_704&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="spm_nechad2016_740">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.spm_nechad2016_740">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">spm_nechad2016_740</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute suspended particulate matter using Nechad et al. (2016) algorithm at 740nm.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance band &#39;rhos_B6&#39; (NIR at 740nm).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        SPM concentration in mg/L.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(A * red) / (1 - (red / C))&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mf">1517.00</span><span class="p">,</span>
+                                                            <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mf">0.19736</span><span class="p">,</span> 
+                                                            <span class="s1">&#39;red&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B6&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;SPM_Nechad2016_739&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="tur_nechad2016_665">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.tur_nechad2016_665">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tur_nechad2016_665</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute turbidity using Nechad et al. (2016) algorithm at 665nm.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance band &#39;rhos_B4&#39; (red band at 665nm).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Turbidity in FNU (Formazin Nephelometric Units).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(A * red) / (1 - (red / C))&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mf">366.14</span><span class="p">,</span>
+                                                            <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mf">0.19563</span><span class="p">,</span> 
+                                                            <span class="s1">&#39;red&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B4&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;TUR_Nechad2016_665&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="tur_nechad2016_704">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.tur_nechad2016_704">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tur_nechad2016_704</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute turbidity using Nechad et al. (2016) algorithm at 704nm.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance band &#39;rhos_B5&#39; (red edge at 704nm).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Turbidity in FNU (Formazin Nephelometric Units).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(A * red) / (1 - (red / C))&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mf">439.09</span><span class="p">,</span>
+                                                            <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mf">0.18753</span><span class="p">,</span> 
+                                                            <span class="s1">&#39;red&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B5&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;TUR_Nechad2016_704&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="tur_nechad2016_740">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.tur_nechad2016_740">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tur_nechad2016_740</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute turbidity using Nechad et al. (2016) algorithm at 740nm.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance band &#39;rhos_B6&#39; (NIR at 740nm).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Turbidity in FNU (Formazin Nephelometric Units).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;(A * red) / (1 - (red / C))&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="mf">1590.66</span><span class="p">,</span>
+                                                            <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="mf">0.19736</span><span class="p">,</span> 
+                                                            <span class="s1">&#39;red&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B6&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;TUR_Nechad2016_739&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="chl_oc2">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.chl_oc2">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chl_oc2</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute chlorophyll-a concentration using OC2 algorithm.</span>
+<span class="sd">    </span>
+<span class="sd">    Two-band blue-green ratio algorithm for chlorophyll-a estimation.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance bands &#39;rhos_B2&#39; (blue) and &#39;rhos_B3&#39; (green).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Chlorophyll-a concentration in mg/m³.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    TODO: Interpolate B1 to B2 dimensions for improved accuracy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">E</span> <span class="o">=</span> <span class="mf">0.1977</span><span class="p">,</span><span class="o">-</span><span class="mf">1.8117</span><span class="p">,</span><span class="mf">1.9743</span><span class="p">,</span><span class="o">-</span><span class="mf">2.5635</span><span class="p">,</span><span class="o">-</span><span class="mf">0.7218</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;log( x / y )&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B2&#39;</span><span class="p">),</span> 
+                                          <span class="s1">&#39;y&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B3&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="n">A</span><span class="p">,</span> 
+                                                                                          <span class="s1">&#39;B&#39;</span> <span class="p">:</span> <span class="n">B</span><span class="p">,</span> 
+                                                                                          <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="n">C</span><span class="p">,</span> 
+                                                                                          <span class="s1">&#39;D&#39;</span> <span class="p">:</span> <span class="n">D</span><span class="p">,</span>
+                                                                                          <span class="s1">&#39;E&#39;</span> <span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+                                                                                          <span class="s1">&#39;x&#39;</span> <span class="p">:</span> <span class="n">x</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;chl_oc2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="chl_oc3">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.chl_oc3">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chl_oc3</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute chlorophyll-a concentration using OC3 algorithm.</span>
+<span class="sd">    </span>
+<span class="sd">    Three-band ratio algorithm using maximum of blue bands vs green.</span>
+<span class="sd">    More robust than OC2 for varying water types.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance bands &#39;rhos_B1&#39;, &#39;rhos_B2&#39; (blue),</span>
+<span class="sd">        and &#39;rhos_B3&#39; (green).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Chlorophyll-a concentration in mg/m³.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    TODO: Interpolate B1 to B2 dimensions for improved accuracy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">E</span> <span class="o">=</span> <span class="mf">0.2412</span><span class="p">,</span><span class="o">-</span><span class="mf">2.0546</span><span class="p">,</span><span class="mf">1.1776</span><span class="p">,</span><span class="o">-</span><span class="mf">0.5538</span><span class="p">,</span><span class="o">-</span><span class="mf">0.4570</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;log( x / y )&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B1&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> 
+                                          <span class="s1">&#39;y&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhos_B3&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;10 ** (A + B * x + C * (x**2) + D * (x**3) + E * (x**4) )&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="n">A</span><span class="p">,</span> 
+                                                                                          <span class="s1">&#39;B&#39;</span> <span class="p">:</span> <span class="n">B</span><span class="p">,</span> 
+                                                                                          <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="n">C</span><span class="p">,</span> 
+                                                                                          <span class="s1">&#39;D&#39;</span> <span class="p">:</span> <span class="n">D</span><span class="p">,</span>
+                                                                                          <span class="s1">&#39;E&#39;</span> <span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+                                                                                          <span class="s1">&#39;x&#39;</span> <span class="p">:</span> <span class="n">x</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;chl_oc3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="chl_re_mishra">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.chl_re_mishra">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chl_re_mishra</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute chlorophyll-a concentration using red edge NDCI algorithm.</span>
+<span class="sd">    </span>
+<span class="sd">    Uses Normalized Difference Chlorophyll Index (NDCI) based on red edge</span>
+<span class="sd">    bands. Particularly effective for turbid and productive waters.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance bands &#39;rhos_B5&#39; (red edge at 704nm)</span>
+<span class="sd">        and &#39;rhos_B4&#39; (red at 665nm).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Chlorophyll-a concentration in mg/m³.</span>
+<span class="sd">    </span>
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Mishra &amp; Mishra (2012). Normalized difference chlorophyll index:</span>
+<span class="sd">    A novel model for remote estimation of chlorophyll-a concentration in</span>
+<span class="sd">    turbid productive waters. Remote Sensing of Environment, 117, 394-406.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">14.039</span><span class="p">,</span> <span class="mf">86.11</span><span class="p">,</span> <span class="mf">194.325</span>
+    <span class="n">ndci</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">normalizedDifference</span><span class="p">([</span><span class="s1">&#39;rhos_B5&#39;</span><span class="p">,</span> <span class="s1">&#39;rhos_B4&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;ndci&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;a + b * ndci + c * ndci * ndci&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span> <span class="p">:</span> <span class="n">a</span><span class="p">,</span> 
+                                                               <span class="s1">&#39;b&#39;</span> <span class="p">:</span> <span class="n">b</span><span class="p">,</span> 
+                                                               <span class="s1">&#39;c&#39;</span> <span class="p">:</span> <span class="n">c</span><span class="p">,</span> 
+                                                               <span class="s1">&#39;ndci&#39;</span> <span class="p">:</span> <span class="n">ndci</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;chl_re_mishra&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ndwi">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.ndwi">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ndwi</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute Normalized Difference Water Index.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with remote sensing reflectance bands &#39;Rrs_B3&#39; (green)</span>
+<span class="sd">        and &#39;Rrs_B8&#39; (NIR).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        NDWI values (range: -1 to 1).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">normalizedDifference</span><span class="p">([</span><span class="s1">&#39;Rrs_B3&#39;</span><span class="p">,</span> <span class="s1">&#39;Rrs_B8&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;ndwi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="pSDB_red">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.pSDB_red">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pSDB_red</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute pseudo-Satellite Derived Bathymetry using blue-red ratio.</span>
+<span class="sd">    </span>
+<span class="sd">    Implements log-ratio bathymetry algorithm using blue and red bands.</span>
+<span class="sd">    Provides relative depth estimation in clear shallow waters.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with remote sensing reflectance bands &#39;Rrs_B2&#39; (blue)</span>
+<span class="sd">        and &#39;Rrs_B4&#39; (red).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Pseudo-bathymetry index (higher values = shallower water).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;log(n * pi * blue) / log(n * pi * red)&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span> <span class="p">:</span> <span class="mi">1_000</span><span class="p">,</span>
+                                                                       <span class="s1">&#39;pi&#39;</span> <span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
+                                                                       <span class="s1">&#39;blue&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;Rrs_B2&#39;</span><span class="p">),</span>
+                                                                       <span class="s1">&#39;red&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;Rrs_B4&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;pSDB_red&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="pSDB_green">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.pSDB_green">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pSDB_green</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute pseudo-Satellite Derived Bathymetry using blue-green ratio.</span>
+<span class="sd">    </span>
+<span class="sd">    Implements log-ratio bathymetry algorithm using blue and green bands.</span>
+<span class="sd">    Generally more sensitive in clearer waters compared to blue-red ratio.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with remote sensing reflectance bands &#39;Rrs_B2&#39; (blue)</span>
+<span class="sd">        and &#39;Rrs_B3&#39; (green).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Pseudo-bathymetry index (higher values = shallower water).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">expression</span><span class="p">(</span><span class="s1">&#39;log(n * pi * blue) / log(n * pi * green)&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span> <span class="p">:</span> <span class="mi">1_000</span><span class="p">,</span>
+                                                                         <span class="s1">&#39;pi&#39;</span> <span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
+                                                                         <span class="s1">&#39;blue&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;Rrs_B2&#39;</span><span class="p">),</span>
+                                                                         <span class="s1">&#39;green&#39;</span> <span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;Rrs_B3&#39;</span><span class="p">)</span> <span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;pSDB_green&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="rrs">
+<a class="viewcode-back" href="../../modules/water_quality.html#gee_acolite.water_quality.rrs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rrs</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert surface reflectance to remote sensing reflectance.</span>
+<span class="sd">    </span>
+<span class="sd">    Transforms surface reflectance (rhos) to remote sensing reflectance (Rrs)</span>
+<span class="sd">    by dividing by π. Rrs is the standard unit for ocean color products.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with surface reflectance bands (rhos_B*).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of ee.Image</span>
+<span class="sd">        List of Rrs bands for all Sentinel-2 bands.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B6&#39;</span><span class="p">,</span> <span class="s1">&#39;B7&#39;</span><span class="p">,</span> <span class="s1">&#39;B8&#39;</span><span class="p">,</span> <span class="s1">&#39;B8A&#39;</span><span class="p">,</span> <span class="s1">&#39;B9&#39;</span><span class="p">,</span> <span class="s1">&#39;B10&#39;</span><span class="p">,</span> <span class="s1">&#39;B11&#39;</span><span class="p">,</span> <span class="s1">&#39;B12&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rhos_</span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Rrs_</span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toFloat</span><span class="p">()</span> <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">bands</span> <span class="p">]</span></div>
+
+
+<span class="c1"># Dictionary mapping product names to computation functions</span>
+<span class="n">PRODUCTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;spm_nechad2016&#39;</span> <span class="p">:</span> <span class="n">spm_nechad2016_665</span><span class="p">,</span>
+    <span class="s1">&#39;spm_nechad2016_704&#39;</span> <span class="p">:</span> <span class="n">spm_nechad2016_704</span><span class="p">,</span>
+    <span class="s1">&#39;spm_nechad2016_740&#39;</span> <span class="p">:</span> <span class="n">spm_nechad2016_740</span><span class="p">,</span>
+    <span class="s1">&#39;tur_nechad2016&#39;</span> <span class="p">:</span> <span class="n">tur_nechad2016_665</span><span class="p">,</span>
+    <span class="s1">&#39;tur_nechad2016_704&#39;</span> <span class="p">:</span> <span class="n">tur_nechad2016_704</span><span class="p">,</span>
+    <span class="s1">&#39;tur_nechad2016_740&#39;</span> <span class="p">:</span> <span class="n">tur_nechad2016_740</span><span class="p">,</span>
+    <span class="s1">&#39;chl_oc2&#39;</span> <span class="p">:</span> <span class="n">chl_oc2</span><span class="p">,</span>
+    <span class="s1">&#39;chl_oc3&#39;</span> <span class="p">:</span> <span class="n">chl_oc3</span><span class="p">,</span>
+    <span class="s1">&#39;chl_re_mishra&#39;</span> <span class="p">:</span> <span class="n">chl_re_mishra</span><span class="p">,</span>
+    <span class="s1">&#39;pSDB_red&#39;</span> <span class="p">:</span> <span class="n">pSDB_red</span><span class="p">,</span>
+    <span class="s1">&#39;pSDB_green&#39;</span> <span class="p">:</span> <span class="n">pSDB_green</span><span class="p">,</span>
+    <span class="s1">&#39;Rrs_*&#39;</span> <span class="p">:</span> <span class="n">rrs</span>
+<span class="p">}</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sergio Heredia
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Sergio Heredia.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

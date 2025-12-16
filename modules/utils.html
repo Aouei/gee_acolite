@@ -46,7 +46,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="L1 Convert Module" href="utils.l1_convert.html" />
-    <link rel="prev" title="Sentinel-2 Module" href="sensors.sentinel2.html" />
+    <link rel="prev" title="Bathymetry Module" href="bathymetry.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -153,17 +153,12 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guide/quickstart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="correction.html">Correction Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="water_quality.html">Water Quality Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bathymetry.html">Bathymetry Module</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="sensors.html">Sensors Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="sensors.sentinel2.html">Sentinel-2 Module</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Utils Package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="utils.l1_convert.html">L1 Convert Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.masks.html">Masks Module</a></li>
@@ -322,7 +317,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 </ul>
             </nav>
         </div>
@@ -337,37 +332,15 @@ document.write(`
   <section id="utils-package">
 <h1>Utils Package<a class="headerlink" href="#utils-package" title="Link to this heading">#</a></h1>
 <p>The Utils package provides utility functions for image processing and manipulation.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="utils.l1_convert.html">L1 Convert Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.l1_convert.html#gee_acolite.utils.l1_convert.DN_to_rrs"><code class="docutils literal notranslate"><span class="pre">DN_to_rrs()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.l1_convert.html#gee_acolite.utils.l1_convert.get_mean_band_angle"><code class="docutils literal notranslate"><span class="pre">get_mean_band_angle()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.l1_convert.html#gee_acolite.utils.l1_convert.l1_to_rrs"><code class="docutils literal notranslate"><span class="pre">l1_to_rrs()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.l1_convert.html#gee_acolite.utils.l1_convert.resample"><code class="docutils literal notranslate"><span class="pre">resample()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="utils.masks.html">Masks Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.add_cld_shdw_mask"><code class="docutils literal notranslate"><span class="pre">add_cld_shdw_mask()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.add_cloud_bands"><code class="docutils literal notranslate"><span class="pre">add_cloud_bands()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.add_shadow_bands"><code class="docutils literal notranslate"><span class="pre">add_shadow_bands()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.cirrus_mask"><code class="docutils literal notranslate"><span class="pre">cirrus_mask()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.cld_shdw_mask"><code class="docutils literal notranslate"><span class="pre">cld_shdw_mask()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.mask_negative_reflectance"><code class="docutils literal notranslate"><span class="pre">mask_negative_reflectance()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.non_water"><code class="docutils literal notranslate"><span class="pre">non_water()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.masks.html#gee_acolite.utils.masks.toa_mask"><code class="docutils literal notranslate"><span class="pre">toa_mask()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="utils.search.html">Search Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.search.html#gee_acolite.utils.search.join_s2_with_cloud_prob"><code class="docutils literal notranslate"><span class="pre">join_s2_with_cloud_prob()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.search.html#gee_acolite.utils.search.search"><code class="docutils literal notranslate"><span class="pre">search()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.search.html#gee_acolite.utils.search.search_list"><code class="docutils literal notranslate"><span class="pre">search_list()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.search.html#gee_acolite.utils.search.search_with_cloud_proba"><code class="docutils literal notranslate"><span class="pre">search_with_cloud_proba()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.l1_convert.html">L1 Convert Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.masks.html">Masks Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.search.html">Search Module</a></li>
 </ul>
 </div>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -383,12 +356,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="sensors.sentinel2.html"
+       href="bathymetry.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Sentinel-2 Module</p>
+        <p class="prev-next-title">Bathymetry Module</p>
       </div>
     </a>
     <a class="right-next"
@@ -416,7 +389,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 </ul>
   </nav></div>
 

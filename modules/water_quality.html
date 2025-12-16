@@ -153,17 +153,12 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guide/quickstart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="correction.html">Correction Module</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Water Quality Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bathymetry.html">Bathymetry Module</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="sensors.html">Sensors Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="sensors.sentinel2.html">Sentinel-2 Module</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="utils.html">Utils Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="utils.l1_convert.html">L1 Convert Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.masks.html">Masks Module</a></li>
@@ -299,7 +294,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -315,6 +312,28 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.chl_oc2"><code class="docutils literal notranslate"><span class="pre">chl_oc2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.chl_oc3"><code class="docutils literal notranslate"><span class="pre">chl_oc3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.chl_re_mishra"><code class="docutils literal notranslate"><span class="pre">chl_re_mishra()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.compute_water_bands"><code class="docutils literal notranslate"><span class="pre">compute_water_bands()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.compute_water_mask"><code class="docutils literal notranslate"><span class="pre">compute_water_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.ndwi"><code class="docutils literal notranslate"><span class="pre">ndwi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.pSDB_green"><code class="docutils literal notranslate"><span class="pre">pSDB_green()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.pSDB_red"><code class="docutils literal notranslate"><span class="pre">pSDB_red()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.rrs"><code class="docutils literal notranslate"><span class="pre">rrs()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.spm_nechad2016_665"><code class="docutils literal notranslate"><span class="pre">spm_nechad2016_665()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.spm_nechad2016_704"><code class="docutils literal notranslate"><span class="pre">spm_nechad2016_704()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.spm_nechad2016_740"><code class="docutils literal notranslate"><span class="pre">spm_nechad2016_740()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.tur_nechad2016_665"><code class="docutils literal notranslate"><span class="pre">tur_nechad2016_665()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.tur_nechad2016_704"><code class="docutils literal notranslate"><span class="pre">tur_nechad2016_704()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.tur_nechad2016_740"><code class="docutils literal notranslate"><span class="pre">tur_nechad2016_740()</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -328,6 +347,310 @@ document.write(`
 <h1>Water Quality Module<a class="headerlink" href="#water-quality-module" title="Link to this heading">#</a></h1>
 <p>The Water Quality module provides functions for calculating water quality parameters
 from atmospherically corrected satellite imagery.</p>
+<p id="module-gee_acolite.water_quality">Water quality parameter computation and masking.</p>
+<p>This module provides functions to compute various water quality parameters
+from atmospherically corrected satellite imagery, including:
+- Suspended particulate matter (SPM)
+- Turbidity
+- Chlorophyll-a concentration
+- Satellite-derived bathymetry (SDB)
+- Remote sensing reflectance (Rrs)</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.chl_oc2">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">chl_oc2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#chl_oc2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.chl_oc2" title="Link to this definition">#</a></dt>
+<dd><p>Compute chlorophyll-a concentration using OC2 algorithm.</p>
+<p>Two-band blue-green ratio algorithm for chlorophyll-a estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance bands ‘rhos_B2’ (blue) and ‘rhos_B3’ (green).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Chlorophyll-a concentration in mg/m³.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>TODO: Interpolate B1 to B2 dimensions for improved accuracy.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.chl_oc3">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">chl_oc3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#chl_oc3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.chl_oc3" title="Link to this definition">#</a></dt>
+<dd><p>Compute chlorophyll-a concentration using OC3 algorithm.</p>
+<p>Three-band ratio algorithm using maximum of blue bands vs green.
+More robust than OC2 for varying water types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance bands ‘rhos_B1’, ‘rhos_B2’ (blue),
+and ‘rhos_B3’ (green).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Chlorophyll-a concentration in mg/m³.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>TODO: Interpolate B1 to B2 dimensions for improved accuracy.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.chl_re_mishra">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">chl_re_mishra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#chl_re_mishra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.chl_re_mishra" title="Link to this definition">#</a></dt>
+<dd><p>Compute chlorophyll-a concentration using red edge NDCI algorithm.</p>
+<p>Uses Normalized Difference Chlorophyll Index (NDCI) based on red edge
+bands. Particularly effective for turbid and productive waters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance bands ‘rhos_B5’ (red edge at 704nm)
+and ‘rhos_B4’ (red at 665nm).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Chlorophyll-a concentration in mg/m³.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Mishra &amp; Mishra (2012). Normalized difference chlorophyll index:
+A novel model for remote estimation of chlorophyll-a concentration in
+turbid productive waters. Remote Sensing of Environment, 117, 394-406.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.compute_water_bands">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">compute_water_bands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#compute_water_bands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.compute_water_bands" title="Link to this definition">#</a></dt>
+<dd><p>Compute water quality parameters and add them as bands.</p>
+<p>Applies water mask and computes selected water quality parameters
+based on settings configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Atmospherically corrected image with surface reflectance bands.</p></li>
+<li><p><strong>settings</strong> (<em>dict</em>) – Processing settings including ‘l2w_parameters’ list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Input image with added water quality parameter bands.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.compute_water_mask">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">compute_water_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#compute_water_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.compute_water_mask" title="Link to this definition">#</a></dt>
+<dd><p>Create a comprehensive water mask for quality control.</p>
+<p>Combines multiple masking criteria to identify valid water pixels:
+- Water/land classification
+- Cirrus cloud contamination
+- High TOA reflectance (clouds, bright targets)
+- Optional cloud probability mask</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Atmospherically corrected image with TOA and surface reflectance bands.</p></li>
+<li><p><strong>settings</strong> (<em>dict</em>) – Processing settings including mask thresholds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Binary mask where valid water pixels = 1.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.ndwi">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">ndwi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#ndwi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.ndwi" title="Link to this definition">#</a></dt>
+<dd><p>Compute Normalized Difference Water Index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with remote sensing reflectance bands ‘Rrs_B3’ (green)
+and ‘Rrs_B8’ (NIR).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NDWI values (range: -1 to 1).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.pSDB_green">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">pSDB_green</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#pSDB_green"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.pSDB_green" title="Link to this definition">#</a></dt>
+<dd><p>Compute pseudo-Satellite Derived Bathymetry using blue-green ratio.</p>
+<p>Implements log-ratio bathymetry algorithm using blue and green bands.
+Generally more sensitive in clearer waters compared to blue-red ratio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with remote sensing reflectance bands ‘Rrs_B2’ (blue)
+and ‘Rrs_B3’ (green).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pseudo-bathymetry index (higher values = shallower water).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.pSDB_red">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">pSDB_red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#pSDB_red"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.pSDB_red" title="Link to this definition">#</a></dt>
+<dd><p>Compute pseudo-Satellite Derived Bathymetry using blue-red ratio.</p>
+<p>Implements log-ratio bathymetry algorithm using blue and red bands.
+Provides relative depth estimation in clear shallow waters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with remote sensing reflectance bands ‘Rrs_B2’ (blue)
+and ‘Rrs_B4’ (red).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pseudo-bathymetry index (higher values = shallower water).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.rrs">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">rrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#rrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.rrs" title="Link to this definition">#</a></dt>
+<dd><p>Convert surface reflectance to remote sensing reflectance.</p>
+<p>Transforms surface reflectance (rhos) to remote sensing reflectance (Rrs)
+by dividing by π. Rrs is the standard unit for ocean color products.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance bands (rhos_B*).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of Rrs bands for all Sentinel-2 bands.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.spm_nechad2016_665">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">spm_nechad2016_665</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#spm_nechad2016_665"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.spm_nechad2016_665" title="Link to this definition">#</a></dt>
+<dd><p>Compute suspended particulate matter using Nechad et al. (2016) algorithm at 665nm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance band ‘rhos_B4’ (red band at 665nm).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SPM concentration in mg/L.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Nechad et al. (2016). Calibration and validation of a generic multisensor
+algorithm for mapping of total suspended matter in turbid waters.
+Remote Sensing of Environment, 159, 139-152.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.spm_nechad2016_704">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">spm_nechad2016_704</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#spm_nechad2016_704"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.spm_nechad2016_704" title="Link to this definition">#</a></dt>
+<dd><p>Compute suspended particulate matter using Nechad et al. (2016) algorithm at 704nm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance band ‘rhos_B5’ (red edge at 704nm).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SPM concentration in mg/L.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.spm_nechad2016_740">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">spm_nechad2016_740</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#spm_nechad2016_740"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.spm_nechad2016_740" title="Link to this definition">#</a></dt>
+<dd><p>Compute suspended particulate matter using Nechad et al. (2016) algorithm at 740nm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance band ‘rhos_B6’ (NIR at 740nm).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SPM concentration in mg/L.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.tur_nechad2016_665">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">tur_nechad2016_665</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#tur_nechad2016_665"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.tur_nechad2016_665" title="Link to this definition">#</a></dt>
+<dd><p>Compute turbidity using Nechad et al. (2016) algorithm at 665nm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance band ‘rhos_B4’ (red band at 665nm).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Turbidity in FNU (Formazin Nephelometric Units).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.tur_nechad2016_704">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">tur_nechad2016_704</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#tur_nechad2016_704"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.tur_nechad2016_704" title="Link to this definition">#</a></dt>
+<dd><p>Compute turbidity using Nechad et al. (2016) algorithm at 704nm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance band ‘rhos_B5’ (red edge at 704nm).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Turbidity in FNU (Formazin Nephelometric Units).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.water_quality.tur_nechad2016_740">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.water_quality.</span></span><span class="sig-name descname"><span class="pre">tur_nechad2016_740</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/water_quality.html#tur_nechad2016_740"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.water_quality.tur_nechad2016_740" title="Link to this definition">#</a></dt>
+<dd><p>Compute turbidity using Nechad et al. (2016) algorithm at 740nm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Image with surface reflectance band ‘rhos_B6’ (NIR at 740nm).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Turbidity in FNU (Formazin Nephelometric Units).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -365,6 +688,35 @@ from atmospherically corrected satellite imagery.</p>
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.chl_oc2"><code class="docutils literal notranslate"><span class="pre">chl_oc2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.chl_oc3"><code class="docutils literal notranslate"><span class="pre">chl_oc3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.chl_re_mishra"><code class="docutils literal notranslate"><span class="pre">chl_re_mishra()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.compute_water_bands"><code class="docutils literal notranslate"><span class="pre">compute_water_bands()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.compute_water_mask"><code class="docutils literal notranslate"><span class="pre">compute_water_mask()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.ndwi"><code class="docutils literal notranslate"><span class="pre">ndwi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.pSDB_green"><code class="docutils literal notranslate"><span class="pre">pSDB_green()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.pSDB_red"><code class="docutils literal notranslate"><span class="pre">pSDB_red()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.rrs"><code class="docutils literal notranslate"><span class="pre">rrs()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.spm_nechad2016_665"><code class="docutils literal notranslate"><span class="pre">spm_nechad2016_665()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.spm_nechad2016_704"><code class="docutils literal notranslate"><span class="pre">spm_nechad2016_704()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.spm_nechad2016_740"><code class="docutils literal notranslate"><span class="pre">spm_nechad2016_740()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.tur_nechad2016_665"><code class="docutils literal notranslate"><span class="pre">tur_nechad2016_665()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.tur_nechad2016_704"><code class="docutils literal notranslate"><span class="pre">tur_nechad2016_704()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.water_quality.tur_nechad2016_740"><code class="docutils literal notranslate"><span class="pre">tur_nechad2016_740()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

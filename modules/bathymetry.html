@@ -45,7 +45,7 @@
     <link rel="canonical" href="https://aouei.github.io/gee_acolite/modules/bathymetry.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Sensors Package" href="sensors.html" />
+    <link rel="next" title="Utils Package" href="utils.html" />
     <link rel="prev" title="Water Quality Module" href="water_quality.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -153,17 +153,12 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guide/quickstart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="correction.html">Correction Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="water_quality.html">Water Quality Module</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Bathymetry Module</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="sensors.html">Sensors Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="sensors.sentinel2.html">Sentinel-2 Module</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="utils.html">Utils Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="utils.l1_convert.html">L1 Convert Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.masks.html">Masks Module</a></li>
@@ -299,7 +294,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -315,6 +312,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.bathymetry.multi_image"><code class="docutils literal notranslate"><span class="pre">multi_image()</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -327,6 +332,35 @@ document.write(`
   <section id="bathymetry-module">
 <h1>Bathymetry Module<a class="headerlink" href="#bathymetry-module" title="Link to this heading">#</a></h1>
 <p>The Bathymetry module provides functions for satellite-derived bathymetry (SDB) estimation.</p>
+<p id="module-gee_acolite.bathymetry">Bathymetry utilities for satellite-derived bathymetry (SDB) processing.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gee_acolite.bathymetry.multi_image">
+<span class="sig-prename descclassname"><span class="pre">gee_acolite.bathymetry.</span></span><span class="sig-name descname"><span class="pre">multi_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.ImageCollection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pSDB_green'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/bathymetry.html#multi_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.bathymetry.multi_image" title="Link to this definition">#</a></dt>
+<dd><p>Create a quality mosaic from multiple images based on a bathymetry band.</p>
+<p>Selects the best pixel values from a collection of images based on the
+quality of a specified bathymetry band (e.g., pseudo-Satellite Derived Bathymetry).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>images</strong> (<em>ee.ImageCollection</em>) – Collection of images containing bathymetry bands.</p></li>
+<li><p><strong>band</strong> (<em>str</em><em>, </em><em>optional</em>) – Band name to use for quality assessment (default: ‘pSDB_green’).
+Pixels with higher values in this band are prioritized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Quality mosaic image with the best pixels from the collection.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">images</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">([</span><span class="n">image1</span><span class="p">,</span> <span class="n">image2</span><span class="p">,</span> <span class="n">image3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mosaic</span> <span class="o">=</span> <span class="n">multi_image</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">band</span><span class="o">=</span><span class="s1">&#39;pSDB_red&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 
 
@@ -350,11 +384,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="sensors.html"
+       href="utils.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Sensors Package</p>
+        <p class="prev-next-title">Utils Package</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -364,6 +398,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.bathymetry.multi_image"><code class="docutils literal notranslate"><span class="pre">multi_image()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -45,7 +45,7 @@
     <link rel="canonical" href="https://aouei.github.io/gee_acolite/user_guide/installation.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Quick Start" href="quickstart.html" />
+    <link rel="next" title="Correction Module" href="../modules/correction.html" />
     <link rel="prev" title="Welcome to gee_acolite’s documentation!" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -153,17 +153,12 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../modules/correction.html">Correction Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/water_quality.html">Water Quality Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/bathymetry.html">Bathymetry Module</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../modules/sensors.html">Sensors Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../modules/sensors.sentinel2.html">Sentinel-2 Module</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../modules/utils.html">Utils Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../modules/utils.l1_convert.html">L1 Convert Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/utils.masks.html">Masks Module</a></li>
@@ -368,9 +363,8 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <ul class="simple">
 <li><p>earthengine-api</p></li>
 <li><p>numpy</p></li>
-<li><p>pandas</p></li>
-<li><p>xarray</p></li>
-<li><p>rasterio</p></li>
+<li><p>scipy</p></li>
+<li><p>netcdf4</p></li>
 </ul>
 </section>
 <section id="setting-up-google-earth-engine">
@@ -406,11 +400,11 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
       </div>
     </a>
     <a class="right-next"
-       href="quickstart.html"
+       href="../modules/correction.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Quick Start</p>
+        <p class="prev-next-title">Correction Module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
