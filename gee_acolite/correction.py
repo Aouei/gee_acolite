@@ -1,3 +1,10 @@
+"""
+Atmospheric correction using ACOLITE Dark Spectrum Fitting.
+
+This module implements the ACOLITE atmospheric correction method adapted for
+Google Earth Engine workflows with Sentinel-2 imagery. It provides dark spectrum
+fitting for aerosol optical thickness (AOT) estimation and atmospheric correction.
+"""
 import numpy as np
 import scipy.stats
 import ee
@@ -14,15 +21,75 @@ from gee_acolite.water_quality import compute_water_bands
 
 
 class ACOLITE(object):
+    """
+    ACOLITE atmospheric correction for Google Earth Engine.
+    
+    This class implements the ACOLITE Dark Spectrum Fitting (DSF) atmospheric
+    correction method optimized for Google Earth Engine with Sentinel-2 imagery.
+    
+    Parameters
+    ----------
+    acolite : ModuleType
+        ACOLITE module imported from the ACOLITE package.
+    settings : str or dict
+        Path to settings file or dictionary with processing settings.
+    
+    Attributes
+    ----------
+    acolite : ModuleType
+        Reference to ACOLITE module.
+    settings : dict
+        Parsed processing settings.
+    
+    Examples
+    --------
+    >>> import acolite as ac
+    >>> from gee_acolite import ACOLITE
+    >>> ac_gee = ACOLITE(ac, 'config/settings.txt')
+    >>> corrected_images, settings = ac_gee.correct(image_collection)
+    """
+    
     def __init__(self, acolite: ModuleType, settings: str | dict) -> None:
         self.acolite = acolite
         self.settings = self.__load_settings(settings)
 
     def __load_settings(self, settings: str | dict):
+        """
+        Load and parse ACOLITE settings.
+        
+        Parameters
+        ----------
+        settings : str or dict
+            Path to settings file or dictionary with settings.
+        
+        Returns
+        -------
+        dict
+            Parsed settings dictionary.
+        """
         # return self.acolite.acolite.settings.load(settings)
         return self.acolite.acolite.settings.parse('S2A_MSI', settings = settings)
     
     def correct(self, images : ee.ImageCollection) -> Tuple[ee.ImageCollection, dict]:
+        """
+        Apply atmospheric correction to image collection.
+        
+        Main entry point for atmospheric correction processing. Converts L1C
+        top-of-atmosphere (TOA) reflectance to surface reflectance using the
+        ACOLITE Dark Spectrum Fitting method.
+        
+        Parameters
+        ----------
+        images : ee.ImageCollection
+            Collection of Sentinel-2 L1C images.
+        
+        Returns
+        -------
+        corrected_images : ee.ImageCollection
+            Atmospherically corrected images with surface reflectance bands.
+        settings : dict
+            Processing settings used for correction.
+        """
         images = l1_to_rrs(images, self.settings.get('s2_target_res', 10))
         images, settings = self.l1_to_l2(images.toList(images.size()), images.size().getInfo(), self.settings)
 
@@ -30,6 +97,29 @@ class ACOLITE(object):
     
 
     def l1_to_l2(self, images : ee.List, size : int, settings : dict) -> Tuple[ee.ImageCollection, dict]:
+        """
+        Convert L1 TOA reflectance to L2 surface reflectance.
+        
+        Processes each image in the collection through atmospheric correction
+        and optionally applies residual glint correction and water quality
+        parameter computation.
+        
+        Parameters
+        ----------
+        images : ee.List
+            List of ee.Image objects (L1C TOA reflectance).
+        size : int
+            Number of images in the list.
+        settings : dict
+            Processing settings including correction parameters.
+        
+        Returns
+        -------
+        corrected_images : ee.ImageCollection
+            Collection of atmospherically corrected images.
+        settings : dict
+            Processing settings used.
+        """
         corrected_images = []
 
         if settings['aerosol_correction'] == 'dark_spectrum':
@@ -55,6 +145,29 @@ class ACOLITE(object):
         return corrected_images, settings
     
     def dask_spectrum_fitting(self, image : ee.Image, settings : dict) -> Tuple[ee.Image, List[str], dict]:
+        """
+        Perform dark spectrum fitting atmospheric correction.
+        
+        Main workflow for dark spectrum fitting (DSF). Retrieves ancillary data,
+        selects optimal atmospheric model (LUT), estimates AOT, and computes
+        surface reflectance.
+        
+        Parameters
+        ----------
+        image : ee.Image
+            Input image with TOA reflectance.
+        settings : dict
+            Processing settings.
+        
+        Returns
+        -------
+        rhos : ee.Image
+            Surface reflectance image.
+        bands : list of str
+            List of band names processed.
+        glint_ave : dict
+            Glint correction parameters per band.
+        """
         if settings.get('ancillary_data', False):
             settings = self.get_ancillary_data(image, settings)
         else:
@@ -82,19 +195,35 @@ class ACOLITE(object):
                              geometry: dict, settings: dict, 
                              aot_skip_bands: List[str] = ['9', '10', '11', '12']) -> dict:
         """
-        Estimate AOT for each LUT model using dark spectrum fitting.
+        Estimate aerosol optical thickness (AOT) for each LUT model.
         
-        Parameters:
-        - pdark: Dark spectrum values per band
-        - lutd: LUT dictionary with atmospheric models
-        - rsrd: Relative spectral response dictionary
-        - ttg: Gas transmittance dictionary
-        - geometry: Dict with 'raa', 'vza', 'sza', 'pressure'
-        - settings: Processing settings
-        - aot_skip_bands: Bands to skip in AOT estimation
+        Uses dark spectrum fitting to estimate AOT at 550nm for each atmospheric
+        model in the LUT dictionary. The method finds AOT values that best match
+        observed dark spectrum reflectance with modeled path reflectance.
         
-        Returns:
-        - results: Dict with AOT estimation results per LUT
+        Parameters
+        ----------
+        pdark : dict
+            Dark spectrum values per band (e.g., {'B1': 0.05, 'B2': 0.04, ...}).
+        lutd : dict
+            Look-up table dictionary with atmospheric models.
+        rsrd : dict
+            Relative spectral response dictionary for the sensor.
+        ttg : dict
+            Gas transmittance values per band.
+        geometry : dict
+            Viewing geometry with keys 'raa', 'vza', 'sza', 'pressure'.
+        settings : dict
+            Processing settings including 'dsf_nbands'.
+        aot_skip_bands : list of str, optional
+            Band numbers to skip in AOT estimation (default: ['9', '10', '11', '12']).
+        
+        Returns
+        -------
+        results : dict
+            Dictionary with AOT estimation results per LUT model.
+            Each entry contains: 'taua', 'taua_std', 'taua_cv', 'taua_bands',
+            'taua_arr', 'rhot_arr', 'bidx'.
         """
         results = {}
         nbands = settings['dsf_nbands']
@@ -158,19 +287,33 @@ class ACOLITE(object):
     def select_best_model(self, results: dict, lutd: dict, geometry: dict, 
                          settings: dict) -> Tuple[str, float, str, float]:
         """
-        Select best atmospheric model based on selection criterion.
+        Select the best atmospheric model from AOT estimation results.
         
-        Parameters:
-        - results: AOT estimation results per LUT from estimate_aot_per_lut
-        - lutd: LUT dictionary with atmospheric models
-        - geometry: Dict with 'raa', 'vza', 'sza', 'pressure'
-        - settings: Processing settings with selection method
+        Evaluates multiple atmospheric models and selects the one that best
+        fits the observed data based on the specified selection criterion
+        (e.g., minimum RMSD, minimum delta tau, or coefficient of variation).
         
-        Returns:
-        - sel_lut: Selected LUT name
-        - sel_aot: Selected AOT value
-        - sel_par: Selection parameter name
-        - sel_val: Selection parameter value
+        Parameters
+        ----------
+        results : dict
+            AOT estimation results per LUT from estimate_aot_per_lut.
+        lutd : dict
+            Look-up table dictionary with atmospheric models.
+        geometry : dict
+            Viewing geometry with keys 'raa', 'vza', 'sza', 'pressure'.
+        settings : dict
+            Processing settings including 'dsf_model_selection' and 'dsf_nbands_fit'.
+        
+        Returns
+        -------
+        sel_lut : str
+            Selected LUT name (e.g., 'ACOLITE-LUT-202110-MOD1').
+        sel_aot : float
+            Selected AOT value at 550nm.
+        sel_par : str
+            Selection parameter name used ('rmsd', 'dtau', or 'taua_cv').
+        sel_val : float
+            Value of the selection parameter for the chosen model.
         """
         dsf_model_selection = settings.get('dsf_model_selection', 'min_drmsd')
         dsf_nbands_fit = settings.get('dsf_nbands_fit', 2)
@@ -235,23 +378,34 @@ class ACOLITE(object):
     
     def select_lut(self, image : ee.Image, settings : dict, aot_skip_bands : List[str] = ['9', '10', '11', '12']) -> Tuple[dict, dict, List[str]]:
         """
-        Main function for LUT selection and atmospheric correction parameter computation.
+        Select optimal LUT and compute atmospheric correction parameters.
         
-        This function orchestrates:
-        1. Dark spectrum extraction
-        2. AOT estimation per LUT model
-        3. Model selection based on validation criterion
-        4. Computation of atmospheric correction parameters
+        Main orchestration function for the dark spectrum fitting workflow:
+        1. Extracts dark spectrum from the image
+        2. Estimates AOT for each atmospheric model
+        3. Selects the best model based on validation criterion
+        4. Computes atmospheric correction parameters (path reflectance, 
+           transmittance, spherical albedo, gas transmittance)
+        5. Computes glint correction parameters
         
-        Parameters:
-        - image: Input ee.Image
-        - settings: Processing settings
-        - aot_skip_bands: Bands to skip in AOT estimation
+        Parameters
+        ----------
+        image : ee.Image
+            Input image with TOA reflectance and geometry metadata.
+        settings : dict
+            Processing settings.
+        aot_skip_bands : list of str, optional
+            Band numbers to skip in AOT estimation (default: ['9', '10', '11', '12']).
         
-        Returns:
-        - am: Atmospheric correction parameters (romix, dutott, astot, tg)
-        - glint_ave: Glint correction parameters per band
-        - bands: List of band names
+        Returns
+        -------
+        am : dict
+            Atmospheric correction parameters with keys 'romix', 'dutott', 
+            'astot', 'tg'. Each contains per-band values.
+        glint_ave : dict
+            Glint correction parameters per band (surface reflectance ratios).
+        bands : list of str
+            List of band names processed.
         """
         # Extract dark spectrum
         pdark = self.compute_pdark(image, settings)
@@ -321,19 +475,35 @@ class ACOLITE(object):
         """
         Compute atmospheric correction parameters using fixed AOT and LUT.
         
-        This function bypasses dark spectrum fitting and directly computes
-        correction parameters for a specified AOT and atmospheric model.
+        Alternative to dark spectrum fitting. Directly computes atmospheric
+        correction parameters for a user-specified AOT value and atmospheric
+        model. Useful for sensitivity analysis or when AOT is known a priori.
         
-        Parameters:
-        - image: Input ee.Image (TOA reflectance)
-        - aot: Fixed aerosol optical thickness at 550nm
-        - lut_name: LUT name (e.g., 'ACOLITE-LUT-202110-MOD2')
-        - settings: Processing settings
+        Parameters
+        ----------
+        image : ee.Image
+            Input image with TOA reflectance and geometry metadata.
+        aot : float
+            Fixed aerosol optical thickness at 550nm.
+        lut_name : str
+            LUT name (e.g., 'ACOLITE-LUT-202110-MOD2').
+        settings : dict
+            Processing settings including pressure, ozone, water vapor.
         
-        Returns:
-        - am: Atmospheric correction parameters (romix, dutott, astot, tg)
-        - glint_ave: Glint correction parameters per band
-        - bands: List of band names
+        Returns
+        -------
+        am : dict
+            Atmospheric correction parameters with keys 'romix', 'dutott',
+            'astot', 'tg'. Each contains per-band values.
+        glint_ave : dict
+            Glint correction parameters per band.
+        bands : list of str
+            List of band names processed.
+        
+        Raises
+        ------
+        ValueError
+            If specified LUT name is not found in available LUTs.
         """
         # Extract geometry from image
         raa = image.get('raa').getInfo()
@@ -403,6 +573,26 @@ class ACOLITE(object):
         return am, glint_ave, rsrd['rsr_bands']
     
     def compute_pdark(self, image : ee.Image, settings : dict):
+        """
+        Compute dark spectrum values from an image.
+        
+        Extracts dark pixel reflectance values for each band using one of
+        three methods: darkest pixels (0th percentile), percentile-based,
+        or linear intercept method.
+        
+        Parameters
+        ----------
+        image : ee.Image
+            Input image with TOA reflectance.
+        settings : dict
+            Processing settings including 'dsf_spectrum_option', 
+            'dsf_percentile', 'dsf_intercept_pixels'.
+        
+        Returns
+        -------
+        pdark_by_band : dict
+            Dictionary with dark spectrum values per band (e.g., {'B1': 0.05, ...}).
+        """
         obands_rhot = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12']
 
         image_to_reduce = image.updateMask(image.gt(0))
@@ -442,6 +632,28 @@ class ACOLITE(object):
         return pdark_by_band
     
     def compute_rhos(self, image : ee.Image, am : dict) -> ee.Image:
+        """
+        Compute surface reflectance from TOA reflectance.
+        
+        Applies atmospheric correction using computed atmospheric parameters
+        to derive surface reflectance. Also adds TOA reflectance bands to
+        the output image.
+        
+        Parameters
+        ----------
+        image : ee.Image
+            Input image with TOA reflectance bands.
+        am : dict
+            Atmospheric correction parameters with keys 'romix' (path reflectance),
+            'dutott' (total upward transmittance), 'astot' (spherical albedo),
+            'tg' (gas transmittance).
+        
+        Returns
+        -------
+        l2r_rrs : ee.Image
+            Image with both TOA reflectance (rhot_*) and surface reflectance
+            (rhos_*) bands.
+        """
         l2r_rrs = ee.Image().select([])
 
         romix = am['romix']
@@ -461,6 +673,25 @@ class ACOLITE(object):
 
 
     def get_ancillary_data(self, image: ee.Image, settings : dict) -> dict:
+        """
+        Retrieve ancillary atmospheric data from NASA Earthdata.
+        
+        Fetches ozone, water vapor, wind speed, and surface pressure data
+        from NASA GMAO or NCEP reanalysis products for the image location
+        and acquisition time.
+        
+        Parameters
+        ----------
+        image : ee.Image
+            Input image with geometry and timestamp.
+        settings : dict
+            Processing settings including Earthdata credentials and default values.
+        
+        Returns
+        -------
+        settings : dict
+            Updated settings with ancillary data values.
+        """
         settings = self.prepare_earthdata_credentials(settings)
         iso_date, lon, lat = self.prepare_query(image)
 
@@ -473,6 +704,23 @@ class ACOLITE(object):
         return settings
 
     def prepare_query(self, image: ee.Image):
+        """
+        Extract location and timestamp from image for ancillary data query.
+        
+        Parameters
+        ----------
+        image : ee.Image
+            Input image with geometry and timestamp metadata.
+        
+        Returns
+        -------
+        iso_date : str
+            ISO formatted date string.
+        lon : float
+            Longitude of image centroid.
+        lat : float
+            Latitude of image centroid.
+        """
         coords = image.geometry().centroid().coordinates().getInfo()
         iso_date = ee.Date(image.get('system:time_start')).format('YYYY-MM-dd HH:mm:ss').getInfo()
 
@@ -480,6 +728,19 @@ class ACOLITE(object):
         return iso_date,lon,lat
 
     def prepare_earthdata_credentials(self, settings: dict) -> dict:
+        """
+        Set NASA Earthdata credentials as environment variables.
+        
+        Parameters
+        ----------
+        settings : dict
+            Settings dictionary potentially containing 'EARTHDATA_u' and 'EARTHDATA_p'.
+        
+        Returns
+        -------
+        settings : dict
+            Input settings dictionary (unchanged).
+        """
         for k in ['EARTHDATA_u', 'EARTHDATA_p']:
             kv = settings[k] if k in settings else self.acolite.ac.config[k]
             if len(kv) == 0: continue
@@ -491,22 +752,36 @@ class ACOLITE(object):
     def deglint_alternative(self, image : ee.Image, bands : List[str], 
                             glint_ave : dict, glint_min : float = 0, glint_max : float = 0.08) -> ee.Image:
         """
-        Alternative glint correction method based on ACOLITE's acolite_l2r.py implementation.
+        Remove residual sun glint from surface reflectance image.
         
-        This method:
-        1. Uses reference SWIR bands (B11, B12) to estimate observed glint
-        2. Computes average modeled surface reflectance (glint_ave) for reference bands
-        3. For each band, scales the observed glint by the ratio of:
-           - Modeled surface reflectance for current band
-           - Average modeled surface reflectance of reference bands
-        4. Subtracts the scaled glint from each band's rhos
+        Alternative glint correction method based on ACOLITE's implementation.
+        Uses SWIR bands (B11, B12) as reference to estimate and remove glint
+        contamination. The glint signal is spectrally scaled based on modeled
+        surface reflectance ratios.
         
-        Parameters:
-        - image: Image with rhos bands
-        - bands: List of band numbers (as strings)
-        - glint_ave: Dict with modeled surface reflectance ratio per band
-        - glint_min: Minimum threshold for glint mask (default: 0)
-        - glint_max: Maximum threshold for glint mask (glint_mask_rhos_threshold)
+        Workflow:
+        1. Computes observed glint as average of SWIR reference bands (B11, B12)
+        2. Calculates average modeled surface reflectance for reference bands
+        3. For each band, scales observed glint by ratio of modeled reflectances
+        4. Subtracts scaled glint from surface reflectance
+        
+        Parameters
+        ----------
+        image : ee.Image
+            Image with surface reflectance (rhos_*) bands.
+        bands : list of str
+            List of band numbers to correct (as strings, e.g., ['1', '2', ...]).
+        glint_ave : dict
+            Modeled surface reflectance ratios per band.
+        glint_min : float, optional
+            Minimum threshold for glint mask (default: 0).
+        glint_max : float, optional
+            Maximum threshold for glint mask (default: 0.08).
+        
+        Returns
+        -------
+        deglinted : ee.Image
+            Image with glint-corrected surface reflectance bands.
         """
         
         # Start with a copy of the original image to preserve all bands
