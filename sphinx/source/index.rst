@@ -9,7 +9,6 @@ enabling efficient processing of satellite imagery for water quality monitoring 
    :caption: User Guide:
 
    user_guide/installation
-   user_guide/quickstart
 
 .. toctree::
    :maxdepth: 2
@@ -18,7 +17,6 @@ enabling efficient processing of satellite imagery for water quality monitoring 
    modules/correction
    modules/water_quality
    modules/bathymetry
-   modules/sensors
    modules/utils
 
 .. toctree::

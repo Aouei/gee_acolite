@@ -12,27 +12,19 @@ Main Features:
 
 Note: Requires ACOLITE package to be installed separately.
 Install from: https://github.com/acolite/acolite
+
+Usage
+-----
+Import specific components directly from their modules:
+
+    from gee_acolite.correction import ACOLITE
+    from gee_acolite.bathymetry import multi_image
+    from gee_acolite.water_quality import compute_water_bands, compute_water_mask, PRODUCTS
 """
 
 __version__ = "0.1.0"
 __author__ = "Sergio"
 __license__ = "GPL-3.0"
-
-# Main atmospheric correction class
-from gee_acolite.correction import ACOLITE
-
-# Bathymetry utilities
-from gee_acolite.bathymetry import multi_image
-
-# Water quality parameters
-from gee_acolite.water_quality import (
-    compute_water_bands,
-    compute_water_mask,
-    PRODUCTS
-)
-
-# Utility modules
-from gee_acolite import utils, sensors
 
 __all__ = [
     # Main class
@@ -43,7 +35,4 @@ __all__ = [
     "compute_water_bands",
     "compute_water_mask",
     "PRODUCTS",
-    # Modules
-    "utils",
-    "sensors",
 ]

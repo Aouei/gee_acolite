@@ -17,7 +17,6 @@ from gee_acolite.utils.search import (
     search,
     search_list,
     search_with_cloud_proba,
-    search_list_with_cloud_proba,
     join_s2_with_cloud_prob,
 )
 
@@ -39,6 +38,5 @@ __all__ = [
     "search",
     "search_list",
     "search_with_cloud_proba",
-    "search_list_with_cloud_proba",
     "join_s2_with_cloud_prob",
 ]

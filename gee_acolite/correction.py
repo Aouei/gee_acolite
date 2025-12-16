@@ -381,11 +381,11 @@ class ACOLITE(object):
         Select optimal LUT and compute atmospheric correction parameters.
         
         Main orchestration function for the dark spectrum fitting workflow:
+        
         1. Extracts dark spectrum from the image
         2. Estimates AOT for each atmospheric model
         3. Selects the best model based on validation criterion
-        4. Computes atmospheric correction parameters (path reflectance, 
-           transmittance, spherical albedo, gas transmittance)
+        4. Computes atmospheric correction parameters (path reflectance, transmittance, spherical albedo, gas transmittance)
         5. Computes glint correction parameters
         
         Parameters

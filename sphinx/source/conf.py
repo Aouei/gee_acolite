@@ -59,3 +59,9 @@ autodoc_default_options = {
     'undoc-members': True,
     'show-inheritance': True,
 }
+
+# Mock imports for dependencies not available during documentation build
+autodoc_mock_imports = ['ee', 'scipy', 'numpy', 'dask', 'geemap', 'xarray', 'netCDF4', 'rasterio']
+
+# Prevent circular import issues during documentation build
+autodoc_preserve_defaults = True

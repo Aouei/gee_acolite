@@ -31,9 +31,8 @@ The main dependencies will be installed automatically:
 
 * earthengine-api
 * numpy
-* pandas
-* xarray
-* rasterio
+* scipy
+* netcdf4
 
 Setting up Google Earth Engine
 -------------------------------
