@@ -276,51 +276,141 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for gee_acolite.utils.masks</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Masking utilities for quality control and scene filtering.</span>
+
+<span class="sd">Provides functions to create various masks for cloud detection,</span>
+<span class="sd">water/land classification, and quality filtering.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
 
 
 <div class="viewcode-block" id="mask_negative_reflectance">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.mask_negative_reflectance">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.mask_negative_reflectance">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mask_negative_reflectance</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">band</span> <span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mask out negative reflectance values.</span>
+<span class="sd">    </span>
+<span class="sd">    Removes pixels with negative reflectance, which are physically</span>
+<span class="sd">    impossible and indicate processing errors or noise.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with reflectance band.</span>
+<span class="sd">    band : str</span>
+<span class="sd">        Band name to check for negative values.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Masked image with only non-negative values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">gte</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">band</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="toa_mask">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.toa_mask">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.toa_mask">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">toa_mask</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">band</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rhot_B11&#39;</span><span class="p">,</span> <span class="n">threshold</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.03</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create mask based on TOA reflectance threshold.</span>
+<span class="sd">    </span>
+<span class="sd">    Masks pixels with high TOA reflectance, typically indicating</span>
+<span class="sd">    clouds, bright surfaces, or other anomalies.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with TOA reflectance bands.</span>
+<span class="sd">    band : str, optional</span>
+<span class="sd">        Band name to check (default: &#39;rhot_B11&#39; - SWIR).</span>
+<span class="sd">    threshold : float, optional</span>
+<span class="sd">        Maximum reflectance threshold (default: 0.03).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Binary mask (1 = valid, 0 = masked).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="cirrus_mask">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.cirrus_mask">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.cirrus_mask">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cirrus_mask</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">band</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rhot_B10&#39;</span><span class="p">,</span> <span class="n">threshold</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create cirrus cloud mask.</span>
+<span class="sd">    </span>
+<span class="sd">    Uses cirrus band (1375nm) to detect high-altitude cirrus clouds.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with cirrus band.</span>
+<span class="sd">    band : str, optional</span>
+<span class="sd">        Cirrus band name (default: &#39;rhot_B10&#39;).</span>
+<span class="sd">    threshold : float, optional</span>
+<span class="sd">        Maximum cirrus reflectance (default: 0.005).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Binary mask (1 = no cirrus, 0 = cirrus detected).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="non_water">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.non_water">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.non_water">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">non_water</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">band</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rhot_B11&#39;</span><span class="p">,</span> <span class="n">threshold</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create water/land classification mask.</span>
+<span class="sd">    </span>
+<span class="sd">    Uses SWIR reflectance to distinguish water from land.</span>
+<span class="sd">    Water has low SWIR reflectance due to strong absorption.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with SWIR band.</span>
+<span class="sd">    band : str, optional</span>
+<span class="sd">        SWIR band name (default: &#39;rhot_B11&#39;).</span>
+<span class="sd">    threshold : float, optional</span>
+<span class="sd">        Maximum reflectance for water (default: 0.05).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Binary mask (1 = water, 0 = land).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="add_cloud_bands">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.add_cloud_bands">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.add_cloud_bands">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">add_cloud_bands</span><span class="p">(</span><span class="n">img</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">cloud_prob_threshold</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Añade banda de máscara de nubes a la imagen</span>
+<span class="sd">    Add cloud mask band based on cloud probability.</span>
 <span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        img: Imagen con banda &#39;probability&#39; de Cloud Probability</span>
-<span class="sd">        cloud_prob_threshold: Umbral de probabilidad de nube (0-100)</span>
-<span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Imagen con banda &#39;clouds&#39; añadida</span>
+<span class="sd">    Uses Sentinel-2 Cloud Probability dataset to identify cloudy pixels.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    img : ee.Image</span>
+<span class="sd">        Image with &#39;cloud_prob&#39; property containing Cloud Probability image.</span>
+<span class="sd">    cloud_prob_threshold : float, optional</span>
+<span class="sd">        Cloud probability threshold 0-100 (default: 50).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Input image with &#39;clouds&#39; band added (1 = cloud, 0 = clear).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Obtener probabilidad de nubes (ya está como banda)</span>
+    <span class="c1"># Get cloud probability (already as band)</span>
     <span class="n">cld_prb</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cloud_prob&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
     
-    <span class="c1"># Máscara de nubes basada en umbral de probabilidad</span>
+    <span class="c1"># Cloud mask based on probability threshold</span>
     <span class="n">is_cloud</span> <span class="o">=</span> <span class="n">cld_prb</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="n">cloud_prob_threshold</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;clouds&#39;</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">is_cloud</span><span class="p">)</span></div>
@@ -328,34 +418,43 @@ document.write(`
 
 
 <div class="viewcode-block" id="add_shadow_bands">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.add_shadow_bands">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.add_shadow_bands">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">add_shadow_bands</span><span class="p">(</span><span class="n">img</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">nir_dark_threshold</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span> 
                      <span class="n">cloud_proj_distance</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Añade bandas de máscara de sombras a la imagen L1C</span>
+<span class="sd">    Add cloud shadow mask bands to L1C image.</span>
 <span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        img: Imagen con banda &#39;clouds&#39; ya añadida</span>
-<span class="sd">        nir_dark_threshold: Umbral para píxeles oscuros en NIR (0-1)</span>
-<span class="sd">        cloud_proj_distance: Distancia de proyección de sombras en km</span>
-<span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Imagen con bandas &#39;dark_pixels&#39;, &#39;cloud_transform&#39; y &#39;shadows&#39; añadidas</span>
+<span class="sd">    Identifies cloud shadows by projecting cloud locations in the direction</span>
+<span class="sd">    of solar illumination and intersecting with dark NIR pixels.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    img : ee.Image</span>
+<span class="sd">        Image with &#39;clouds&#39; band and solar geometry metadata.</span>
+<span class="sd">    nir_dark_threshold : float, optional</span>
+<span class="sd">        Threshold for dark pixels in NIR (0-1, default: 0.15).</span>
+<span class="sd">    cloud_proj_distance : float, optional</span>
+<span class="sd">        Maximum shadow projection distance in km (default: 1).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Input image with &#39;dark_pixels&#39;, &#39;cloud_transform&#39;, and &#39;shadows&#39; bands.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Píxeles oscuros en NIR (posibles sombras) - para L1C usar B8 directamente</span>
+    <span class="c1"># Dark pixels in NIR (possible shadows) - for L1C use B8 directly</span>
     <span class="n">dark_pixels</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;rhot_B8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">nir_dark_threshold</span> <span class="o">*</span> <span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;dark_pixels&#39;</span><span class="p">)</span>
     
-    <span class="c1"># Dirección de proyección de sombras</span>
+    <span class="c1"># Shadow projection direction</span>
     <span class="n">shadow_azimuth</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;MEAN_SOLAR_AZIMUTH_ANGLE&#39;</span><span class="p">)))</span>
     
-    <span class="c1"># Proyectar sombras desde nubes</span>
+    <span class="c1"># Project shadows from clouds</span>
     <span class="n">cld_proj</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;clouds&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">directionalDistanceTransform</span><span class="p">(</span><span class="n">shadow_azimuth</span><span class="p">,</span> <span class="n">cloud_proj_distance</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> \
         <span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;crs&#39;</span><span class="p">:</span> <span class="n">img</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">projection</span><span class="p">(),</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">})</span> \
         <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;distance&#39;</span><span class="p">)</span> \
         <span class="o">.</span><span class="n">mask</span><span class="p">()</span> \
         <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;cloud_transform&#39;</span><span class="p">)</span>
     
-    <span class="c1"># Identificar sombras como intersección de píxeles oscuros y proyección de nubes</span>
+    <span class="c1"># Identify shadows as intersection of dark pixels and cloud projection</span>
     <span class="n">shadows</span> <span class="o">=</span> <span class="n">cld_proj</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">dark_pixels</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;shadows&#39;</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">([</span><span class="n">dark_pixels</span><span class="p">,</span> <span class="n">cld_proj</span><span class="p">,</span> <span class="n">shadows</span><span class="p">]))</span></div>
@@ -363,33 +462,46 @@ document.write(`
 
 
 <div class="viewcode-block" id="add_cld_shdw_mask">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.add_cld_shdw_mask">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.add_cld_shdw_mask">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">add_cld_shdw_mask</span><span class="p">(</span><span class="n">img</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">cloud_prob_threshold</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
                       <span class="n">nir_dark_threshold</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">cloud_proj_distance</span> <span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
                       <span class="n">buffer</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Añade máscara combinada de nubes y sombras con buffer</span>
+<span class="sd">    Add combined cloud and shadow mask with buffer.</span>
 <span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        img: Imagen con banda &#39;probability&#39; de Cloud Probability</span>
-<span class="sd">        cloud_prob_threshold: Umbral de probabilidad de nube (0-100)</span>
-<span class="sd">        nir_dark_threshold: Umbral para píxeles oscuros en NIR (0-1)</span>
-<span class="sd">        cloud_proj_distance: Distancia de proyección de sombras en km</span>
-<span class="sd">        buffer: Buffer alrededor de nubes en metros</span>
-<span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Imagen con banda &#39;cloudmask&#39; añadida</span>
+<span class="sd">    Creates comprehensive cloud and shadow mask by combining:</span>
+<span class="sd">    1. Cloud probability mask</span>
+<span class="sd">    2. Cloud shadow detection</span>
+<span class="sd">    3. Buffer around masked areas</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    img : ee.Image</span>
+<span class="sd">        Image with &#39;cloud_prob&#39; property containing Cloud Probability data.</span>
+<span class="sd">    cloud_prob_threshold : float, optional</span>
+<span class="sd">        Cloud probability threshold 0-100 (default: 50).</span>
+<span class="sd">    nir_dark_threshold : float, optional</span>
+<span class="sd">        Threshold for dark NIR pixels 0-1 (default: 0.15).</span>
+<span class="sd">    cloud_proj_distance : float, optional</span>
+<span class="sd">        Shadow projection distance in km (default: 1).</span>
+<span class="sd">    buffer : int, optional</span>
+<span class="sd">        Buffer distance around clouds/shadows in meters (default: 50).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Input image with &#39;cloudmask&#39; band (1 = cloud/shadow, 0 = clear).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Añadir bandas de nubes</span>
+    <span class="c1"># Add cloud bands</span>
     <span class="n">img_cloud</span> <span class="o">=</span> <span class="n">add_cloud_bands</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cloud_prob_threshold</span><span class="p">)</span>
     
-    <span class="c1"># Añadir bandas de sombras</span>
+    <span class="c1"># Add shadow bands</span>
     <span class="n">img_cloud_shadow</span> <span class="o">=</span> <span class="n">add_shadow_bands</span><span class="p">(</span><span class="n">img_cloud</span><span class="p">,</span> <span class="n">nir_dark_threshold</span><span class="p">,</span> <span class="n">cloud_proj_distance</span><span class="p">)</span>
     
-    <span class="c1"># Combinar máscaras</span>
+    <span class="c1"># Combine masks</span>
     <span class="n">is_cld_shdw</span> <span class="o">=</span> <span class="n">img_cloud_shadow</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;clouds&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">img_cloud_shadow</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;shadows&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     
-    <span class="c1"># Aplicar buffer</span>
+    <span class="c1"># Apply buffer</span>
     <span class="n">is_cld_shdw</span> <span class="o">=</span> <span class="n">is_cld_shdw</span><span class="o">.</span><span class="n">focal_min</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">focal_max</span><span class="p">(</span><span class="n">buffer</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)</span> \
         <span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;crs&#39;</span><span class="p">:</span> <span class="n">img</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">projection</span><span class="p">(),</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">})</span> \
         <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;cloudmask&#39;</span><span class="p">)</span>
@@ -399,18 +511,24 @@ document.write(`
 
 
 <div class="viewcode-block" id="cld_shdw_mask">
-<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.cld_shdw_mask">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.masks.html#gee_acolite.utils.masks.cld_shdw_mask">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cld_shdw_mask</span><span class="p">(</span><span class="n">img</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Aplica la máscara de nubes y sombras a la imagen</span>
+<span class="sd">    Extract cloud/shadow mask for application.</span>
 <span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        img: Imagen con banda &#39;cloudmask&#39; ya añadida</span>
-<span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Imagen enmascarada con solo las bandas B* (bandas Sentinel-2)</span>
+<span class="sd">    Inverts the &#39;cloudmask&#39; band so that valid pixels = 1.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    img : ee.Image</span>
+<span class="sd">        Image with &#39;cloudmask&#39; band.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Binary mask (1 = valid/clear, 0 = cloud/shadow).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Obtener máscara</span>
+    <span class="c1"># Get inverted mask (1 = valid, 0 = masked)</span>
     <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;cloudmask&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Not</span><span class="p">()</span></div>
 
 </pre></div>

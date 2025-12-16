@@ -276,22 +276,64 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for gee_acolite.utils.l1_convert</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Level-1 to reflectance conversion utilities.</span>
+
+<span class="sd">Provides functions to convert Sentinel-2 L1C Digital Numbers to</span>
+<span class="sd">top-of-atmosphere (TOA) reflectance with proper geometric metadata.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.sensors.sentinel2</span><span class="w"> </span><span class="kn">import</span> <span class="n">SENTINEL2_BANDS</span><span class="p">,</span> <span class="n">BAND_BY_SCALE</span>
 
 
 <div class="viewcode-block" id="l1_to_rrs">
-<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.l1_to_rrs">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.l1_convert.l1_to_rrs">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">l1_to_rrs</span><span class="p">(</span><span class="n">images</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert L1C image collection from DN to TOA reflectance.</span>
+<span class="sd">    </span>
+<span class="sd">    Applies DN to reflectance conversion and resamples all bands to</span>
+<span class="sd">    the specified spatial resolution.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    images : ee.ImageCollection</span>
+<span class="sd">        Sentinel-2 L1C image collection with DN values.</span>
+<span class="sd">    scale : int</span>
+<span class="sd">        Target spatial resolution in meters (10, 20, or 60).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.ImageCollection</span>
+<span class="sd">        Collection with TOA reflectance and geometry metadata.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">resample_scale</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">resample</span><span class="p">,</span> <span class="n">band</span> <span class="o">=</span> <span class="n">BAND_BY_SCALE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">images</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">SENTINEL2_BANDS</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">DN_to_rrs</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">resample_scale</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DN_to_rrs">
-<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.DN_to_rrs">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.l1_convert.DN_to_rrs">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">DN_to_rrs</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert L1C image from Digital Numbers to TOA reflectance.</span>
+<span class="sd">    </span>
+<span class="sd">    Applies radiometric calibration (DN / 10000) and extracts viewing</span>
+<span class="sd">    geometry from metadata (solar and viewing zenith/azimuth angles).</span>
+<span class="sd">    Also computes relative azimuth angle.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Sentinel-2 L1C image with DN values and angle metadata.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Image with TOA reflectance (0-1) and geometry properties:</span>
+<span class="sd">        &#39;sza&#39;, &#39;saa&#39;, &#39;vza&#39;, &#39;vaa&#39;, &#39;raa&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rrs</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">10_000</span><span class="p">)</span>
 
     <span class="n">rrs</span> <span class="o">=</span> <span class="n">rrs</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;sza&#39;</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;MEAN_SOLAR_ZENITH_ANGLE&#39;</span><span class="p">))</span>
@@ -314,8 +356,27 @@ document.write(`
 
 
 <div class="viewcode-block" id="get_mean_band_angle">
-<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.get_mean_band_angle">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.l1_convert.get_mean_band_angle">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_mean_band_angle</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">angle_name</span> <span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Number</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute mean viewing angle across all bands.</span>
+<span class="sd">    </span>
+<span class="sd">    Extracts and averages band-specific viewing angles from Sentinel-2</span>
+<span class="sd">    metadata. Each band has its own viewing geometry due to the sensor&#39;s</span>
+<span class="sd">    detector layout.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Sentinel-2 L1C image with angle metadata.</span>
+<span class="sd">    angle_name : str</span>
+<span class="sd">        Angle type to extract: &#39;ZENITH&#39; or &#39;AZIMUTH&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Number</span>
+<span class="sd">        Mean viewing angle across all bands (in degrees).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">bands</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">bandNames</span><span class="p">()</span>
     
     <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">):</span>
@@ -331,8 +392,26 @@ document.write(`
 
 
 <div class="viewcode-block" id="resample">
-<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.resample">[docs]</a>
+<a class="viewcode-back" href="../../../modules/utils.l1_convert.html#gee_acolite.utils.l1_convert.resample">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">resample</span><span class="p">(</span><span class="n">image</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">band</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resample all bands to match a reference band&#39;s projection.</span>
+<span class="sd">    </span>
+<span class="sd">    Applies bilinear resampling to align all bands to the spatial</span>
+<span class="sd">    resolution and projection of the specified reference band.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : ee.Image</span>
+<span class="sd">        Image with multiple bands at different resolutions.</span>
+<span class="sd">    band : str</span>
+<span class="sd">        Reference band name (e.g., &#39;B2&#39; for 10m, &#39;B5&#39; for 20m).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Resampled image with all bands matching reference projection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;bilinear&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">projection</span><span class="p">())</span></div>
 
 </pre></div>

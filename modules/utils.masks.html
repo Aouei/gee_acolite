@@ -345,22 +345,32 @@ document.write(`
 <h1>Masks Module<a class="headerlink" href="#masks-module" title="Link to this heading">#</a></h1>
 <p>Image masking functions.
 Functions for creating and applying masks to imagery.</p>
-<dl class="py function" id="module-gee_acolite.utils.masks">
+<p id="module-gee_acolite.utils.masks">Masking utilities for quality control and scene filtering.</p>
+<p>Provides functions to create various masks for cloud detection,
+water/land classification, and quality filtering.</p>
+<dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.add_cld_shdw_mask">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">add_cld_shdw_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud_prob_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nir_dark_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud_proj_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#add_cld_shdw_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.add_cld_shdw_mask" title="Link to this definition">#</a></dt>
-<dd><p>Añade máscara combinada de nubes y sombras con buffer</p>
+<dd><p>Add combined cloud and shadow mask with buffer.</p>
+<p>Creates comprehensive cloud and shadow mask by combining:
+1. Cloud probability mask
+2. Cloud shadow detection
+3. Buffer around masked areas</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>img</strong> – Imagen con banda ‘probability’ de Cloud Probability</p></li>
-<li><p><strong>cloud_prob_threshold</strong> – Umbral de probabilidad de nube (0-100)</p></li>
-<li><p><strong>nir_dark_threshold</strong> – Umbral para píxeles oscuros en NIR (0-1)</p></li>
-<li><p><strong>cloud_proj_distance</strong> – Distancia de proyección de sombras en km</p></li>
-<li><p><strong>buffer</strong> – Buffer alrededor de nubes en metros</p></li>
+<li><p><strong>img</strong> (<em>ee.Image</em>) – Image with ‘cloud_prob’ property containing Cloud Probability data.</p></li>
+<li><p><strong>cloud_prob_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Cloud probability threshold 0-100 (default: 50).</p></li>
+<li><p><strong>nir_dark_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for dark NIR pixels 0-1 (default: 0.15).</p></li>
+<li><p><strong>cloud_proj_distance</strong> (<em>float</em><em>, </em><em>optional</em>) – Shadow projection distance in km (default: 1).</p></li>
+<li><p><strong>buffer</strong> (<em>int</em><em>, </em><em>optional</em>) – Buffer distance around clouds/shadows in meters (default: 50).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Imagen con banda ‘cloudmask’ añadida</p>
+<dd class="field-even"><p>Input image with ‘cloudmask’ band (1 = cloud/shadow, 0 = clear).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
 </dd>
 </dl>
 </dd></dl>
@@ -368,16 +378,20 @@ Functions for creating and applying masks to imagery.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.add_cloud_bands">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">add_cloud_bands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud_prob_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#add_cloud_bands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.add_cloud_bands" title="Link to this definition">#</a></dt>
-<dd><p>Añade banda de máscara de nubes a la imagen</p>
+<dd><p>Add cloud mask band based on cloud probability.</p>
+<p>Uses Sentinel-2 Cloud Probability dataset to identify cloudy pixels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>img</strong> – Imagen con banda ‘probability’ de Cloud Probability</p></li>
-<li><p><strong>cloud_prob_threshold</strong> – Umbral de probabilidad de nube (0-100)</p></li>
+<li><p><strong>img</strong> (<em>ee.Image</em>) – Image with ‘cloud_prob’ property containing Cloud Probability image.</p></li>
+<li><p><strong>cloud_prob_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Cloud probability threshold 0-100 (default: 50).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Imagen con banda ‘clouds’ añadida</p>
+<dd class="field-even"><p>Input image with ‘clouds’ band added (1 = cloud, 0 = clear).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
 </dd>
 </dl>
 </dd></dl>
@@ -385,17 +399,22 @@ Functions for creating and applying masks to imagery.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.add_shadow_bands">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">add_shadow_bands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nir_dark_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud_proj_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#add_shadow_bands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.add_shadow_bands" title="Link to this definition">#</a></dt>
-<dd><p>Añade bandas de máscara de sombras a la imagen L1C</p>
+<dd><p>Add cloud shadow mask bands to L1C image.</p>
+<p>Identifies cloud shadows by projecting cloud locations in the direction
+of solar illumination and intersecting with dark NIR pixels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>img</strong> – Imagen con banda ‘clouds’ ya añadida</p></li>
-<li><p><strong>nir_dark_threshold</strong> – Umbral para píxeles oscuros en NIR (0-1)</p></li>
-<li><p><strong>cloud_proj_distance</strong> – Distancia de proyección de sombras en km</p></li>
+<li><p><strong>img</strong> (<em>ee.Image</em>) – Image with ‘clouds’ band and solar geometry metadata.</p></li>
+<li><p><strong>nir_dark_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for dark pixels in NIR (0-1, default: 0.15).</p></li>
+<li><p><strong>cloud_proj_distance</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum shadow projection distance in km (default: 1).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Imagen con bandas ‘dark_pixels’, ‘cloud_transform’ y ‘shadows’ añadidas</p>
+<dd class="field-even"><p>Input image with ‘dark_pixels’, ‘cloud_transform’, and ‘shadows’ bands.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
 </dd>
 </dl>
 </dd></dl>
@@ -403,18 +422,39 @@ Functions for creating and applying masks to imagery.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.cirrus_mask">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">cirrus_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rhot_B10'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.005</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#cirrus_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.cirrus_mask" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Create cirrus cloud mask.</p>
+<p>Uses cirrus band (1375nm) to detect high-altitude cirrus clouds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Image with cirrus band.</p></li>
+<li><p><strong>band</strong> (<em>str</em><em>, </em><em>optional</em>) – Cirrus band name (default: ‘rhot_B10’).</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum cirrus reflectance (default: 0.005).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Binary mask (1 = no cirrus, 0 = cirrus detected).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.cld_shdw_mask">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">cld_shdw_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#cld_shdw_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.cld_shdw_mask" title="Link to this definition">#</a></dt>
-<dd><p>Aplica la máscara de nubes y sombras a la imagen</p>
+<dd><p>Extract cloud/shadow mask for application.</p>
+<p>Inverts the ‘cloudmask’ band so that valid pixels = 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>img</strong> – Imagen con banda ‘cloudmask’ ya añadida</p>
+<dd class="field-odd"><p><strong>img</strong> (<em>ee.Image</em>) – Image with ‘cloudmask’ band.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Imagen enmascarada con solo las bandas B* (bandas Sentinel-2)</p>
+<dd class="field-even"><p>Binary mask (1 = valid/clear, 0 = cloud/shadow).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
 </dd>
 </dl>
 </dd></dl>
@@ -422,17 +462,70 @@ Functions for creating and applying masks to imagery.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.mask_negative_reflectance">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">mask_negative_reflectance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#mask_negative_reflectance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.mask_negative_reflectance" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Mask out negative reflectance values.</p>
+<p>Removes pixels with negative reflectance, which are physically
+impossible and indicate processing errors or noise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Image with reflectance band.</p></li>
+<li><p><strong>band</strong> (<em>str</em>) – Band name to check for negative values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Masked image with only non-negative values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.non_water">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">non_water</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rhot_B11'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#non_water"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.non_water" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Create water/land classification mask.</p>
+<p>Uses SWIR reflectance to distinguish water from land.
+Water has low SWIR reflectance due to strong absorption.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Image with SWIR band.</p></li>
+<li><p><strong>band</strong> (<em>str</em><em>, </em><em>optional</em>) – SWIR band name (default: ‘rhot_B11’).</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum reflectance for water (default: 0.05).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Binary mask (1 = water, 0 = land).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.masks.toa_mask">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.masks.</span></span><span class="sig-name descname"><span class="pre">toa_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rhot_B11'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.03</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gee_acolite/utils/masks.html#toa_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.masks.toa_mask" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Create mask based on TOA reflectance threshold.</p>
+<p>Masks pixels with high TOA reflectance, typically indicating
+clouds, bright surfaces, or other anomalies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Image with TOA reflectance bands.</p></li>
+<li><p><strong>band</strong> (<em>str</em><em>, </em><em>optional</em>) – Band name to check (default: ‘rhot_B11’ - SWIR).</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum reflectance threshold (default: 0.03).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Binary mask (1 = valid, 0 = masked).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 

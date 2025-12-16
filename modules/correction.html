@@ -299,9 +299,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -317,29 +315,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE"><code class="docutils literal notranslate"><span class="pre">ACOLITE</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.compute_correction_with_fixed_aot"><code class="docutils literal notranslate"><span class="pre">ACOLITE.compute_correction_with_fixed_aot()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.compute_pdark"><code class="docutils literal notranslate"><span class="pre">ACOLITE.compute_pdark()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.compute_rhos"><code class="docutils literal notranslate"><span class="pre">ACOLITE.compute_rhos()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.correct"><code class="docutils literal notranslate"><span class="pre">ACOLITE.correct()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.dask_spectrum_fitting"><code class="docutils literal notranslate"><span class="pre">ACOLITE.dask_spectrum_fitting()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.deglint_alternative"><code class="docutils literal notranslate"><span class="pre">ACOLITE.deglint_alternative()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.estimate_aot_per_lut"><code class="docutils literal notranslate"><span class="pre">ACOLITE.estimate_aot_per_lut()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.get_ancillary_data"><code class="docutils literal notranslate"><span class="pre">ACOLITE.get_ancillary_data()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.l1_to_l2"><code class="docutils literal notranslate"><span class="pre">ACOLITE.l1_to_l2()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.prepare_earthdata_credentials"><code class="docutils literal notranslate"><span class="pre">ACOLITE.prepare_earthdata_credentials()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.prepare_query"><code class="docutils literal notranslate"><span class="pre">ACOLITE.prepare_query()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.select_best_model"><code class="docutils literal notranslate"><span class="pre">ACOLITE.select_best_model()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.select_lut"><code class="docutils literal notranslate"><span class="pre">ACOLITE.select_lut()</span></code></a></li>
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -352,145 +327,6 @@ document.write(`
   <section id="correction-module">
 <h1>Correction Module<a class="headerlink" href="#correction-module" title="Link to this heading">#</a></h1>
 <p>The Correction module provides functions for atmospheric correction of satellite imagery using ACOLITE.</p>
-<dl class="py class" id="module-gee_acolite.correction">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gee_acolite.correction.</span></span><span class="sig-name descname"><span class="pre">ACOLITE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">acolite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ModuleType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.compute_correction_with_fixed_aot">
-<span class="sig-name descname"><span class="pre">compute_correction_with_fixed_aot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lut_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.compute_correction_with_fixed_aot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.compute_correction_with_fixed_aot" title="Link to this definition">#</a></dt>
-<dd><p>Compute atmospheric correction parameters using fixed AOT and LUT.</p>
-<p>This function bypasses dark spectrum fitting and directly computes
-correction parameters for a specified AOT and atmospheric model.</p>
-<p>Parameters:
-- image: Input ee.Image (TOA reflectance)
-- aot: Fixed aerosol optical thickness at 550nm
-- lut_name: LUT name (e.g., ‘ACOLITE-LUT-202110-MOD2’)
-- settings: Processing settings</p>
-<p>Returns:
-- am: Atmospheric correction parameters (romix, dutott, astot, tg)
-- glint_ave: Glint correction parameters per band
-- bands: List of band names</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.compute_pdark">
-<span class="sig-name descname"><span class="pre">compute_pdark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.compute_pdark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.compute_pdark" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.compute_rhos">
-<span class="sig-name descname"><span class="pre">compute_rhos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">am</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.compute_rhos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.compute_rhos" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.correct">
-<span class="sig-name descname"><span class="pre">correct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ImageCollection</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ImageCollection</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.correct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.correct" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.dask_spectrum_fitting">
-<span class="sig-name descname"><span class="pre">dask_spectrum_fitting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Image</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.dask_spectrum_fitting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.dask_spectrum_fitting" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.deglint_alternative">
-<span class="sig-name descname"><span class="pre">deglint_alternative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glint_ave</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glint_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glint_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.08</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.deglint_alternative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.deglint_alternative" title="Link to this definition">#</a></dt>
-<dd><p>Alternative glint correction method based on ACOLITE’s acolite_l2r.py implementation.</p>
-<p>This method:
-1. Uses reference SWIR bands (B11, B12) to estimate observed glint
-2. Computes average modeled surface reflectance (glint_ave) for reference bands
-3. For each band, scales the observed glint by the ratio of:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Modeled surface reflectance for current band</p></li>
-<li><p>Average modeled surface reflectance of reference bands</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple" start="4">
-<li><p>Subtracts the scaled glint from each band’s rhos</p></li>
-</ol>
-<p>Parameters:
-- image: Image with rhos bands
-- bands: List of band numbers (as strings)
-- glint_ave: Dict with modeled surface reflectance ratio per band
-- glint_min: Minimum threshold for glint mask (default: 0)
-- glint_max: Maximum threshold for glint mask (glint_mask_rhos_threshold)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.estimate_aot_per_lut">
-<span class="sig-name descname"><span class="pre">estimate_aot_per_lut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pdark</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lutd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rsrd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ttg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aot_skip_bands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['9',</span> <span class="pre">'10',</span> <span class="pre">'11',</span> <span class="pre">'12']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.estimate_aot_per_lut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.estimate_aot_per_lut" title="Link to this definition">#</a></dt>
-<dd><p>Estimate AOT for each LUT model using dark spectrum fitting.</p>
-<p>Parameters:
-- pdark: Dark spectrum values per band
-- lutd: LUT dictionary with atmospheric models
-- rsrd: Relative spectral response dictionary
-- ttg: Gas transmittance dictionary
-- geometry: Dict with ‘raa’, ‘vza’, ‘sza’, ‘pressure’
-- settings: Processing settings
-- aot_skip_bands: Bands to skip in AOT estimation</p>
-<p>Returns:
-- results: Dict with AOT estimation results per LUT</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.get_ancillary_data">
-<span class="sig-name descname"><span class="pre">get_ancillary_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.get_ancillary_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.get_ancillary_data" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.l1_to_l2">
-<span class="sig-name descname"><span class="pre">l1_to_l2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ImageCollection</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.l1_to_l2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.l1_to_l2" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.prepare_earthdata_credentials">
-<span class="sig-name descname"><span class="pre">prepare_earthdata_credentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.prepare_earthdata_credentials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.prepare_earthdata_credentials" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.prepare_query">
-<span class="sig-name descname"><span class="pre">prepare_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.prepare_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.prepare_query" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.select_best_model">
-<span class="sig-name descname"><span class="pre">select_best_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lutd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.select_best_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.select_best_model" title="Link to this definition">#</a></dt>
-<dd><p>Select best atmospheric model based on selection criterion.</p>
-<p>Parameters:
-- results: AOT estimation results per LUT from estimate_aot_per_lut
-- lutd: LUT dictionary with atmospheric models
-- geometry: Dict with ‘raa’, ‘vza’, ‘sza’, ‘pressure’
-- settings: Processing settings with selection method</p>
-<p>Returns:
-- sel_lut: Selected LUT name
-- sel_aot: Selected AOT value
-- sel_par: Selection parameter name
-- sel_val: Selection parameter value</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gee_acolite.correction.ACOLITE.select_lut">
-<span class="sig-name descname"><span class="pre">select_lut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aot_skip_bands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['9',</span> <span class="pre">'10',</span> <span class="pre">'11',</span> <span class="pre">'12']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/gee_acolite/correction.html#ACOLITE.select_lut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.correction.ACOLITE.select_lut" title="Link to this definition">#</a></dt>
-<dd><p>Main function for LUT selection and atmospheric correction parameter computation.</p>
-<p>This function orchestrates:
-1. Dark spectrum extraction
-2. AOT estimation per LUT model
-3. Model selection based on validation criterion
-4. Computation of atmospheric correction parameters</p>
-<p>Parameters:
-- image: Input ee.Image
-- settings: Processing settings
-- aot_skip_bands: Bands to skip in AOT estimation</p>
-<p>Returns:
-- am: Atmospheric correction parameters (romix, dutott, astot, tg)
-- glint_ave: Glint correction parameters per band
-- bands: List of band names</p>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 
 
@@ -528,36 +364,6 @@ correction parameters for a specified AOT and atmospheric model.</p>
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE"><code class="docutils literal notranslate"><span class="pre">ACOLITE</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.compute_correction_with_fixed_aot"><code class="docutils literal notranslate"><span class="pre">ACOLITE.compute_correction_with_fixed_aot()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.compute_pdark"><code class="docutils literal notranslate"><span class="pre">ACOLITE.compute_pdark()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.compute_rhos"><code class="docutils literal notranslate"><span class="pre">ACOLITE.compute_rhos()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.correct"><code class="docutils literal notranslate"><span class="pre">ACOLITE.correct()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.dask_spectrum_fitting"><code class="docutils literal notranslate"><span class="pre">ACOLITE.dask_spectrum_fitting()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.deglint_alternative"><code class="docutils literal notranslate"><span class="pre">ACOLITE.deglint_alternative()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.estimate_aot_per_lut"><code class="docutils literal notranslate"><span class="pre">ACOLITE.estimate_aot_per_lut()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.get_ancillary_data"><code class="docutils literal notranslate"><span class="pre">ACOLITE.get_ancillary_data()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.l1_to_l2"><code class="docutils literal notranslate"><span class="pre">ACOLITE.l1_to_l2()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.prepare_earthdata_credentials"><code class="docutils literal notranslate"><span class="pre">ACOLITE.prepare_earthdata_credentials()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.prepare_query"><code class="docutils literal notranslate"><span class="pre">ACOLITE.prepare_query()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.select_best_model"><code class="docutils literal notranslate"><span class="pre">ACOLITE.select_best_model()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.correction.ACOLITE.select_lut"><code class="docutils literal notranslate"><span class="pre">ACOLITE.select_lut()</span></code></a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

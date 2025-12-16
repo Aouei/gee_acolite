@@ -340,25 +340,96 @@ document.write(`
   <section id="l1-convert-module">
 <h1>L1 Convert Module<a class="headerlink" href="#l1-convert-module" title="Link to this heading">#</a></h1>
 <p>Functions for converting L1C with DN Rrs to decimal and with angles needed for ACOLITE.</p>
-<dl class="py function" id="module-gee_acolite.utils.l1_convert">
+<p id="module-gee_acolite.utils.l1_convert">Level-1 to reflectance conversion utilities.</p>
+<p>Provides functions to convert Sentinel-2 L1C Digital Numbers to
+top-of-atmosphere (TOA) reflectance with proper geometric metadata.</p>
+<dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.l1_convert.DN_to_rrs">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.l1_convert.</span></span><span class="sig-name descname"><span class="pre">DN_to_rrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/l1_convert.html#DN_to_rrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.l1_convert.DN_to_rrs" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Convert L1C image from Digital Numbers to TOA reflectance.</p>
+<p>Applies radiometric calibration (DN / 10000) and extracts viewing
+geometry from metadata (solar and viewing zenith/azimuth angles).
+Also computes relative azimuth angle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ee.Image</em>) – Sentinel-2 L1C image with DN values and angle metadata.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image with TOA reflectance (0-1) and geometry properties:
+‘sza’, ‘saa’, ‘vza’, ‘vaa’, ‘raa’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.l1_convert.get_mean_band_angle">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.l1_convert.</span></span><span class="sig-name descname"><span class="pre">get_mean_band_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Number</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/l1_convert.html#get_mean_band_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.l1_convert.get_mean_band_angle" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Compute mean viewing angle across all bands.</p>
+<p>Extracts and averages band-specific viewing angles from Sentinel-2
+metadata. Each band has its own viewing geometry due to the sensor’s
+detector layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Sentinel-2 L1C image with angle metadata.</p></li>
+<li><p><strong>angle_name</strong> (<em>str</em>) – Angle type to extract: ‘ZENITH’ or ‘AZIMUTH’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mean viewing angle across all bands (in degrees).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Number</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.l1_convert.l1_to_rrs">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.l1_convert.</span></span><span class="sig-name descname"><span class="pre">l1_to_rrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ImageCollection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ImageCollection</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/l1_convert.html#l1_to_rrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.l1_convert.l1_to_rrs" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Convert L1C image collection from DN to TOA reflectance.</p>
+<p>Applies DN to reflectance conversion and resamples all bands to
+the specified spatial resolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>images</strong> (<em>ee.ImageCollection</em>) – Sentinel-2 L1C image collection with DN values.</p></li>
+<li><p><strong>scale</strong> (<em>int</em>) – Target spatial resolution in meters (10, 20, or 60).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Collection with TOA reflectance and geometry metadata.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.ImageCollection</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.l1_convert.resample">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.l1_convert.</span></span><span class="sig-name descname"><span class="pre">resample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Image</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/l1_convert.html#resample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.l1_convert.resample" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Resample all bands to match a reference band’s projection.</p>
+<p>Applies bilinear resampling to align all bands to the spatial
+resolution and projection of the specified reference band.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>ee.Image</em>) – Image with multiple bands at different resolutions.</p></li>
+<li><p><strong>band</strong> (<em>str</em>) – Reference band name (e.g., ‘B2’ for 10m, ‘B5’ for 20m).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resampled image with all bands matching reference projection.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.Image</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 

@@ -325,7 +325,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.join_s2_with_cloud_prob"><code class="docutils literal notranslate"><span class="pre">join_s2_with_cloud_prob()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search"><code class="docutils literal notranslate"><span class="pre">search()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search_list"><code class="docutils literal notranslate"><span class="pre">search_list()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search_list_with_cloud_proba"><code class="docutils literal notranslate"><span class="pre">search_list_with_cloud_proba()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search_with_cloud_proba"><code class="docutils literal notranslate"><span class="pre">search_with_cloud_proba()</span></code></a></li>
 </ul>
             </nav>
@@ -341,7 +340,10 @@ document.write(`
   <section id="search-module">
 <h1>Search Module<a class="headerlink" href="#search-module" title="Link to this heading">#</a></h1>
 <p>Functions for searching and retrieving satellite imagery from GEE.</p>
-<dl class="py function" id="module-gee_acolite.utils.search">
+<p id="module-gee_acolite.utils.search">Image search and retrieval utilities for Google Earth Engine.</p>
+<p>Provides functions to search and retrieve Sentinel-2 imagery from
+the GEE catalog, with optional cloud probability data integration.</p>
+<dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.search.join_s2_with_cloud_prob">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.search.</span></span><span class="sig-name descname"><span class="pre">join_s2_with_cloud_prob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s2_collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ImageCollection</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ImageCollection</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/search.html#join_s2_with_cloud_prob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.search.join_s2_with_cloud_prob" title="Link to this definition">#</a></dt>
 <dd><p>Une la colección Sentinel-2 con Cloud Probability</p>
@@ -361,29 +363,48 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.search.search">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.search.</span></span><span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'S2_HARMONIZED'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ImageCollection</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/search.html#search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.search.search" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Search for Sentinel-2 images in a region and time period.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>roi</strong> (<em>ee.Geometry</em>) – Region of interest.</p></li>
+<li><p><strong>start</strong> (<em>str</em>) – Start date in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>end</strong> (<em>str</em>) – End date in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>collection</strong> (<em>str</em><em>, </em><em>optional</em>) – Sentinel-2 collection name (default: ‘S2_HARMONIZED’).
+Options: ‘S2_HARMONIZED’, ‘S2’, ‘S2_SR’, ‘S2_SR_HARMONIZED’.</p></li>
+<li><p><strong>tile</strong> (<em>str</em><em>, </em><em>optional</em>) – Specific tile identifier to filter (e.g., ‘T30SYJ’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Collection of matching Sentinel-2 images.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.ImageCollection</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.search.search_list">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.search.</span></span><span class="sig-name descname"><span class="pre">search_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ends</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'S2_HARMONIZED'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ImageCollection</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/search.html#search_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.search.search_list" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="gee_acolite.utils.search.search_list_with_cloud_proba">
-<span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.search.</span></span><span class="sig-name descname"><span class="pre">search_list_with_cloud_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ends</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'S2_HARMONIZED'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ImageCollection</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/search.html#search_list_with_cloud_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.search.search_list_with_cloud_proba" title="Link to this definition">#</a></dt>
-<dd><p>Busca una lista de imágenes Sentinel-2 y une con Cloud Probability</p>
+<dd><p>Search for multiple Sentinel-2 images using date pairs.</p>
+<p>Retrieves the first image matching each date range. Useful for
+selecting specific acquisitions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>roi</strong> – Región de interés</p></li>
-<li><p><strong>starts</strong> – Lista de fechas de inicio (formato ‘YYYY-MM-DD’)</p></li>
-<li><p><strong>ends</strong> – Lista de fechas de fin (formato ‘YYYY-MM-DD’)</p></li>
-<li><p><strong>collection</strong> – Nombre de la colección de Sentinel-2 (default: ‘S2_HARMONIZED’)</p></li>
-<li><p><strong>tile</strong> – Identificador del tile (opcional)</p></li>
+<li><p><strong>roi</strong> (<em>ee.Geometry</em>) – Region of interest.</p></li>
+<li><p><strong>starts</strong> (<em>list</em><em> of </em><em>str</em>) – List of start dates in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>ends</strong> (<em>list</em><em> of </em><em>str</em>) – List of end dates in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>collection</strong> (<em>str</em><em>, </em><em>optional</em>) – Sentinel-2 collection name (default: ‘S2_HARMONIZED’).</p></li>
+<li><p><strong>tile</strong> (<em>str</em><em>, </em><em>optional</em>) – Specific tile identifier to filter.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Colección de imágenes con Cloud Probability unida</p>
+<dd class="field-even"><p>Collection with first image from each date range.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.ImageCollection</p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,19 +412,43 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.search.search_with_cloud_proba">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.search.</span></span><span class="sig-name descname"><span class="pre">search_with_cloud_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'S2_HARMONIZED'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ImageCollection</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/search.html#search_with_cloud_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.search.search_with_cloud_proba" title="Link to this definition">#</a></dt>
-<dd><p>Busca imágenes Sentinel-2 y une con Cloud Probability</p>
+<dd><p>Search Sentinel-2 images and join with Cloud Probability data.</p>
+<p>Retrieves Sentinel-2 images and joins them with the corresponding
+cloud probability data from COPERNICUS/S2_CLOUD_PROBABILITY.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>roi</strong> – Región de interés</p></li>
-<li><p><strong>start</strong> – Fecha de inicio (formato ‘YYYY-MM-DD’)</p></li>
-<li><p><strong>end</strong> – Fecha de fin (formato ‘YYYY-MM-DD’)</p></li>
-<li><p><strong>collection</strong> – Nombre de la colección de Sentinel-2 (default: ‘S2_HARMONIZED’)</p></li>
-<li><p><strong>tile</strong> – Identificador del tile (opcional)</p></li>
+<li><p><strong>roi</strong> (<em>ee.Geometry</em>) – Region of interest.</p></li>
+<li><p><strong>start</strong> (<em>str</em>) – Start date in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>end</strong> (<em>str</em>) – End date in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>collection</strong> (<em>str</em><em>, </em><em>optional</em>) – Sentinel-2 collection name (default: ‘S2_HARMONIZED’).</p></li>
+<li><p><strong>tile</strong> (<em>str</em><em>, </em><em>optional</em>) – Specific tile identifier to filter.</p></li>
+<li><p><strong>Returns</strong></p></li>
+<li><p><strong>Probability.</strong> (<em>Search multiple Sentinel-2 images and join with Cloud</em>)</p></li>
+<li><p><strong>with</strong> (<em>Retrieves the first image matching each date range and joins</em>)</p></li>
+<li><p><strong>data.</strong> (<em>Join Sentinel-2 collection with Cloud Probability</em>)</p></li>
+<li><p><strong>roi</strong> – Region of interest.</p></li>
+<li><p><strong>starts</strong> (<em>list</em><em> of </em><em>str</em>) – List of start dates in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>ends</strong> (<em>list</em><em> of </em><em>str</em>) – List of end dates in format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>collection</strong> – Sentinel-2 collection name (default: ‘S2_HARMONIZED’).</p></li>
+<li><p><strong>tile</strong> – Specific tile identifier to filter.</p></li>
+<li><p><strong>data.</strong></p></li>
+<li><p><strong>probability</strong> (<em>Matches each Sentinel-2 image with its corresponding cloud</em>)</p></li>
+<li><p><strong>the</strong> (<em>image from the COPERNICUS/S2_CLOUD_PROBABILITY collection using</em>)</p></li>
+<li><p><strong>system</strong> (<em>index property.</em>)</p></li>
+<li><p><strong>s2_collection</strong> (<em>ee.ImageCollection</em>) – Sentinel-2 L1C image collection.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Colección de imágenes con Cloud Probability unida</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>ee.ImageCollection</em> – Collection with Cloud Probability images added as ‘cloud_prob’ property.
+starts: Lista de fechas de inicio (formato ‘YYYY-MM-DD’)
+ends: Lista de fechas de fin (formato ‘YYYY-MM-DD’)
+collection: Nombre de la colección de Sentinel-2 (default: ‘S2_HARMONIZED’)
+tile: Identificador del tile (opcional)</p></li>
+<li><p><em>Returns</em> – Colección de imágenes con Cloud Probability unida</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -458,7 +503,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.join_s2_with_cloud_prob"><code class="docutils literal notranslate"><span class="pre">join_s2_with_cloud_prob()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search"><code class="docutils literal notranslate"><span class="pre">search()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search_list"><code class="docutils literal notranslate"><span class="pre">search_list()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search_list_with_cloud_proba"><code class="docutils literal notranslate"><span class="pre">search_list_with_cloud_proba()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gee_acolite.utils.search.search_with_cloud_proba"><code class="docutils literal notranslate"><span class="pre">search_with_cloud_proba()</span></code></a></li>
 </ul>
   </nav></div>
