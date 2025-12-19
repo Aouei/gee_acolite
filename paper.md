@@ -83,7 +83,7 @@ Beyond spectral validation, \autoref{fig:sdb} demonstrates the application of GE
 
 # Availability
 
-The source code for `GEE ACOLITE` is available on GitHub at https://github.com/Aouei/gee_acolite under the GNU General Public License v3.0. Documentation, examples, and API reference are included in the repository. The library requires ACOLITE to be installed separately from https://github.com/acolite/acolite.
+The source code for `GEE ACOLITE` is available on GitHub at https://github.com/Aouei/gee_acolite under the GNU General Public License v3.0. Documentation, examples, and API reference are included in the repository. The library requires ACOLITE source code from https://github.com/acolite/acolite.c
 
 # Acknowledgements
 
