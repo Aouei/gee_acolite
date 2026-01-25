@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/961844693.svg)](https://doi.org/10.5281/zenodo.18367146)
+[![DOI](https://zenodo.org/badge/961844693.svg)](https://doi.org/10.5281/zenodo.18367865)
 
 # GEE ACOLITE
 
