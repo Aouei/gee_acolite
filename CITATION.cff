@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "gee_acolite"
+license: GPL-3.0-or-later
+type: software
+repository-code: "https://github.com/Aouei/gee_acolite"
+abstract: "GEE ACOLITE: Atmospheric Correction for Google Earth Engine"
+message: "If you use this software, please cite it as below."
+authors:
+  - given-names: Sergio
+    family-names: Heredia
+    affiliation: "Department of Ecology and Coastal Management, Institute of Marine Sciences Andalusia (ICMAN), Spanish National Research Council (CSIC), 11519 Puerto Real, Spain"
+    orcid: "https://orcid.org/0009-0003-9495-9625"
+keywords:
+  - Remote Sensing
+  - Raster
+  - Sentinel-2
+  - Atmospheric Correction
