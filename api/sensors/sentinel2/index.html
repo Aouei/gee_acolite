@@ -1,0 +1,1381 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Atmospheric correction with ACOLITE for Google Earth Engine" name="description"/>
+<meta content="Sergio" name="author"/>
+<link href="../../utils/masks/" rel="prev"/>
+<link href="../../../architecture/class_diagram/" rel="next"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<title>Sensors - GEE ACOLITE Documentation</title>
+<link href="../../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="cyan" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#sentinel-2">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="GEE ACOLITE Documentation" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="GEE ACOLITE Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            GEE ACOLITE Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Sensors
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="cyan" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="cyan" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Aouei/gee_acolite" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    Aouei/gee_acolite
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../guide/installation/">
+          
+  
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../../correction/">
+          
+  
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../architecture/class_diagram/">
+          
+  
+  
+  Architecture
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../contributing/">
+        
+  
+  
+    
+  
+  Contribute
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../about/">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="GEE ACOLITE Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="GEE ACOLITE Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    GEE ACOLITE Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Aouei/gee_acolite" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    Aouei/gee_acolite
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../guide/installation/">
+<span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../guide/dependencies/">
+<span class="md-ellipsis">
+    
+  
+    Dependencies
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../guide/quickstart/">
+<span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../guide/examples/">
+<span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../guide/configuration/">
+<span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../correction/">
+<span class="md-ellipsis">
+    
+  
+    Atmospheric Correction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../water_quality/">
+<span class="md-ellipsis">
+    
+  
+    Water Quality
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../bathymetry/">
+<span class="md-ellipsis">
+    
+  
+    Bathymetry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../utils/search/">
+<span class="md-ellipsis">
+    
+  
+    Image Search
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../utils/l1_convert/">
+<span class="md-ellipsis">
+    
+  
+    L1 Conversion
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../utils/masks/">
+<span class="md-ellipsis">
+    
+  
+    Masks
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Sensors
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sentinel-2-msi-bands">
+<span class="md-ellipsis">
+      
+        Sentinel-2 MSI Bands
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#defined-constants">
+<span class="md-ellipsis">
+      
+        Defined Constants
+      
+    </span>
+</a>
+<nav aria-label="Defined Constants" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gee_acolite.sensors.sentinel2.SENTINEL2_BANDS">
+<span class="md-ellipsis">
+<code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code> SENTINEL2_BANDS
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gee_acolite.sensors.sentinel2.BAND_BY_SCALE">
+<span class="md-ellipsis">
+<code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code> BAND_BY_SCALE
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#technical-specifications">
+<span class="md-ellipsis">
+      
+        Technical Specifications
+      
+    </span>
+</a>
+<nav aria-label="Technical Specifications" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-band-table">
+<span class="md-ellipsis">
+      
+        Complete Band Table
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#spectral-response">
+<span class="md-ellipsis">
+      
+        Spectral Response
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#band-applications">
+<span class="md-ellipsis">
+      
+        Band Applications
+      
+    </span>
+</a>
+<nav aria-label="Band Applications" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#water-quality-and-bathymetry">
+<span class="md-ellipsis">
+      
+        Water Quality and Bathymetry
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vegetation-indices">
+<span class="md-ellipsis">
+      
+        Vegetation Indices
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#water-indices">
+<span class="md-ellipsis">
+      
+        Water Indices
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resampling-and-projection">
+<span class="md-ellipsis">
+      
+        Resampling and Projection
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#s2a-vs-s2b-differences">
+<span class="md-ellipsis">
+      
+        S2A vs S2B Differences
+      
+    </span>
+</a>
+<nav aria-label="S2A vs S2B Differences" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#radiometric-offset">
+<span class="md-ellipsis">
+      
+        Radiometric Offset
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rgb-visualisation">
+<span class="md-ellipsis">
+      
+        RGB Visualisation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#comparison-with-other-sensors">
+<span class="md-ellipsis">
+      
+        Comparison with Other Sensors
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      
+        References
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../architecture/class_diagram/">
+<span class="md-ellipsis">
+    
+  
+    Class Diagram
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../architecture/data_flow/">
+<span class="md-ellipsis">
+    
+  
+    Data Flow
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../architecture/gee_integration/">
+<span class="md-ellipsis">
+    
+  
+    GEE Integration
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../contributing/">
+<span class="md-ellipsis">
+    
+  
+    Contribute
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../about/">
+<span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sentinel-2-msi-bands">
+<span class="md-ellipsis">
+      
+        Sentinel-2 MSI Bands
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#defined-constants">
+<span class="md-ellipsis">
+      
+        Defined Constants
+      
+    </span>
+</a>
+<nav aria-label="Defined Constants" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gee_acolite.sensors.sentinel2.SENTINEL2_BANDS">
+<span class="md-ellipsis">
+<code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code> SENTINEL2_BANDS
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gee_acolite.sensors.sentinel2.BAND_BY_SCALE">
+<span class="md-ellipsis">
+<code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code> BAND_BY_SCALE
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#technical-specifications">
+<span class="md-ellipsis">
+      
+        Technical Specifications
+      
+    </span>
+</a>
+<nav aria-label="Technical Specifications" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-band-table">
+<span class="md-ellipsis">
+      
+        Complete Band Table
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#spectral-response">
+<span class="md-ellipsis">
+      
+        Spectral Response
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#band-applications">
+<span class="md-ellipsis">
+      
+        Band Applications
+      
+    </span>
+</a>
+<nav aria-label="Band Applications" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#water-quality-and-bathymetry">
+<span class="md-ellipsis">
+      
+        Water Quality and Bathymetry
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vegetation-indices">
+<span class="md-ellipsis">
+      
+        Vegetation Indices
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#water-indices">
+<span class="md-ellipsis">
+      
+        Water Indices
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resampling-and-projection">
+<span class="md-ellipsis">
+      
+        Resampling and Projection
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#s2a-vs-s2b-differences">
+<span class="md-ellipsis">
+      
+        S2A vs S2B Differences
+      
+    </span>
+</a>
+<nav aria-label="S2A vs S2B Differences" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#radiometric-offset">
+<span class="md-ellipsis">
+      
+        Radiometric Offset
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rgb-visualisation">
+<span class="md-ellipsis">
+      
+        RGB Visualisation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#comparison-with-other-sensors">
+<span class="md-ellipsis">
+      
+        Comparison with Other Sensors
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      
+        References
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="sentinel-2">Sentinel-2<a class="headerlink" href="#sentinel-2" title="Permanent link">¶</a></h1>
+<p>Band configuration and definitions for the Sentinel-2 MSI sensor.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>The <code>gee_acolite.sensors.sentinel2</code> module defines constants and configurations specific to the MultiSpectral Instrument (MSI) aboard Sentinel-2A and Sentinel-2B.</p>
+<h2 id="sentinel-2-msi-bands">Sentinel-2 MSI Bands<a class="headerlink" href="#sentinel-2-msi-bands" title="Permanent link">¶</a></h2>
+<div class="mermaid">graph TD
+    A[Sentinel-2 MSI] --&gt; B[13 Bands]
+
+    B --&gt; C[10m: 4 bands]
+    B --&gt; D[20m: 6 bands]
+    B --&gt; E[60m: 3 bands]
+
+    C --&gt; C1[B2 Blue 490nm]
+    C --&gt; C2[B3 Green 560nm]
+    C --&gt; C3[B4 Red 665nm]
+    C --&gt; C4[B8 NIR 833nm]
+
+    D --&gt; D1[B5 Red Edge 705nm]
+    D --&gt; D2[B6 Red Edge 740nm]
+    D --&gt; D3[B7 Red Edge 783nm]
+    D --&gt; D4[B8A NIR 865nm]
+    D --&gt; D5[B11 SWIR 1610nm]
+    D --&gt; D6[B12 SWIR 2190nm]
+
+    E --&gt; E1[B1 Coastal 443nm]
+    E --&gt; E2[B9 Water Vap 945nm]
+    E --&gt; E3[B10 Cirrus 1375nm]
+
+    style A fill:#e1f5ff
+    style C fill:#e1ffe1
+    style D fill:#ffe1e1
+    style E fill:#ffffcc
+</div>
+<h2 id="defined-constants">Defined Constants<a class="headerlink" href="#defined-constants" title="Permanent link">¶</a></h2>
+<div class="doc doc-object doc-attribute">
+<h3 class="doc doc-heading" id="gee_acolite.sensors.sentinel2.SENTINEL2_BANDS">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code> <span class="doc doc-object-name doc-attribute-name">SENTINEL2_BANDS</span>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+</span>
+<a class="headerlink" href="#gee_acolite.sensors.sentinel2.SENTINEL2_BANDS" title="Permanent link">¶</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">SENTINEL2_BANDS</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="s2">"B1"</span><span class="p">,</span>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="s2">"B2"</span><span class="p">,</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="s2">"B3"</span><span class="p">,</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="s2">"B4"</span><span class="p">,</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="s2">"B5"</span><span class="p">,</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="s2">"B6"</span><span class="p">,</span>
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="s2">"B7"</span><span class="p">,</span>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="s2">"B8"</span><span class="p">,</span>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="s2">"B8A"</span><span class="p">,</span>
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="s2">"B9"</span><span class="p">,</span>
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="s2">"B10"</span><span class="p">,</span>
+</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>    <span class="s2">"B11"</span><span class="p">,</span>
+</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="s2">"B12"</span><span class="p">,</span>
+</span><span id="__span-0-15"><a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="p">]</span>
+</span></code></pre></div>
+<div class="doc doc-contents first">
+</div>
+</div>
+<div class="doc doc-object doc-attribute">
+<h3 class="doc doc-heading" id="gee_acolite.sensors.sentinel2.BAND_BY_SCALE">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code> <span class="doc doc-object-name doc-attribute-name">BAND_BY_SCALE</span>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+</span>
+<a class="headerlink" href="#gee_acolite.sensors.sentinel2.BAND_BY_SCALE" title="Permanent link">¶</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">BAND_BY_SCALE</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span> <span class="s1">'B2'</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span> <span class="s1">'B5'</span><span class="p">,</span> <span class="mi">60</span><span class="p">:</span> <span class="s1">'B1'</span><span class="p">}</span>
+</span></code></pre></div>
+<div class="doc doc-contents first">
+</div>
+</div><h2 id="technical-specifications">Technical Specifications<a class="headerlink" href="#technical-specifications" title="Permanent link">¶</a></h2>
+<h3 id="complete-band-table">Complete Band Table<a class="headerlink" href="#complete-band-table" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Band</th>
+<th>Name</th>
+<th>Central λ (nm)</th>
+<th>Width (nm)</th>
+<th>Resolution</th>
+<th>SNR</th>
+<th>Primary Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>Coastal aerosol</td>
+<td>442.7</td>
+<td>21</td>
+<td>60m</td>
+<td>129</td>
+<td>Atmospheric correction, aerosols</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Blue</td>
+<td>492.4</td>
+<td>66</td>
+<td>10m</td>
+<td>154</td>
+<td>Ocean, bathymetry</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>Green</td>
+<td>559.8</td>
+<td>36</td>
+<td>10m</td>
+<td>168</td>
+<td>Vegetation, bathymetry</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>Red</td>
+<td>664.6</td>
+<td>31</td>
+<td>10m</td>
+<td>142</td>
+<td>Vegetation</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>Red Edge 1</td>
+<td>704.1</td>
+<td>15</td>
+<td>20m</td>
+<td>117</td>
+<td>Vegetation classification</td>
+</tr>
+<tr>
+<td>B6</td>
+<td>Red Edge 2</td>
+<td>740.5</td>
+<td>15</td>
+<td>20m</td>
+<td>89</td>
+<td>Vegetation classification</td>
+</tr>
+<tr>
+<td>B7</td>
+<td>Red Edge 3</td>
+<td>782.8</td>
+<td>20</td>
+<td>20m</td>
+<td>105</td>
+<td>Vegetation classification</td>
+</tr>
+<tr>
+<td>B8</td>
+<td>NIR</td>
+<td>832.8</td>
+<td>106</td>
+<td>10m</td>
+<td>174</td>
+<td>Biomass, vegetation indices</td>
+</tr>
+<tr>
+<td>B8A</td>
+<td>NIR Narrow</td>
+<td>864.7</td>
+<td>21</td>
+<td>20m</td>
+<td>72</td>
+<td>Water vapour</td>
+</tr>
+<tr>
+<td>B9</td>
+<td>Water vapour</td>
+<td>945.1</td>
+<td>20</td>
+<td>60m</td>
+<td>114</td>
+<td>Water vapour correction</td>
+</tr>
+<tr>
+<td>B10</td>
+<td>SWIR - Cirrus</td>
+<td>1373.5</td>
+<td>31</td>
+<td>60m</td>
+<td>50</td>
+<td>Cirrus detection</td>
+</tr>
+<tr>
+<td>B11</td>
+<td>SWIR 1</td>
+<td>1613.7</td>
+<td>91</td>
+<td>20m</td>
+<td>100</td>
+<td>Snow/cloud discrimination</td>
+</tr>
+<tr>
+<td>B12</td>
+<td>SWIR 2</td>
+<td>2202.4</td>
+<td>175</td>
+<td>20m</td>
+<td>100</td>
+<td>Soil moisture, geology</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spectral-response">Spectral Response<a class="headerlink" href="#spectral-response" title="Permanent link">¶</a></h3>
+<div class="mermaid">graph LR
+    A[400nm UV] --&gt; B[443nm B1]
+    B --&gt; C[492nm B2]
+    C --&gt; D[560nm B3]
+    D --&gt; E[665nm B4]
+    E --&gt; F[704-783nm Red Edge]
+    F --&gt; G[833-865nm NIR]
+    G --&gt; H[945nm Water Vapor]
+    H --&gt; I[1374nm Cirrus]
+    I --&gt; J[1614-2202nm SWIR]
+    J --&gt; K[2400nm]
+
+    style C fill:#0066ff
+    style D fill:#00ff00
+    style E fill:#ff0000
+    style G fill:#990000
+</div>
+<h2 id="band-applications">Band Applications<a class="headerlink" href="#band-applications" title="Permanent link">¶</a></h2>
+<h3 id="water-quality-and-bathymetry">Water Quality and Bathymetry<a class="headerlink" href="#water-quality-and-bathymetry" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Optimal bands for aquatic applications</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="n">WATER_BANDS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="s1">'blue'</span><span class="p">:</span> <span class="s1">'B2'</span><span class="p">,</span>        <span class="c1"># Deep penetration, bathymetry</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="s1">'green'</span><span class="p">:</span> <span class="s1">'B3'</span><span class="p">,</span>       <span class="c1"># Balance of penetration/sensitivity</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="s1">'red'</span><span class="p">:</span> <span class="s1">'B4'</span><span class="p">,</span>         <span class="c1"># Shallow waters, SPM</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="s1">'red_edge'</span><span class="p">:</span> <span class="s1">'B5'</span><span class="p">,</span>    <span class="c1"># Chlorophyll, advanced algorithms</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="s1">'nir'</span><span class="p">:</span> <span class="s1">'B8'</span><span class="p">,</span>         <span class="c1"># High turbidity, SPM</span>
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="s1">'nir_narrow'</span><span class="p">:</span> <span class="s1">'B8A'</span><span class="p">,</span> <span class="c1"># Water vapour, atmospheric correction</span>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="s1">'swir1'</span><span class="p">:</span> <span class="s1">'B11'</span><span class="p">,</span>      <span class="c1"># Cloud/snow detection</span>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="vegetation-indices">Vegetation Indices<a class="headerlink" href="#vegetation-indices" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># NDVI (Normalized Difference Vegetation Index)</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_ndvi</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="sd">"""NDVI = (NIR - Red) / (NIR + Red)"""</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="n">nir</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B8'</span><span class="p">)</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>    <span class="n">red</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B4'</span><span class="p">)</span>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="n">ndvi</span> <span class="o">=</span> <span class="n">nir</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">red</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">nir</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">red</span><span class="p">))</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'NDVI'</span><span class="p">)</span>
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span>
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="c1"># EVI (Enhanced Vegetation Index)</span>
+</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_evi</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="sd">"""EVI = 2.5 * (NIR - Red) / (NIR + 6*Red - 7.5*Blue + 1)"""</span>
+</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a>    <span class="n">nir</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B8'</span><span class="p">)</span>
+</span><span id="__span-1-13"><a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="n">red</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B4'</span><span class="p">)</span>
+</span><span id="__span-1-14"><a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a>    <span class="n">blue</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B2'</span><span class="p">)</span>
+</span><span id="__span-1-15"><a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a>    <span class="n">evi</span> <span class="o">=</span> <span class="n">nir</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">red</span><span class="p">)</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+</span><span id="__span-1-17"><a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="n">nir</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">red</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">blue</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mf">7.5</span><span class="p">))</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-1-18"><a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a>    <span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'EVI'</span><span class="p">)</span>
+</span><span id="__span-1-19"><a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">evi</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="water-indices">Water Indices<a class="headerlink" href="#water-indices" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># NDWI (Normalized Difference Water Index)</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_ndwi</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="sd">"""NDWI = (Green - NIR) / (Green + NIR)"""</span>
+</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="n">green</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B3'</span><span class="p">)</span>
+</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="n">nir</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B8'</span><span class="p">)</span>
+</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="n">ndwi</span> <span class="o">=</span> <span class="n">green</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">nir</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">green</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nir</span><span class="p">))</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'NDWI'</span><span class="p">)</span>
+</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">ndwi</span><span class="p">)</span>
+</span><span id="__span-2-8"><a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="c1"># MNDWI (Modified NDWI)</span>
+</span><span id="__span-2-10"><a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_mndwi</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-2-11"><a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">    </span><span class="sd">"""MNDWI = (Green - SWIR1) / (Green + SWIR1)"""</span>
+</span><span id="__span-2-12"><a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="n">green</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B3'</span><span class="p">)</span>
+</span><span id="__span-2-13"><a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="n">swir</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'B11'</span><span class="p">)</span>
+</span><span id="__span-2-14"><a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">mndwi</span> <span class="o">=</span> <span class="n">green</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">swir</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">green</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">swir</span><span class="p">))</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'MNDWI'</span><span class="p">)</span>
+</span><span id="__span-2-15"><a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">mndwi</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="resampling-and-projection">Resampling and Projection<a class="headerlink" href="#resampling-and-projection" title="Permanent link">¶</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gee_acolite.sensors.sentinel2</span><span class="w"> </span><span class="kn">import</span> <span class="n">BAND_BY_SCALE</span>
+</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_native_projection</span><span class="p">(</span><span class="n">scale</span><span class="p">):</span>
+</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="sd">    Get the representative band for a given scale.</span>
+</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="sd">    Parameters</span>
+</span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="sd">    ----------</span>
+</span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="sd">    scale : int</span>
+</span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="sd">        Target scale (10, 20, or 60 metres)</span>
+</span><span id="__span-3-11"><a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="sd">    Returns</span>
+</span><span id="__span-3-13"><a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="sd">    -------</span>
+</span><span id="__span-3-14"><a href="#__codelineno-3-14" id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="sd">    str</span>
+</span><span id="__span-3-15"><a href="#__codelineno-3-15" id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="sd">        Band name with that native resolution</span>
+</span><span id="__span-3-16"><a href="#__codelineno-3-16" id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="sd">    """</span>
+</span><span id="__span-3-17"><a href="#__codelineno-3-17" id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="k">return</span> <span class="n">BAND_BY_SCALE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="s1">'B2'</span><span class="p">)</span>
+</span><span id="__span-3-18"><a href="#__codelineno-3-18" id="__codelineno-3-18" name="__codelineno-3-18"></a>
+</span><span id="__span-3-19"><a href="#__codelineno-3-19" id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="c1"># Example: resample all bands to 10m</span>
+</span><span id="__span-3-20"><a href="#__codelineno-3-20" id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="n">target_scale</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span id="__span-3-21"><a href="#__codelineno-3-21" id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="n">reference_band</span> <span class="o">=</span> <span class="n">get_native_projection</span><span class="p">(</span><span class="n">target_scale</span><span class="p">)</span>
+</span><span id="__span-3-22"><a href="#__codelineno-3-22" id="__codelineno-3-22" name="__codelineno-3-22"></a>
+</span><span id="__span-3-23"><a href="#__codelineno-3-23" id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="k">def</span><span class="w"> </span><span class="nf">resample_to_10m</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-3-24"><a href="#__codelineno-3-24" id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">    </span><span class="sd">"""Resample all bands to 10m."""</span>
+</span><span id="__span-3-25"><a href="#__codelineno-3-25" id="__codelineno-3-25" name="__codelineno-3-25"></a>    <span class="n">proj</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">reference_band</span><span class="p">)</span><span class="o">.</span><span class="n">projection</span><span class="p">()</span>
+</span><span id="__span-3-26"><a href="#__codelineno-3-26" id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'bilinear'</span><span class="p">)</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">crs</span><span class="o">=</span><span class="n">proj</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">target_scale</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="s2a-vs-s2b-differences">S2A vs S2B Differences<a class="headerlink" href="#s2a-vs-s2b-differences" title="Permanent link">¶</a></h2>
+<p>Sentinel-2A and Sentinel-2B have slight calibration differences:</p>
+<h3 id="radiometric-offset">Radiometric Offset<a class="headerlink" href="#radiometric-offset" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># S2A/S2B harmonisation (simplified method)</span>
+</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">harmonize_s2</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="sd">    Apply offset correction between S2A and S2B.</span>
+</span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="sd">    Based on Roy et al. (2021).</span>
+</span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="sd">    """</span>
+</span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>    <span class="c1"># Identify satellite</span>
+</span><span id="__span-4-8"><a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>    <span class="n">spacecraft</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'SPACECRAFT_NAME'</span><span class="p">)</span>
+</span><span id="__span-4-9"><a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="c1"># Offsets for S2B (S2A is the reference)</span>
+</span><span id="__span-4-11"><a href="#__codelineno-4-11" id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="n">offsets_s2b</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-4-12"><a href="#__codelineno-4-12" id="__codelineno-4-12" name="__codelineno-4-12"></a>        <span class="s1">'B2'</span><span class="p">:</span> <span class="mf">0.0008</span><span class="p">,</span>   <span class="c1"># Blue</span>
+</span><span id="__span-4-13"><a href="#__codelineno-4-13" id="__codelineno-4-13" name="__codelineno-4-13"></a>        <span class="s1">'B3'</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.0001</span><span class="p">,</span>  <span class="c1"># Green</span>
+</span><span id="__span-4-14"><a href="#__codelineno-4-14" id="__codelineno-4-14" name="__codelineno-4-14"></a>        <span class="s1">'B4'</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.0017</span><span class="p">,</span>  <span class="c1"># Red</span>
+</span><span id="__span-4-15"><a href="#__codelineno-4-15" id="__codelineno-4-15" name="__codelineno-4-15"></a>        <span class="s1">'B8'</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.0022</span><span class="p">,</span>  <span class="c1"># NIR</span>
+</span><span id="__span-4-16"><a href="#__codelineno-4-16" id="__codelineno-4-16" name="__codelineno-4-16"></a>        <span class="s1">'B11'</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.0011</span><span class="p">,</span> <span class="c1"># SWIR1</span>
+</span><span id="__span-4-17"><a href="#__codelineno-4-17" id="__codelineno-4-17" name="__codelineno-4-17"></a>        <span class="s1">'B12'</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.0028</span>  <span class="c1"># SWIR2</span>
+</span><span id="__span-4-18"><a href="#__codelineno-4-18" id="__codelineno-4-18" name="__codelineno-4-18"></a>    <span class="p">}</span>
+</span><span id="__span-4-19"><a href="#__codelineno-4-19" id="__codelineno-4-19" name="__codelineno-4-19"></a>
+</span><span id="__span-4-20"><a href="#__codelineno-4-20" id="__codelineno-4-20" name="__codelineno-4-20"></a>    <span class="c1"># Apply offset if S2B</span>
+</span><span id="__span-4-21"><a href="#__codelineno-4-21" id="__codelineno-4-21" name="__codelineno-4-21"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_offset</span><span class="p">(</span><span class="n">band_name</span><span class="p">):</span>
+</span><span id="__span-4-22"><a href="#__codelineno-4-22" id="__codelineno-4-22" name="__codelineno-4-22"></a>        <span class="n">band</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">band_name</span><span class="p">)</span>
+</span><span id="__span-4-23"><a href="#__codelineno-4-23" id="__codelineno-4-23" name="__codelineno-4-23"></a>        <span class="n">offset</span> <span class="o">=</span> <span class="n">offsets_s2b</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">band_name</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-4-24"><a href="#__codelineno-4-24" id="__codelineno-4-24" name="__codelineno-4-24"></a>        <span class="k">return</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span>
+</span><span id="__span-4-25"><a href="#__codelineno-4-25" id="__codelineno-4-25" name="__codelineno-4-25"></a>            <span class="n">ee</span><span class="o">.</span><span class="n">Algorithms</span><span class="o">.</span><span class="n">If</span><span class="p">(</span>
+</span><span id="__span-4-26"><a href="#__codelineno-4-26" id="__codelineno-4-26" name="__codelineno-4-26"></a>                <span class="n">ee</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s1">'Sentinel-2B'</span><span class="p">),</span>
+</span><span id="__span-4-27"><a href="#__codelineno-4-27" id="__codelineno-4-27" name="__codelineno-4-27"></a>                <span class="n">band</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span>
+</span><span id="__span-4-28"><a href="#__codelineno-4-28" id="__codelineno-4-28" name="__codelineno-4-28"></a>                <span class="n">band</span>
+</span><span id="__span-4-29"><a href="#__codelineno-4-29" id="__codelineno-4-29" name="__codelineno-4-29"></a>            <span class="p">)</span>
+</span><span id="__span-4-30"><a href="#__codelineno-4-30" id="__codelineno-4-30" name="__codelineno-4-30"></a>        <span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">band_name</span><span class="p">)</span>
+</span><span id="__span-4-31"><a href="#__codelineno-4-31" id="__codelineno-4-31" name="__codelineno-4-31"></a>
+</span><span id="__span-4-32"><a href="#__codelineno-4-32" id="__codelineno-4-32" name="__codelineno-4-32"></a>    <span class="c1"># Apply to all bands</span>
+</span><span id="__span-4-33"><a href="#__codelineno-4-33" id="__codelineno-4-33" name="__codelineno-4-33"></a>    <span class="n">harmonized_bands</span> <span class="o">=</span> <span class="p">[</span><span class="n">apply_offset</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">offsets_s2b</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+</span><span id="__span-4-34"><a href="#__codelineno-4-34" id="__codelineno-4-34" name="__codelineno-4-34"></a>    <span class="n">other_bands</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">image</span><span class="o">.</span><span class="n">bandNames</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+</span><span id="__span-4-35"><a href="#__codelineno-4-35" id="__codelineno-4-35" name="__codelineno-4-35"></a>                                <span class="k">if</span> <span class="n">b</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">offsets_s2b</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+</span><span id="__span-4-36"><a href="#__codelineno-4-36" id="__codelineno-4-36" name="__codelineno-4-36"></a>
+</span><span id="__span-4-37"><a href="#__codelineno-4-37" id="__codelineno-4-37" name="__codelineno-4-37"></a>    <span class="k">return</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">harmonized_bands</span> <span class="o">+</span> <span class="p">[</span><span class="n">other_bands</span><span class="p">])</span><span class="o">.</span><span class="n">copyProperties</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="rgb-visualisation">RGB Visualisation<a class="headerlink" href="#rgb-visualisation" title="Permanent link">¶</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Common RGB composites</span>
+</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="c1"># True Colour</span>
+</span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">true_color</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="sd">"""RGB: B4-B3-B2 (Red-Green-Blue)"""</span>
+</span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">'B4'</span><span class="p">,</span> <span class="s1">'B3'</span><span class="p">,</span> <span class="s1">'B2'</span><span class="p">])</span>
+</span><span id="__span-5-7"><a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="c1"># False Colour (NIR)</span>
+</span><span id="__span-5-9"><a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">false_color_nir</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-5-10"><a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span><span class="sd">"""RGB: B8-B4-B3 (NIR-Red-Green)"""</span>
+</span><span id="__span-5-11"><a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">'B8'</span><span class="p">,</span> <span class="s1">'B4'</span><span class="p">,</span> <span class="s1">'B3'</span><span class="p">])</span>
+</span><span id="__span-5-12"><a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a href="#__codelineno-5-13" id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="c1"># False Colour (SWIR)</span>
+</span><span id="__span-5-14"><a href="#__codelineno-5-14" id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="k">def</span><span class="w"> </span><span class="nf">false_color_swir</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-5-15"><a href="#__codelineno-5-15" id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">    </span><span class="sd">"""RGB: B12-B8A-B4 (SWIR2-NIR-Red)"""</span>
+</span><span id="__span-5-16"><a href="#__codelineno-5-16" id="__codelineno-5-16" name="__codelineno-5-16"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">'B12'</span><span class="p">,</span> <span class="s1">'B8A'</span><span class="p">,</span> <span class="s1">'B4'</span><span class="p">])</span>
+</span><span id="__span-5-17"><a href="#__codelineno-5-17" id="__codelineno-5-17" name="__codelineno-5-17"></a>
+</span><span id="__span-5-18"><a href="#__codelineno-5-18" id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="c1"># Agriculture</span>
+</span><span id="__span-5-19"><a href="#__codelineno-5-19" id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">agriculture</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-5-20"><a href="#__codelineno-5-20" id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">    </span><span class="sd">"""RGB: B11-B8-B2 (SWIR1-NIR-Blue)"""</span>
+</span><span id="__span-5-21"><a href="#__codelineno-5-21" id="__codelineno-5-21" name="__codelineno-5-21"></a>    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">'B11'</span><span class="p">,</span> <span class="s1">'B8'</span><span class="p">,</span> <span class="s1">'B2'</span><span class="p">])</span>
+</span><span id="__span-5-22"><a href="#__codelineno-5-22" id="__codelineno-5-22" name="__codelineno-5-22"></a>
+</span><span id="__span-5-23"><a href="#__codelineno-5-23" id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="c1"># Bathymetry</span>
+</span><span id="__span-5-24"><a href="#__codelineno-5-24" id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">bathymetry_rgb</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+</span><span id="__span-5-25"><a href="#__codelineno-5-25" id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">    </span><span class="sd">"""RGB: B4-B3-B2 with aggressive stretch for water."""</span>
+</span><span id="__span-5-26"><a href="#__codelineno-5-26" id="__codelineno-5-26" name="__codelineno-5-26"></a>    <span class="n">rgb</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">'B4'</span><span class="p">,</span> <span class="s1">'B3'</span><span class="p">,</span> <span class="s1">'B2'</span><span class="p">])</span>
+</span><span id="__span-5-27"><a href="#__codelineno-5-27" id="__codelineno-5-27" name="__codelineno-5-27"></a>    <span class="k">return</span> <span class="n">rgb</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="comparison-with-other-sensors">Comparison with Other Sensors<a class="headerlink" href="#comparison-with-other-sensors" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Sentinel-2 MSI</th>
+<th>Landsat-8 OLI</th>
+<th>MODIS Aqua</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spatial resolution</td>
+<td>10–60m</td>
+<td>30m</td>
+<td>250–1000m</td>
+</tr>
+<tr>
+<td>Temporal revisit</td>
+<td>5 days (S2A+B)</td>
+<td>16 days</td>
+<td>1–2 days</td>
+</tr>
+<tr>
+<td>Spectral bands</td>
+<td>13</td>
+<td>11</td>
+<td>36</td>
+</tr>
+<tr>
+<td>Swath width</td>
+<td>290 km</td>
+<td>185 km</td>
+<td>2330 km</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>High resolution</td>
+<td>Long time series</td>
+<td>Global monitoring</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Free</td>
+<td>Free</td>
+<td>Free</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://sentinel.esa.int/documents/247904/685211/Sentinel-2_User_Handbook">Sentinel-2 User Handbook</a></li>
+<li><a href="https://earth.esa.int/web/sentinel/technical-guides/sentinel-2-msi">Sentinel-2 MSI Technical Guide</a></li>
+<li>Roy, D. P., et al. (2021). Harmonization of Landsat and Sentinel-2 data. Remote Sensing of Environment, 264, 112577.</li>
+<li>Drusch, M., et al. (2012). Sentinel-2: ESA's Optical High-Resolution Mission for GMES Operational Services. Remote Sensing of Environment, 120, 25–36.</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/Aouei/gee_acolite" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.6.1/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>
