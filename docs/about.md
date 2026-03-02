@@ -165,12 +165,12 @@ See [LICENSE](https://github.com/Aouei/gee_acolite/blob/main/LICENSE) for detail
 If you use GEE ACOLITE in your research, please cite:
 
 ```bibtex
-@software{gee_acolite2024,
+@software{gee_acolite2026,
   title = {GEE ACOLITE: Atmospheric correction for Google Earth Engine},
   author = {Sergio},
-  year = {2024},
+  year = {2026},
   url = {https://github.com/Aouei/gee_acolite},
-  version = {0.1.0}
+  version = {1.0.1}
 }
 ```
 

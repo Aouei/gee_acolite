@@ -8,91 +8,80 @@ Accurate class and module structure of GEE ACOLITE, based on the actual source c
 
 ```mermaid
 classDiagram
-    class ACOLITE {
-        +ModuleType acolite
-        +dict settings
-        +__init__(acolite, settings)
-        +correct(images) tuple
-        +l1_to_l2(images, size, settings) tuple
-        +dask_spectrum_fitting(image, settings) tuple
-        +select_lut(image, settings) tuple
-        +compute_pdark(image, settings) dict
-        +estimate_aot_per_lut(pdark, lutd, rsrd, ttg, geometry, settings) dict
-        +select_best_model(results, lutd, geometry, settings) tuple
-        +compute_correction_with_fixed_aot(image, aot, lut_name, settings) tuple
-        +compute_rhos(image, am) ee_Image
-        +get_ancillary_data(image, settings) dict
-        +prepare_query(image) tuple
-        +prepare_earthdata_credentials(settings) dict
-        +deglint_alternative(image, bands, glint_ave, glint_min, glint_max) ee_Image
+    namespace gee_acolite {
+        class ACOLITE {
+            +correct() tuple
+            +l1_to_l2() tuple
+            +dask_spectrum_fitting() tuple
+            +select_lut() tuple
+            +compute_pdark() dict
+            +estimate_aot_per_lut() dict
+            +select_best_model() tuple
+            +compute_correction_with_fixed_aot() tuple
+            +compute_rhos() Image
+            +deglint_alternative() Image
+            +get_ancillary_data() dict
+            +prepare_query() tuple
+            +prepare_earthdata_credentials() dict
+        }
+        class WaterQuality {
+            +compute_water_mask() Image
+            +compute_water_bands() Image
+            +spm_nechad2016_665() Image
+            +spm_nechad2016_704() Image
+            +spm_nechad2016_740() Image
+            +tur_nechad2016_665() Image
+            +chl_oc2() Image
+            +chl_oc3() Image
+            +chl_re_mishra() Image
+            +pSDB_green() Image
+            +pSDB_red() Image
+            +rrs() Image
+        }
+        class Bathymetry {
+            +optical_deep_water_model() Image
+            +calibrate_sdb() dict
+            +apply_calibration() Image
+            +multi_image() Image
+        }
     }
 
-    class WaterQuality {
-        <<module>>
-        +dict PRODUCTS
-        +compute_water_mask(image, settings) ee_Image
-        +compute_water_bands(image, settings) ee_Image
-        +spm_nechad2016_665(image) ee_Image
-        +spm_nechad2016_704(image) ee_Image
-        +spm_nechad2016_740(image) ee_Image
-        +tur_nechad2016_665(image) ee_Image
-        +tur_nechad2016_704(image) ee_Image
-        +tur_nechad2016_740(image) ee_Image
-        +chl_oc2(image) ee_Image
-        +chl_oc3(image) ee_Image
-        +chl_re_mishra(image) ee_Image
-        +ndwi(image) ee_Image
-        +pSDB_green(image) ee_Image
-        +pSDB_red(image) ee_Image
-        +rrs(image) ee_Image
+    namespace utils {
+        class Search {
+            +search() ImageCollection
+            +search_list() ImageCollection
+            +search_with_cloud_proba() ImageCollection
+            +join_s2_with_cloud_prob() ImageCollection
+        }
+        class L1Convert {
+            +l1_to_rrs() ImageCollection
+            +DN_to_rrs() Image
+            +get_mean_band_angle() Image
+            +resample() Image
+        }
+        class Masks {
+            +mask_negative_reflectance() Image
+            +toa_mask() Image
+            +cirrus_mask() Image
+            +non_water() Image
+            +add_cloud_bands() Image
+            +add_shadow_bands() Image
+            +add_cld_shdw_mask() Image
+            +cld_shdw_mask() Image
+        }
     }
 
-    class Bathymetry {
-        <<module>>
-        +optical_deep_water_model(model, blue, green, vnir) ee_Image
-        +calibrate_sdb(psdb_image, insitu_bathymetry, region, max_depth, num_points, seed, scale) dict
-        +apply_calibration(psdb_image, slope, intercept, output_name) ee_Image
-        +multi_image(images, band) ee_Image
-    }
-
-    class Search {
-        <<module>>
-        +search(roi, start, end, collection, tile) ee_ImageCollection
-        +search_list(roi, starts, ends, collection, tile) ee_ImageCollection
-        +search_with_cloud_proba(roi, start, end, collection, tile) ee_ImageCollection
-        +join_s2_with_cloud_prob(s2_collection) ee_ImageCollection
-    }
-
-    class L1Convert {
-        <<module>>
-        +l1_to_rrs(images, scale) ee_ImageCollection
-        +DN_to_rrs(image) ee_Image
-        +get_mean_band_angle(image, angle_name) ee_Image
-        +resample(image, band) ee_Image
-    }
-
-    class Masks {
-        <<module>>
-        +mask_negative_reflectance(image, band) ee_Image
-        +toa_mask(image, band, threshold) ee_Image
-        +cirrus_mask(image, band, threshold) ee_Image
-        +non_water(image, band, threshold) ee_Image
-        +add_cloud_bands(img, cloud_prob_threshold) ee_Image
-        +add_shadow_bands(img, nir_dark_threshold, cloud_proj_distance) ee_Image
-        +add_cld_shdw_mask(img, cloud_prob_threshold, nir_dark_threshold, cloud_proj_distance, buffer) ee_Image
-        +cld_shdw_mask(img) ee_Image
-    }
-
-    class Sentinel2 {
-        <<module>>
-        +list SENTINEL2_BANDS
-        +dict BAND_BY_SCALE
+    namespace sensors {
+        class Sentinel2 {
+            +list SENTINEL2_BANDS
+            +dict BAND_BY_SCALE
+        }
     }
 
     ACOLITE --> L1Convert : uses l1_to_rrs
     ACOLITE --> WaterQuality : uses compute_water_bands
-    ACOLITE --> Masks : uses mask_negative_reflectance
-    WaterQuality --> Masks : uses water/cirrus/cloud masks
+    ACOLITE --> Masks : applies masks
+    WaterQuality --> Masks : applies masks
     WaterQuality --> Sentinel2 : uses SENTINEL2_BANDS
     L1Convert --> Sentinel2 : uses BAND_BY_SCALE
 ```
@@ -104,20 +93,20 @@ classDiagram
 ```mermaid
 classDiagram
     class ACOLITE {
-        +correct(images) ImageCollection_dict
-        +l1_to_l2(images, size, settings) ImageCollection_dict
-        +dask_spectrum_fitting(image, settings) Image_list_dict
-        +select_lut(image, settings) dict_dict_list
-        +compute_pdark(image, settings) dict
-        +estimate_aot_per_lut(pdark, lutd, rsrd, ttg, geometry, settings) dict
-        +select_best_model(results, lutd, geometry, settings) str_float_str_float
-        +compute_correction_with_fixed_aot(image, aot, lut_name, settings) dict_dict_list
-        +compute_rhos(image, am) Image
-        +deglint_alternative(image, bands, glint_ave, glint_min, glint_max) Image
-        +get_ancillary_data(image, settings) dict
+        +correct() tuple
+        +l1_to_l2() ImageCollection
+        +dask_spectrum_fitting() tuple
+        +select_lut() tuple
+        +compute_pdark() ndarray
+        +estimate_aot_per_lut() dict
+        +select_best_model() tuple
+        +compute_correction_with_fixed_aot() tuple
+        +compute_rhos() Image
+        +deglint_alternative() Image
+        +get_ancillary_data() dict
     }
 
-    note for ACOLITE "GEE server-side:\ncorrect, l1_to_l2,\ncompute_pdark (reducer),\ncompute_rhos, deglint_alternative\n\nClient-side (numpy/scipy):\nestimate_aot_per_lut,\nselect_best_model,\ndask_spectrum_fitting (orchestration)"
+    note for ACOLITE "Server-side: correct, l1_to_l2, compute_pdark, compute_rhos, deglint_alternative\nClient-side: estimate_aot_per_lut, select_best_model, dask_spectrum_fitting"
 ```
 
 ### Method Responsibilities
@@ -143,43 +132,20 @@ classDiagram
 The `PRODUCTS` dict maps product names to their computation functions:
 
 ```mermaid
-classDiagram
-    class PRODUCTS {
-        <<dict>>
-        spm_nechad2016 --> spm_nechad2016_665
-        spm_nechad2016_704 --> spm_nechad2016_704
-        spm_nechad2016_740 --> spm_nechad2016_740
-        tur_nechad2016 --> tur_nechad2016_665
-        tur_nechad2016_704 --> tur_nechad2016_704
-        tur_nechad2016_740 --> tur_nechad2016_740
-        chl_oc2 --> chl_oc2
-        chl_oc3 --> chl_oc3
-        chl_re_mishra --> chl_re_mishra
-        pSDB_green --> pSDB_green
-        pSDB_red --> pSDB_red
-        Rrs_B_star --> rrs
-    }
-
-    class spm_nechad2016_665 {
-        formula: A*R / (1 - R/C)
-        band: rhos_B4 (665nm)
-        A: 610.94, C: 0.2324
-    }
-
-    class chl_oc3 {
-        formula: 10^(A + B*x + C*x^2 + D*x^3 + E*x^4)
-        x: log10(max(B1,B2) / B3)
-    }
-
-    class pSDB_green {
-        formula: log(1000*pi*B2) / log(1000*pi*B3)
-        bands: rhos_B2, rhos_B3
-    }
-
-    class rrs {
-        formula: rhos / pi
-        bands: all 13 rhos_B* bands
-    }
+graph LR
+    P["PRODUCTS dict"]
+    P --> A[spm_nechad2016]
+    P --> B[spm_nechad2016_704]
+    P --> C[spm_nechad2016_740]
+    P --> D[tur_nechad2016]
+    P --> E[tur_nechad2016_704]
+    P --> F[tur_nechad2016_740]
+    P --> G[chl_oc2]
+    P --> H[chl_oc3]
+    P --> I[chl_re_mishra]
+    P --> J[pSDB_green]
+    P --> K[pSDB_red]
+    P --> L["Rrs_B1 to Rrs_B12"]
 ```
 
 ---
@@ -187,43 +153,18 @@ classDiagram
 ## Masking Pipeline
 
 ```mermaid
-classDiagram
-    class compute_water_mask {
-        <<function>>
-        1. non_water(image, band, threshold)
-        2. cirrus_mask(image, band, threshold)
-        3. toa_mask(image, band, threshold)
-        4. add_cld_shdw_mask() [optional]
-        returns: combined mask Image
-    }
+flowchart TD
+    A[compute_water_mask] --> B[non_water<br/>B11 less than threshold]
+    A --> C[cirrus_mask<br/>B10 less than threshold]
+    A --> D[toa_mask<br/>band less than threshold]
+    A --> E[add_cld_shdw_mask<br/>optional]
+    B --> F[Combined mask Image]
+    C --> F
+    D --> F
+    E --> F
 
-    class non_water {
-        band: B11 (SWIR)
-        logic: B11 lt threshold
-        default threshold: 0.05
-    }
-
-    class cirrus_mask {
-        band: B10 (1375nm)
-        logic: B10 lt threshold
-        default threshold: 0.005
-    }
-
-    class toa_mask {
-        band: configurable
-        logic: band lt threshold
-        default threshold: 0.3
-    }
-
-    class add_cld_shdw_mask {
-        uses: S2 Cloud Probability dataset
-        steps: cloud, shadow, buffer
-    }
-
-    compute_water_mask --> non_water
-    compute_water_mask --> cirrus_mask
-    compute_water_mask --> toa_mask
-    compute_water_mask --> add_cld_shdw_mask
+    style A fill:#e1f5ff
+    style F fill:#e1ffe1
 ```
 
 ---
@@ -233,12 +174,11 @@ classDiagram
 ```mermaid
 classDiagram
     class Sentinel2Config {
-        <<module: sensors/sentinel2>>
-        +SENTINEL2_BANDS: list
-        +BAND_BY_SCALE: dict
+        +list SENTINEL2_BANDS
+        +dict BAND_BY_SCALE
     }
 
-    note for Sentinel2Config "SENTINEL2_BANDS = ['B1','B2','B3','B4','B5','B6','B7','B8','B8A','B9','B10','B11','B12']\n\nBAND_BY_SCALE = {\n  10: 'B2',   <- reference for 10m\n  20: 'B5',   <- reference for 20m\n  60: 'B1'    <- reference for 60m\n}"
+    note for Sentinel2Config "SENTINEL2_BANDS: B1 to B12 (13 bands)\nBAND_BY_SCALE: 10m to B2, 20m to B5, 60m to B1"
 ```
 
 ### Band Wavelengths and Resolutions

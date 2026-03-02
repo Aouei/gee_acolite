@@ -15,18 +15,18 @@ The `gee_acolite.utils.l1_convert` module:
 
 ```mermaid
 flowchart TD
-    A[S2 L1C Image\nDN values] --> B[DN_to_rrs]
-    B --> C[Divide by 10000\nTOA reflectance 0-1]
+    A["S2 L1C Image<br/>DN values"] --> B[DN_to_rrs]
+    B --> C["Divide by 10000<br/>TOA reflectance 0-1"]
     C --> D[Extract Angles]
     D --> D1[Solar Zenith SZA]
     D --> D2[Solar Azimuth SAA]
-    D --> D3[View Zenith VZA\nmean over 13 bands]
-    D --> D4[View Azimuth VAA\nmean over 13 bands]
-    D1 --> E[Compute RAA\n|SAA - VAA|, clamped 0-180]
+    D --> D3["View Zenith VZA<br/>mean over 13 bands"]
+    D --> D4["View Azimuth VAA<br/>mean over 13 bands"]
+    D1 --> E["Compute RAA<br/>abs(SAA - VAA), clamped 0-180"]
     D2 --> E
     D4 --> E
-    E --> F[Add geometry bands\nsza, saa, vza, vaa, raa]
-    F --> G[resample\nbilinear to target scale]
+    E --> F["Add geometry bands<br/>sza, saa, vza, vaa, raa"]
+    F --> G["resample<br/>bilinear to target scale"]
     G --> H[TOA Image + Geometry]
 
     style A fill:#e1f5ff

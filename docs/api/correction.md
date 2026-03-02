@@ -25,14 +25,6 @@ classDiagram
         +get_ancillary_data() dict
     }
 
-    class ImageCollection {
-        <<GEE>>
-    }
-
-    class Image {
-        <<GEE>>
-    }
-
     ACOLITE --> ImageCollection : processes
     ACOLITE --> Image : returns
     ImageCollection --> Image : contains
