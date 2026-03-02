@@ -1,105 +1,118 @@
 [![DOI](https://zenodo.org/badge/961844693.svg)](https://doi.org/10.5281/zenodo.18367865)
+[![PyPI version](https://img.shields.io/pypi/v/gee_acolite.svg)](https://pypi.org/project/gee_acolite/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-%3E%3D3.11-blue.svg)](https://www.python.org/)
 
 # GEE ACOLITE
 
-ACOLITE atmospheric correction implementation for Google Earth Engine (GEE).
+Atmospheric correction for Sentinel-2 imagery on Google Earth Engine using the ACOLITE Dark Spectrum Fitting (DSF) method.
 
 ## Description
 
-This package provides atmospheric correction for Sentinel-2 imagery using the ACOLITE dark spectrum fitting method, optimized for Google Earth Engine workflows. It includes:
+`gee_acolite` adapts the [ACOLITE](https://github.com/acolite/acolite) atmospheric correction to Google Earth Engine workflows. A single global AOT is estimated per image using ACOLITE LUTs (client-side), while all pixel operations run server-side on GEE.
 
-- **Dark Spectrum Fitting**: Multiple methods (darkest, percentile, intercept)
-- **AOT Estimation**: Fixed geometry mode
-- **Atmospheric Correction**: Full LUT-based correction
-- **Water Quality Parameters**: SPM, turbidity, chlorophyll, bathymetry indices
-- **Cloud Masking**: Integration with Sentinel-2 Cloud Probability
+**Key features:**
+
+- **Dark Spectrum Fitting**: darkest pixel, percentile, or intercept methods
+- **AOT Estimation**: single fixed AOT per image via LUT interpolation
+- **Atmospheric Correction**: full LUT-based surface reflectance retrieval
+- **Water Quality Products**: SPM, turbidity, chlorophyll-a, Rrs, bathymetry indices
+- **Cloud & Water Masking**: integration with Sentinel-2 Cloud Probability
 
 ## Installation
-
-### From PyPI (when published)
 
 ```bash
 pip install gee_acolite
 ```
 
-### From source
+### ACOLITE
 
-```bash
-git clone https://github.com/Aouei/gee_acolite.git
-cd gee_acolite
-pip install -e .
+`gee_acolite` requires ACOLITE for LUT loading and atmospheric calculations. ACOLITE is not on PyPI — download it from its [official repository](https://github.com/acolite/acolite) and add it to your Python path:
+
+```python
+import sys
+sys.path.append('/path/to/acolite')
+
+import acolite as ac
+from gee_acolite import ACOLITE
 ```
 
-## Features
+## Quickstart
 
-### Atmospheric Correction Methods
+```python
+import sys
+sys.path.append('/path/to/acolite')
 
-- **Fixed Geometry**: Single AOT estimation for entire image
-- **Dark Spectrum Options**:
-  - `darkest`: Use minimum values
-  - `percentile`: Use Nth percentile
-  - `intercept`: Linear regression intercept
+import ee
+import acolite as ac
+from gee_acolite import ACOLITE
+from gee_acolite.utils.search import search
 
-### Model Selection Criteria
+ee.Initialize(project='your-cloud-project-id')
 
-- `min_drmsd`: Minimum RMSD between observed and modeled reflectance
-- `min_dtau`: Minimum delta AOT between darkest bands
-- `taua_cv`: Minimum coefficient of variation
+roi = ee.Geometry.Rectangle([-0.40, 39.27, -0.28, 39.38])
+images = search(roi, '2023-06-01', '2023-06-30', tile='30SYJ')
 
-### Water Quality Products
+settings = {
+    's2_target_res': 10,
+    'dsf_spectrum_option': 'darkest',
+    'l2w_parameters': ['spm_nechad2016', 'chl_oc3', 'pSDB_green'],
+}
 
-- **SPM**: Suspended particulate matter (Nechad 2016)
-- **Turbidity**: Water turbidity (Nechad 2016)
-- **Chlorophyll**: Chl-a concentration (OC2, OC3, Mishra)
-- **Bathymetry**: Pseudo satellite-derived bathymetry (pSDB)
-- **Indices**: NDWI, custom band ratios
+ac_gee = ACOLITE(ac, settings)
+corrected, final_settings = ac_gee.correct(images)
+```
 
 ## Requirements
 
-- Python ≥ 3.8
-- earthengine-api ≥ 0.1.350
-- numpy ≥ 1.20.0
-- scipy ≥ 1.7.0
-- **ACOLITE** (standalone installation required)
+- Python ≥ 3.11
+- `earthengine-api` ≥ 0.1.350
+- `numpy` ≥ 1.20.0
+- `scipy` ≥ 1.7.0
+- `netcdf4` ≥ 1.7.0
+- [ACOLITE](https://github.com/acolite/acolite) (separate installation)
 
-### Installing ACOLITE
+## Documentation
 
-This package requires the ACOLITE atmospheric correction software to be installed separately:
+Full documentation including API reference, examples, and architecture diagrams is available at:
+**[https://aouei.github.io/gee_acolite](https://aouei.github.io/gee_acolite)**
 
-```bash
-# Clone ACOLITE repository
-git clone https://github.com/acolite/acolite.git
+## Water Quality Products
 
-# Install ACOLITE
-cd acolite
-pip install -e .
-```
-
-**Important:** ACOLITE is not available on PyPI and must be installed from source.
+| Product | Description |
+|---------|-------------|
+| `spm_nechad2016` | Suspended particulate matter — 665 nm (Nechad 2016) |
+| `spm_nechad2016_704` | SPM — 704 nm |
+| `spm_nechad2016_740` | SPM — 740 nm |
+| `tur_nechad2016` | Turbidity — 665 nm (Nechad 2016) |
+| `chl_oc2` | Chlorophyll-a OC2 |
+| `chl_oc3` | Chlorophyll-a OC3 |
+| `chl_re_mishra` | Chlorophyll-a NDCI (Mishra) |
+| `pSDB_green` | Pseudo satellite-derived bathymetry — green |
+| `pSDB_red` | Pseudo satellite-derived bathymetry — red |
+| `Rrs_B*` | Remote sensing reflectance (all 13 bands) |
 
 ## Contributing
 
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new features
-4. Submit a pull request
+Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request.
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+GNU General Public License v3.0 — see [LICENSE](LICENSE) for details.
 
 ## Citation
 
 If you use this package in your research, please cite:
 
 ```bibtex
-@software{gee_acolite,
-  author = {Sergio},
-  title = {GEE ACOLITE: Atmospheric Correction for Google Earth Engine},
-  year = {2025},
-  url = {https://github.com/Aouei/gee_acolite}
+@software{heredia_sergio_2026_gee_acolite,
+  author    = {Heredia, Sergio},
+  title     = {gee\_acolite},
+  year      = {2026},
+  version   = {1.0.1},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.18367865},
+  url       = {https://doi.org/10.5281/zenodo.18367865}
 }
 ```
 
@@ -107,13 +120,13 @@ And the original ACOLITE paper:
 
 ```bibtex
 @article{vanhellemont2019,
-  title={Adaptation of the dark spectrum fitting atmospheric correction for aquatic applications of the Landsat and Sentinel-2 archives},
-  author={Vanhellemont, Quinten and Ruddick, Kevin},
-  journal={Remote Sensing of Environment},
-  volume={225},
-  pages={175--192},
-  year={2019},
-  publisher={Elsevier}
+  author  = {Vanhellemont, Quinten and Ruddick, Kevin},
+  title   = {Adaptation of the dark spectrum fitting atmospheric correction for aquatic applications of the Landsat and Sentinel-2 archives},
+  journal = {Remote Sensing of Environment},
+  volume  = {225},
+  pages   = {175--192},
+  year    = {2019},
+  doi     = {10.1016/j.rse.2019.03.010}
 }
 ```
 
