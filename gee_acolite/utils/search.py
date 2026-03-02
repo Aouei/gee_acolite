@@ -91,24 +91,16 @@ def search_with_cloud_proba(roi : ee.Geometry, start : str, end : str,
         Specific tile identifier to filter.
     
     Returns
-    Search multiple Sentinel-2 images and join with Cloud Probability.
-    
-    Retrieves the first image matching each date range and joins with
-    cloud probability data.
-    
-    Parameters
-    ----------
-    roi : ee.Geometry
-        Region of interest.
-    starts : list of str
-        List of start dates in format 'YYYY-MM-DD'.
-    ends : list of str
-        List of end dates in format 'YYYY-MM-DD'.
-    collection : str, optional
-        Sentinel-2 collection name (default: 'S2_HARMONIZED').
-    tile : str, optional
-        Specific tile identifier to filter.
-    
+    -------
+    ee.ImageCollection
+        Collection with Cloud Probability data joined.
+    """
+    s2_collection = search(roi, start, end, collection, tile)
+    return join_s2_with_cloud_prob(s2_collection)
+
+
+def join_s2_with_cloud_prob(s2_collection : ee.ImageCollection) -> ee.ImageCollection:
+    """
     Join Sentinel-2 collection with Cloud Probability data.
     
     Matches each Sentinel-2 image with its corresponding cloud probability
@@ -119,33 +111,11 @@ def search_with_cloud_proba(roi : ee.Geometry, start : str, end : str,
     ----------
     s2_collection : ee.ImageCollection
         Sentinel-2 L1C image collection.
-    
+        
     Returns
     -------
     ee.ImageCollection
         Collection with Cloud Probability images added as 'cloud_prob' property.
-        starts: Lista de fechas de inicio (formato 'YYYY-MM-DD')
-        ends: Lista de fechas de fin (formato 'YYYY-MM-DD')
-        collection: Nombre de la colección de Sentinel-2 (default: 'S2_HARMONIZED')
-        tile: Identificador del tile (opcional)
-        
-    Returns:
-        Colección de imágenes con Cloud Probability unida
-    """
-    s2_collection = search_list(roi, starts, ends, collection, tile)
-    return join_s2_with_cloud_prob(s2_collection)
-
-
-def join_s2_with_cloud_prob(s2_collection : ee.ImageCollection) -> ee.ImageCollection:
-    """
-    Une la colección Sentinel-2 con Cloud Probability
-    
-    Args:
-        s2_collection: Colección de imágenes Sentinel-2 L1C
-        roi: Región de interés
-        
-    Returns:
-        Colección de imágenes con Cloud Probability unida como propiedad 'cloud_prob'
     """
     
     def add_cloud_prob(img):
