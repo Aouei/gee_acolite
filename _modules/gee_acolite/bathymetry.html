@@ -277,6 +277,220 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">ee</span>
 
 
+<div class="viewcode-block" id="optical_deep_water_model">
+<a class="viewcode-back" href="../../modules/bathymetry.html#gee_acolite.bathymetry.optical_deep_water_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">optical_deep_water_model</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
+    <span class="n">blue</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
+    <span class="n">green</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
+    <span class="n">vnir</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter depth estimations based on optical properties of water.</span>
+
+<span class="sd">    This function applies optical water property-based filters to depth estimation</span>
+<span class="sd">    models to improve accuracy. It filters out pixels based on reflectance thresholds</span>
+<span class="sd">    for clear waters and an upper depth limit equation for turbid waters as described</span>
+<span class="sd">    in peer-reviewed literature.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model : ee.Image</span>
+<span class="sd">        The initial depth estimation model output to be filtered</span>
+<span class="sd">    blue : ee.Image</span>
+<span class="sd">        Blue band reflectance values, used for clear water filtering</span>
+<span class="sd">    green : ee.Image</span>
+<span class="sd">        Green band reflectance values, used for clear water filtering</span>
+<span class="sd">    vnir : ee.Image</span>
+<span class="sd">        Near-infrared band reflectance values, used for turbid water depth limit calculation</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Filtered depth model with invalid estimations masked out</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The function applies two filtering steps:</span>
+<span class="sd">    1. Clear water filtering: removes pixels with reflectance &lt;= 0.003 in blue or green bands</span>
+<span class="sd">    2. Turbid water filtering: applies depth limitation based on NIR reflectance using the equation:</span>
+<span class="sd">       Ymax = -0.251 * ln(NIR) + 0.8</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Caballero, I., &amp; Stumpf, R. P. (2019). Retrieval of nearshore bathymetry from Sentinel-2A and 2B</span>
+<span class="sd">    satellites in South Florida coastal waters. Estuarine, Coastal and Shelf Science, 226, 106277.</span>
+<span class="sd">    https://doi.org/10.1016/j.ecss.2019.106277</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Clear waters mask: remove pixels with reflectance &lt;= 0.003 in blue or green bands</span>
+    <span class="n">clear_water_mask</span> <span class="o">=</span> <span class="n">blue</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mf">0.003</span><span class="p">)</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="n">green</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mf">0.003</span><span class="p">))</span>
+    
+    <span class="c1"># Turbid waters: calculate depth limit based on NIR reflectance</span>
+    <span class="c1"># Ymax = -0.251 * ln(NIR) + 0.8</span>
+    <span class="n">Ymax</span> <span class="o">=</span> <span class="n">vnir</span><span class="o">.</span><span class="n">log</span><span class="p">()</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="o">-</span><span class="mf">0.251</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">Ymax</span> <span class="o">=</span> <span class="n">Ymax</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">Ymax</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    
+    <span class="c1"># Calculate y = ln(model) and mask negative values</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    
+    <span class="c1"># Turbid water mask: y &lt;= Ymax</span>
+    <span class="n">turbid_water_mask</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">lte</span><span class="p">(</span><span class="n">Ymax</span><span class="p">)</span>
+    
+    <span class="c1"># Apply both masks</span>
+    <span class="n">filtered_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">clear_water_mask</span><span class="p">)</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">turbid_water_mask</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">filtered_model</span></div>
+
+
+
+<div class="viewcode-block" id="calibrate_sdb">
+<a class="viewcode-back" href="../../modules/bathymetry.html#gee_acolite.bathymetry.calibrate_sdb">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calibrate_sdb</span><span class="p">(</span>
+    <span class="n">psdb_image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
+    <span class="n">insitu_bathymetry</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
+    <span class="n">region</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calibrate satellite-derived bathymetry using random sample points.</span>
+
+<span class="sd">    This function selects random points from areas with valid in-situ bathymetry</span>
+<span class="sd">    data up to a specified maximum depth, and performs linear regression to</span>
+<span class="sd">    establish a calibration relationship.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    psdb_image : ee.Image</span>
+<span class="sd">        Pseudo-SDB image (e.g., pSDB_green band) to calibrate</span>
+<span class="sd">    insitu_bathymetry : ee.Image</span>
+<span class="sd">        In-situ bathymetry reference image with depth values</span>
+<span class="sd">    region : ee.Geometry</span>
+<span class="sd">        Region of interest for sampling</span>
+<span class="sd">    max_depth : float, optional</span>
+<span class="sd">        Maximum depth in meters for calibration points (default: 10)</span>
+<span class="sd">    num_points : int, optional</span>
+<span class="sd">        Maximum number of random points to sample (default: 20)</span>
+<span class="sd">    seed : int, optional</span>
+<span class="sd">        Random seed for reproducibility (default: 42)</span>
+<span class="sd">    scale : int, optional</span>
+<span class="sd">        Scale in meters for sampling (default: 10)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary containing:</span>
+<span class="sd">        - &#39;slope&#39;: Regression slope coefficient</span>
+<span class="sd">        - &#39;intercept&#39;: Regression intercept coefficient</span>
+<span class="sd">        - &#39;correlation&#39;: Pearson correlation coefficient</span>
+<span class="sd">        - &#39;num_points&#39;: Number of valid points used</span>
+<span class="sd">        - &#39;sample_fc&#39;: ee.FeatureCollection of sampled points</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; result = calibrate_sdb(</span>
+<span class="sd">    ...     psdb_image=image.select(&#39;pSDB_green&#39;),</span>
+<span class="sd">    ...     insitu_bathymetry=bathymetry_image,</span>
+<span class="sd">    ...     region=roi,</span>
+<span class="sd">    ...     max_depth=10,</span>
+<span class="sd">    ...     num_points=20</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; print(f&quot;SDB = {result[&#39;slope&#39;]:.4f} * pSDB + {result[&#39;intercept&#39;]:.4f}&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Combine images for sampling</span>
+    <span class="n">combined</span> <span class="o">=</span> <span class="n">psdb_image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">insitu_bathymetry</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;depth&#39;</span><span class="p">))</span>
+    
+    <span class="c1"># Create mask for valid depth values (0 &lt; depth &lt;= max_depth)</span>
+    <span class="n">depth_mask</span> <span class="o">=</span> <span class="n">insitu_bathymetry</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="n">insitu_bathymetry</span><span class="o">.</span><span class="n">lte</span><span class="p">(</span><span class="n">max_depth</span><span class="p">))</span>
+    
+    <span class="c1"># Create mask for valid pSDB values (not null/masked)</span>
+    <span class="n">psdb_mask</span> <span class="o">=</span> <span class="n">psdb_image</span><span class="o">.</span><span class="n">mask</span><span class="p">()</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    
+    <span class="c1"># Apply both masks: only sample where both depth AND pSDB are valid</span>
+    <span class="n">combined_filtered</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">depth_mask</span><span class="p">)</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">psdb_mask</span><span class="p">)</span>
+    
+    <span class="c1"># Sample random points</span>
+    <span class="n">sample_fc</span> <span class="o">=</span> <span class="n">combined_filtered</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+        <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
+        <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
+        <span class="n">numPixels</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="n">geometries</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Get band name from psdb_image</span>
+    <span class="n">psdb_band_name</span> <span class="o">=</span> <span class="n">psdb_image</span><span class="o">.</span><span class="n">bandNames</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+    
+    <span class="c1"># Perform linear regression</span>
+    <span class="n">regression</span> <span class="o">=</span> <span class="n">sample_fc</span><span class="o">.</span><span class="n">reduceColumns</span><span class="p">(</span>
+        <span class="n">reducer</span><span class="o">=</span><span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">linearFit</span><span class="p">(),</span>
+        <span class="n">selectors</span><span class="o">=</span><span class="p">[</span><span class="n">psdb_band_name</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Calculate Pearson correlation</span>
+    <span class="n">correlation</span> <span class="o">=</span> <span class="n">sample_fc</span><span class="o">.</span><span class="n">reduceColumns</span><span class="p">(</span>
+        <span class="n">reducer</span><span class="o">=</span><span class="n">ee</span><span class="o">.</span><span class="n">Reducer</span><span class="o">.</span><span class="n">pearsonsCorrelation</span><span class="p">(),</span>
+        <span class="n">selectors</span><span class="o">=</span><span class="p">[</span><span class="n">psdb_band_name</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Get results</span>
+    <span class="n">regression_info</span> <span class="o">=</span> <span class="n">regression</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+    <span class="n">correlation_info</span> <span class="o">=</span> <span class="n">correlation</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+    <span class="n">num_sampled</span> <span class="o">=</span> <span class="n">sample_fc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;slope&#39;</span><span class="p">:</span> <span class="n">regression_info</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;intercept&#39;</span><span class="p">:</span> <span class="n">regression_info</span><span class="p">[</span><span class="s1">&#39;offset&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;correlation&#39;</span><span class="p">:</span> <span class="n">correlation_info</span><span class="p">[</span><span class="s1">&#39;correlation&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;num_points&#39;</span><span class="p">:</span> <span class="n">num_sampled</span><span class="p">,</span>
+        <span class="s1">&#39;sample_fc&#39;</span><span class="p">:</span> <span class="n">sample_fc</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="apply_calibration">
+<a class="viewcode-back" href="../../modules/bathymetry.html#gee_acolite.bathymetry.apply_calibration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_calibration</span><span class="p">(</span>
+    <span class="n">psdb_image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
+    <span class="n">slope</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">intercept</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">output_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;SDB&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply calibration coefficients to a pseudo-SDB image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    psdb_image : ee.Image</span>
+<span class="sd">        Pseudo-SDB image to calibrate</span>
+<span class="sd">    slope : float</span>
+<span class="sd">        Regression slope coefficient</span>
+<span class="sd">    intercept : float</span>
+<span class="sd">        Regression intercept coefficient</span>
+<span class="sd">    output_name : str, optional</span>
+<span class="sd">        Name for the output band (default: &#39;SDB&#39;)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.Image</span>
+<span class="sd">        Calibrated SDB image</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sdb = apply_calibration(</span>
+<span class="sd">    ...     psdb_image=image.select(&#39;pSDB_green&#39;),</span>
+<span class="sd">    ...     slope=result[&#39;slope&#39;],</span>
+<span class="sd">    ...     intercept=result[&#39;intercept&#39;],</span>
+<span class="sd">    ...     output_name=&#39;SDB_green&#39;</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">psdb_image</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">slope</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">intercept</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">output_name</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="multi_image">
 <a class="viewcode-back" href="../../modules/bathymetry.html#gee_acolite.bathymetry.multi_image">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">multi_image</span><span class="p">(</span><span class="n">images</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">,</span> <span class="n">band</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pSDB_green&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>

@@ -372,24 +372,19 @@ document.write(`
 <span class="sd">        Specific tile identifier to filter.</span>
 <span class="sd">    </span>
 <span class="sd">    Returns</span>
-<span class="sd">    Search multiple Sentinel-2 images and join with Cloud Probability.</span>
-<span class="sd">    </span>
-<span class="sd">    Retrieves the first image matching each date range and joins with</span>
-<span class="sd">    cloud probability data.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    roi : ee.Geometry</span>
-<span class="sd">        Region of interest.</span>
-<span class="sd">    starts : list of str</span>
-<span class="sd">        List of start dates in format &#39;YYYY-MM-DD&#39;.</span>
-<span class="sd">    ends : list of str</span>
-<span class="sd">        List of end dates in format &#39;YYYY-MM-DD&#39;.</span>
-<span class="sd">    collection : str, optional</span>
-<span class="sd">        Sentinel-2 collection name (default: &#39;S2_HARMONIZED&#39;).</span>
-<span class="sd">    tile : str, optional</span>
-<span class="sd">        Specific tile identifier to filter.</span>
-<span class="sd">    </span>
+<span class="sd">    -------</span>
+<span class="sd">    ee.ImageCollection</span>
+<span class="sd">        Collection with Cloud Probability data joined.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s2_collection</span> <span class="o">=</span> <span class="n">search</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">tile</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">join_s2_with_cloud_prob</span><span class="p">(</span><span class="n">s2_collection</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="join_s2_with_cloud_prob">
+<a class="viewcode-back" href="../../../modules/utils.search.html#gee_acolite.utils.search.join_s2_with_cloud_prob">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">join_s2_with_cloud_prob</span><span class="p">(</span><span class="n">s2_collection</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Join Sentinel-2 collection with Cloud Probability data.</span>
 <span class="sd">    </span>
 <span class="sd">    Matches each Sentinel-2 image with its corresponding cloud probability</span>
@@ -400,36 +395,11 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    s2_collection : ee.ImageCollection</span>
 <span class="sd">        Sentinel-2 L1C image collection.</span>
-<span class="sd">    </span>
+<span class="sd">        </span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ee.ImageCollection</span>
 <span class="sd">        Collection with Cloud Probability images added as &#39;cloud_prob&#39; property.</span>
-<span class="sd">        starts: Lista de fechas de inicio (formato &#39;YYYY-MM-DD&#39;)</span>
-<span class="sd">        ends: Lista de fechas de fin (formato &#39;YYYY-MM-DD&#39;)</span>
-<span class="sd">        collection: Nombre de la colección de Sentinel-2 (default: &#39;S2_HARMONIZED&#39;)</span>
-<span class="sd">        tile: Identificador del tile (opcional)</span>
-<span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Colección de imágenes con Cloud Probability unida</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">s2_collection</span> <span class="o">=</span> <span class="n">search_list</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">starts</span><span class="p">,</span> <span class="n">ends</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">tile</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">join_s2_with_cloud_prob</span><span class="p">(</span><span class="n">s2_collection</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="join_s2_with_cloud_prob">
-<a class="viewcode-back" href="../../../modules/utils.search.html#gee_acolite.utils.search.join_s2_with_cloud_prob">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">join_s2_with_cloud_prob</span><span class="p">(</span><span class="n">s2_collection</span> <span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Une la colección Sentinel-2 con Cloud Probability</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        s2_collection: Colección de imágenes Sentinel-2 L1C</span>
-<span class="sd">        roi: Región de interés</span>
-<span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Colección de imágenes con Cloud Probability unida como propiedad &#39;cloud_prob&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">add_cloud_prob</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>

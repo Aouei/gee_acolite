@@ -341,16 +341,19 @@ the GEE catalog, with optional cloud probability data integration.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gee_acolite.utils.search.join_s2_with_cloud_prob">
 <span class="sig-prename descclassname"><span class="pre">gee_acolite.utils.search.</span></span><span class="sig-name descname"><span class="pre">join_s2_with_cloud_prob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s2_collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ee.ImageCollection</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ee.ImageCollection</span></span></span><a class="reference internal" href="../_modules/gee_acolite/utils/search.html#join_s2_with_cloud_prob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gee_acolite.utils.search.join_s2_with_cloud_prob" title="Link to this definition">#</a></dt>
-<dd><p>Une la colección Sentinel-2 con Cloud Probability</p>
+<dd><p>Join Sentinel-2 collection with Cloud Probability data.</p>
+<p>Matches each Sentinel-2 image with its corresponding cloud probability
+image from the COPERNICUS/S2_CLOUD_PROBABILITY collection using the
+system:index property.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s2_collection</strong> – Colección de imágenes Sentinel-2 L1C</p></li>
-<li><p><strong>roi</strong> – Región de interés</p></li>
-</ul>
+<dd class="field-odd"><p><strong>s2_collection</strong> (<em>ee.ImageCollection</em>) – Sentinel-2 L1C image collection.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Colección de imágenes con Cloud Probability unida como propiedad ‘cloud_prob’</p>
+<dd class="field-even"><p>Collection with Cloud Probability images added as ‘cloud_prob’ property.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.ImageCollection</p>
 </dd>
 </dl>
 </dd></dl>
@@ -418,32 +421,13 @@ cloud probability data from COPERNICUS/S2_CLOUD_PROBABILITY.</p>
 <li><p><strong>end</strong> (<em>str</em>) – End date in format ‘YYYY-MM-DD’.</p></li>
 <li><p><strong>collection</strong> (<em>str</em><em>, </em><em>optional</em>) – Sentinel-2 collection name (default: ‘S2_HARMONIZED’).</p></li>
 <li><p><strong>tile</strong> (<em>str</em><em>, </em><em>optional</em>) – Specific tile identifier to filter.</p></li>
-<li><p><strong>Returns</strong></p></li>
-<li><p><strong>Probability.</strong> (<em>Search multiple Sentinel-2 images and join with Cloud</em>)</p></li>
-<li><p><strong>with</strong> (<em>Retrieves the first image matching each date range and joins</em>)</p></li>
-<li><p><strong>data.</strong> (<em>Join Sentinel-2 collection with Cloud Probability</em>)</p></li>
-<li><p><strong>roi</strong> – Region of interest.</p></li>
-<li><p><strong>starts</strong> (<em>list</em><em> of </em><em>str</em>) – List of start dates in format ‘YYYY-MM-DD’.</p></li>
-<li><p><strong>ends</strong> (<em>list</em><em> of </em><em>str</em>) – List of end dates in format ‘YYYY-MM-DD’.</p></li>
-<li><p><strong>collection</strong> – Sentinel-2 collection name (default: ‘S2_HARMONIZED’).</p></li>
-<li><p><strong>tile</strong> – Specific tile identifier to filter.</p></li>
-<li><p><strong>data.</strong></p></li>
-<li><p><strong>probability</strong> (<em>Matches each Sentinel-2 image with its corresponding cloud</em>)</p></li>
-<li><p><strong>the</strong> (<em>image from the COPERNICUS/S2_CLOUD_PROBABILITY collection using</em>)</p></li>
-<li><p><strong>system</strong> (<em>index property.</em>)</p></li>
-<li><p><strong>s2_collection</strong> (<em>ee.ImageCollection</em>) – Sentinel-2 L1C image collection.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><em>ee.ImageCollection</em> – Collection with Cloud Probability images added as ‘cloud_prob’ property.
-starts: Lista de fechas de inicio (formato ‘YYYY-MM-DD’)
-ends: Lista de fechas de fin (formato ‘YYYY-MM-DD’)
-collection: Nombre de la colección de Sentinel-2 (default: ‘S2_HARMONIZED’)
-tile: Identificador del tile (opcional)</p></li>
-<li><p><em>Returns</em> – Colección de imágenes con Cloud Probability unida</p></li>
-</ul>
-</p>
+<dd class="field-even"><p>Collection with Cloud Probability data joined.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ee.ImageCollection</p>
 </dd>
 </dl>
 </dd></dl>
