@@ -73,101 +73,113 @@ def calibrate_sdb(
     insitu_bathymetry: ee.Image,
     region: ee.Geometry,
     max_depth: float = 10,
-    num_points: int = 20,
+    num_sample_points: int = 500,
     seed: int = 42,
     scale: int = 10
 ) -> dict:
     """
-    Calibrate satellite-derived bathymetry using random sample points.
+    Calibrate satellite-derived bathymetry using linear regression.
 
-    This function selects random points from areas with valid in-situ bathymetry
-    data up to a specified maximum depth, and performs linear regression to
-    establish a calibration relationship.
+    Performs pixel-wise linear regression between a pseudo-SDB image and
+    in-situ bathymetry using all valid overlapping pixels up to `max_depth`.
+    A random subsample is also returned for scatter plot visualization.
 
     Parameters
     ----------
     psdb_image : ee.Image
         Pseudo-SDB image (e.g., pSDB_green band) to calibrate
     insitu_bathymetry : ee.Image
-        In-situ bathymetry reference image with depth values
+        In-situ bathymetry image with depth values in metres (positive = deeper)
     region : ee.Geometry
-        Region of interest for sampling
+        Region of interest for the regression
     max_depth : float, optional
-        Maximum depth in meters for calibration points (default: 10)
-    num_points : int, optional
-        Maximum number of random points to sample (default: 20)
+        Maximum depth in metres for calibration pixels (default: 10)
+    num_sample_points : int, optional
+        Number of random points to draw for the visualisation sample
+        (default: 500). Does **not** affect regression coefficients.
     seed : int, optional
-        Random seed for reproducibility (default: 42)
+        Random seed for the visualisation sample (default: 42)
     scale : int, optional
-        Scale in meters for sampling (default: 10)
+        Pixel scale in metres (default: 10)
 
     Returns
     -------
     dict
         Dictionary containing:
-        - 'slope': Regression slope coefficient
-        - 'intercept': Regression intercept coefficient
-        - 'correlation': Pearson correlation coefficient
-        - 'num_points': Number of valid points used
-        - 'sample_fc': ee.FeatureCollection of sampled points
+
+        - ``'slope'``: Regression slope coefficient
+        - ``'intercept'``: Regression intercept coefficient
+        - ``'correlation'``: Pearson correlation coefficient
+        - ``'num_pixels'``: Number of valid pixels used in the regression
+        - ``'sample_fc'``: ``ee.FeatureCollection`` of random points for plotting
+
+    Notes
+    -----
+    Regression is computed with ``ee.Reducer.linearFit()`` over all valid pixels
+    (``reduceRegion``), which is more robust than point sampling when in-situ and
+    satellite data have sparse spatial overlap.
 
     Examples
     --------
     >>> result = calibrate_sdb(
     ...     psdb_image=image.select('pSDB_green'),
-    ...     insitu_bathymetry=bathymetry_image,
+    ...     insitu_bathymetry=bathy_image,
     ...     region=roi,
     ...     max_depth=10,
-    ...     num_points=20
     ... )
     >>> print(f"SDB = {result['slope']:.4f} * pSDB + {result['intercept']:.4f}")
     """
-    # Combine images for sampling
-    combined = psdb_image.addBands(insitu_bathymetry.rename('depth'))
-    
-    # Create mask for valid depth values (0 < depth <= max_depth)
+    psdb_band_name = psdb_image.bandNames().get(0).getInfo()
+
+    # Mask: valid depth range AND valid pSDB pixel
     depth_mask = insitu_bathymetry.gt(0).And(insitu_bathymetry.lte(max_depth))
-    
-    # Create mask for valid pSDB values (not null/masked)
     psdb_mask = psdb_image.mask().reduce(ee.Reducer.min())
-    
-    # Apply both masks: only sample where both depth AND pSDB are valid
-    combined_filtered = combined.updateMask(depth_mask).updateMask(psdb_mask)
-    
-    # Sample random points
-    sample_fc = combined_filtered.sample(
+    valid_mask = depth_mask.And(psdb_mask)
+
+    combined = psdb_image.addBands(insitu_bathymetry.rename('depth')).updateMask(valid_mask)
+
+    # --- Regression over all valid pixels ---
+    regression = combined.reduceRegion(
+        reducer=ee.Reducer.linearFit().setOutputs(['scale', 'offset']),
+        geometry=region,
+        scale=scale,
+        maxPixels=1e9
+    )
+
+    # --- Pearson correlation ---
+    correlation = combined.reduceRegion(
+        reducer=ee.Reducer.pearsonsCorrelation(),
+        geometry=region,
+        scale=scale,
+        maxPixels=1e9
+    )
+
+    # --- Pixel count ---
+    pixel_count = combined.select(psdb_band_name).reduceRegion(
+        reducer=ee.Reducer.count(),
+        geometry=region,
+        scale=scale,
+        maxPixels=1e9
+    )
+
+    # --- Random subsample for visualisation ---
+    sample_fc = combined.sample(
         region=region,
         scale=scale,
-        numPixels=num_points,
+        numPixels=num_sample_points,
         seed=seed,
         geometries=True
     )
-    
-    # Get band name from psdb_image
-    psdb_band_name = psdb_image.bandNames().get(0).getInfo()
-    
-    # Perform linear regression
-    regression = sample_fc.reduceColumns(
-        reducer=ee.Reducer.linearFit(),
-        selectors=[psdb_band_name, 'depth']
-    )
-    
-    # Calculate Pearson correlation
-    correlation = sample_fc.reduceColumns(
-        reducer=ee.Reducer.pearsonsCorrelation(),
-        selectors=[psdb_band_name, 'depth']
-    )
-    
-    # Get results
+
     regression_info = regression.getInfo()
     correlation_info = correlation.getInfo()
-    num_sampled = sample_fc.size().getInfo()
-    
+    count_info = pixel_count.getInfo()
+
     return {
-        'slope': regression_info['scale'],
-        'intercept': regression_info['offset'],
-        'correlation': correlation_info['correlation'],
-        'num_points': num_sampled,
+        'slope': regression_info.get('scale'),
+        'intercept': regression_info.get('offset'),
+        'correlation': correlation_info.get('correlation'),
+        'num_pixels': count_info.get(psdb_band_name),
         'sample_fc': sample_fc
     }
 

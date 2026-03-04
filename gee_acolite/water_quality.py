@@ -81,17 +81,22 @@ def compute_water_bands(image: ee.Image, settings: dict) -> ee.Image:
         Input image with added water quality parameter bands.
     """
     mask = compute_water_mask(image, settings)
+    median_radius = int(settings.get('psdb_median_radius', 1))
 
     for product in settings['l2w_parameters']:
-        new_band = PRODUCTS[product](image)
-        
+        fn = PRODUCTS[product]
+        if product in ('pSDB_green', 'pSDB_red'):
+            new_band = fn(image, median_radius=median_radius)
+        else:
+            new_band = fn(image)
+
         if isinstance(new_band, list):
             new_band = [band.updateMask(mask) for band in new_band]
         else:
             new_band = new_band.updateMask(mask)
-        
+
         image = image.addBands(new_band)
-    
+
     return image
 
 
@@ -319,51 +324,83 @@ def ndwi(image : ee.Image) -> ee.Image:
     """
     return image.normalizedDifference(['Rrs_B3', 'Rrs_B8']).rename('ndwi').toFloat()
 
-def pSDB_red(image : ee.Image) -> ee.Image:
+def pSDB_red(image : ee.Image, median_radius: int = 1) -> ee.Image:
     """
     Compute pseudo-Satellite Derived Bathymetry using blue-red ratio.
-    
+
     Implements log-ratio bathymetry algorithm using blue and red bands.
     Provides relative depth estimation in clear shallow waters.
-    
+
+    A median filter is applied to the Rrs bands before the ratio to reduce
+    radiometric noise, following Caballero & Stumpf (2019).
+
     Parameters
     ----------
     image : ee.Image
         Image with remote sensing reflectance bands 'Rrs_B2' (blue)
         and 'Rrs_B4' (red).
-    
+    median_radius : int, optional
+        Radius in pixels for the circular median kernel (default: 1 → 3×3).
+        Set to 0 to disable smoothing.
+
     Returns
     -------
     ee.Image
         Pseudo-bathymetry index (higher values = shallower water).
+
+    References
+    ----------
+    Caballero, I., & Stumpf, R. P. (2019). Retrieval of nearshore bathymetry
+    from Sentinel-2A and 2B satellites in South Florida coastal waters.
+    Estuarine, Coastal and Shelf Science, 226, 106277.
+    https://doi.org/10.1016/j.ecss.2019.106277
     """
+    kernel = ee.Kernel.circle(radius=median_radius)
+    blue  = image.select('Rrs_B2').focal_median(kernel=kernel)
+    red   = image.select('Rrs_B4').focal_median(kernel=kernel)
     return image.expression('log(n * pi * blue) / log(n * pi * red)', {'n' : 1_000,
                                                                        'pi' : float(np.pi),
-                                                                       'blue' : image.select('Rrs_B2'),
-                                                                       'red' : image.select('Rrs_B4') }).rename('pSDB_red').toFloat()
+                                                                       'blue' : blue,
+                                                                       'red' : red }).rename('pSDB_red').toFloat()
 
-def pSDB_green(image : ee.Image) -> ee.Image:
+def pSDB_green(image : ee.Image, median_radius: int = 1) -> ee.Image:
     """
     Compute pseudo-Satellite Derived Bathymetry using blue-green ratio.
-    
+
     Implements log-ratio bathymetry algorithm using blue and green bands.
     Generally more sensitive in clearer waters compared to blue-red ratio.
-    
+
+    A median filter is applied to the Rrs bands before the ratio to reduce
+    radiometric noise, following Caballero & Stumpf (2019).
+
     Parameters
     ----------
     image : ee.Image
         Image with remote sensing reflectance bands 'Rrs_B2' (blue)
         and 'Rrs_B3' (green).
-    
+    median_radius : int, optional
+        Radius in pixels for the circular median kernel (default: 1 → 3×3).
+        Set to 0 to disable smoothing.
+
     Returns
     -------
     ee.Image
         Pseudo-bathymetry index (higher values = shallower water).
+
+    References
+    ----------
+    Caballero, I., & Stumpf, R. P. (2019). Retrieval of nearshore bathymetry
+    from Sentinel-2A and 2B satellites in South Florida coastal waters.
+    Estuarine, Coastal and Shelf Science, 226, 106277.
+    https://doi.org/10.1016/j.ecss.2019.106277
     """
+    kernel = ee.Kernel.circle(radius=median_radius)
+    blue  = image.select('Rrs_B2').focal_median(kernel=kernel)
+    green = image.select('Rrs_B3').focal_median(kernel=kernel)
     return image.expression('log(n * pi * blue) / log(n * pi * green)', {'n' : 1_000,
                                                                          'pi' : float(np.pi),
-                                                                         'blue' : image.select('Rrs_B2'),
-                                                                         'green' : image.select('Rrs_B3') }).rename('pSDB_green').toFloat()
+                                                                         'blue' : blue,
+                                                                         'green' : green }).rename('pSDB_green').toFloat()
 
 def rrs(image : ee.Image) -> ee.image:
     """

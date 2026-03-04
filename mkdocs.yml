@@ -38,8 +38,12 @@ theme:
 
 plugins:
   - search:
-      lang: 
+      lang:
         - en
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true
+      ignore_h1_titles: true
   - mkdocstrings:
       handlers:
         python:
@@ -110,6 +114,8 @@ nav:
       - Class Diagram: architecture/class_diagram.md
       - Data Flow: architecture/data_flow.md
       - GEE Integration: architecture/gee_integration.md
+    - Notebooks:
+      - Bathymetry (Caballero & Stumpf): jupyters/SDB_caballero_stumpf.ipynb
     - Contribute: contributing.md
     - About: about.md
 
