@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      republish:
+        description: 'Republish current version to PyPI (no new tag, no version bump)'
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -12,8 +18,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    # Only run when commit message contains a release tag
+    # On push: only run when commit message contains a release keyword
+    # On manual dispatch: always run
     if: |
+      github.event_name == 'workflow_dispatch' ||
       contains(github.event.head_commit.message, '[release-major]') ||
       contains(github.event.head_commit.message, '[release-minor]') ||
       contains(github.event.head_commit.message, '[release-patch]')
@@ -30,8 +38,11 @@ jobs:
       with:
         python-version: '3.11'
 
+    # ── Version bump steps — skipped on manual republish ──────────────────
+
     - name: Detect version bump type
       id: bump_type
+      if: github.event_name == 'push'
       run: |
         MSG="${{ github.event.head_commit.message }}"
         if echo "$MSG" | grep -q '\[release-major\]'; then
@@ -44,14 +55,13 @@ jobs:
 
     - name: Bump version in pyproject.toml
       id: version
+      if: github.event_name == 'push'
       run: |
-        # Read current version
         CURRENT=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
         MAJOR=$(echo $CURRENT | cut -d. -f1)
         MINOR=$(echo $CURRENT | cut -d. -f2)
         PATCH=$(echo $CURRENT | cut -d. -f3)
 
-        # Bump the right component
         TYPE="${{ steps.bump_type.outputs.type }}"
         if [ "$TYPE" = "major" ]; then
           MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0
@@ -68,6 +78,7 @@ jobs:
         echo "new=$NEW"     >> $GITHUB_OUTPUT
 
     - name: Commit version bump and tag
+      if: github.event_name == 'push'
       run: |
         git config user.name  "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -77,6 +88,7 @@ jobs:
         git push origin main --tags
 
     - name: Create GitHub Release
+      if: github.event_name == 'push'
       uses: softprops/action-gh-release@v2
       with:
         tag_name: "v${{ steps.version.outputs.new }}"
@@ -91,6 +103,8 @@ jobs:
           ---
           Install: `pip install gee_acolite==${{ steps.version.outputs.new }}`
           Install with visualization extras: `pip install "gee_acolite[viz]==${{ steps.version.outputs.new }}"`
+
+    # ── Build and publish — always runs ───────────────────────────────────
 
     - name: Build package
       run: |
