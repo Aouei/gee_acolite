@@ -152,6 +152,15 @@
         </a>
 </li>
 <li class="md-tabs__item">
+<a class="md-tabs__link" href="../../jupyters/SDB_caballero_stumpf/">
+          
+  
+  
+  Notebooks
+
+        </a>
+</li>
+<li class="md-tabs__item">
 <a class="md-tabs__link" href="../../contributing/">
         
   
@@ -730,7 +739,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../architecture/data_flow.md">
+<a class="md-nav__link" href="../../architecture/data_flow/">
 <span class="md-ellipsis">
     
   
@@ -747,6 +756,44 @@
     
   
     GEE Integration
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Notebooks
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Notebooks
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../jupyters/SDB_caballero_stumpf/">
+<span class="md-ellipsis">
+    
+  
+    Bathymetry (Caballero &amp; Stumpf)
   
 
     
@@ -1177,7 +1224,7 @@
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/water_quality.py</code></summary>
+<summary>Source code in <code>gee_acolite\water_quality.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-19">19</a></span>
 <span class="normal"><a href="#__codelineno-0-20">20</a></span>
 <span class="normal"><a href="#__codelineno-0-21">21</a></span>
@@ -1346,39 +1393,44 @@ based on settings configuration.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/water_quality.py</code></summary>
-<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-64">64</a></span>
-<span class="normal"><a href="#__codelineno-0-65">65</a></span>
-<span class="normal"><a href="#__codelineno-0-66">66</a></span>
-<span class="normal"><a href="#__codelineno-0-67">67</a></span>
-<span class="normal"><a href="#__codelineno-0-68">68</a></span>
-<span class="normal"><a href="#__codelineno-0-69">69</a></span>
-<span class="normal"><a href="#__codelineno-0-70">70</a></span>
-<span class="normal"><a href="#__codelineno-0-71">71</a></span>
-<span class="normal"><a href="#__codelineno-0-72">72</a></span>
-<span class="normal"><a href="#__codelineno-0-73">73</a></span>
-<span class="normal"><a href="#__codelineno-0-74">74</a></span>
-<span class="normal"><a href="#__codelineno-0-75">75</a></span>
-<span class="normal"><a href="#__codelineno-0-76">76</a></span>
-<span class="normal"><a href="#__codelineno-0-77">77</a></span>
-<span class="normal"><a href="#__codelineno-0-78">78</a></span>
-<span class="normal"><a href="#__codelineno-0-79">79</a></span>
-<span class="normal"><a href="#__codelineno-0-80">80</a></span>
-<span class="normal"><a href="#__codelineno-0-81">81</a></span>
-<span class="normal"><a href="#__codelineno-0-82">82</a></span>
-<span class="normal"><a href="#__codelineno-0-83">83</a></span>
-<span class="normal"><a href="#__codelineno-0-84">84</a></span>
-<span class="normal"><a href="#__codelineno-0-85">85</a></span>
-<span class="normal"><a href="#__codelineno-0-86">86</a></span>
-<span class="normal"><a href="#__codelineno-0-87">87</a></span>
-<span class="normal"><a href="#__codelineno-0-88">88</a></span>
-<span class="normal"><a href="#__codelineno-0-89">89</a></span>
-<span class="normal"><a href="#__codelineno-0-90">90</a></span>
-<span class="normal"><a href="#__codelineno-0-91">91</a></span>
-<span class="normal"><a href="#__codelineno-0-92">92</a></span>
-<span class="normal"><a href="#__codelineno-0-93">93</a></span>
-<span class="normal"><a href="#__codelineno-0-94">94</a></span>
-<span class="normal"><a href="#__codelineno-0-95">95</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_water_bands</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+<summary>Source code in <code>gee_acolite\water_quality.py</code></summary>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-0-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-0-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-0-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-0-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-0-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-0-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-0-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-0-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-0-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-0-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-0-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-0-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-0-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-0-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-0-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-0-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-0-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-0-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-0-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-0-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-0-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-0-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-0-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-0-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-0-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-0-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-0-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-0-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-0-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-0-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-0-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-0-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-0-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-0-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-0-100">100</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_water_bands</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
 </span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a><span class="w">    </span><span class="sd">"""</span>
 </span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="sd">    Compute water quality parameters and add them as bands.</span>
 </span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a>
@@ -1398,18 +1450,23 @@ based on settings configuration.</p>
 </span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="sd">        Input image with added water quality parameter bands.</span>
 </span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="sd">    """</span>
 </span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a>    <span class="n">mask</span> <span class="o">=</span> <span class="n">compute_water_mask</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
-</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a>
-</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a>    <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s1">'l2w_parameters'</span><span class="p">]:</span>
-</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a>        <span class="n">new_band</span> <span class="o">=</span> <span class="n">PRODUCTS</span><span class="p">[</span><span class="n">product</span><span class="p">](</span><span class="n">image</span><span class="p">)</span>
-</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a>
-</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_band</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a>            <span class="n">new_band</span> <span class="o">=</span> <span class="p">[</span><span class="n">band</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">new_band</span><span class="p">]</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a>    <span class="n">median_radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'psdb_median_radius'</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a>    <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s1">'l2w_parameters'</span><span class="p">]:</span>
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a>        <span class="n">fn</span> <span class="o">=</span> <span class="n">PRODUCTS</span><span class="p">[</span><span class="n">product</span><span class="p">]</span>
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a>        <span class="k">if</span> <span class="n">product</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'pSDB_green'</span><span class="p">,</span> <span class="s1">'pSDB_red'</span><span class="p">):</span>
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a>            <span class="n">new_band</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">median_radius</span><span class="o">=</span><span class="n">median_radius</span><span class="p">)</span>
 </span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90"></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91"></a>            <span class="n">new_band</span> <span class="o">=</span> <span class="n">new_band</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91"></a>            <span class="n">new_band</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92"></a>
-</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93"></a>        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">new_band</span><span class="p">)</span>
-</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94"></a>
-</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a>    <span class="k">return</span> <span class="n">image</span>
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_band</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94"></a>            <span class="n">new_band</span> <span class="o">=</span> <span class="p">[</span><span class="n">band</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">new_band</span><span class="p">]</span>
+</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96"></a>            <span class="n">new_band</span> <span class="o">=</span> <span class="n">new_band</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+</span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97"></a>
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98"></a>        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">new_band</span><span class="p">)</span>
+</span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99"></a>
+</span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100"></a>    <span class="k">return</span> <span class="n">image</span>
 </span></code></pre></div></td></tr></table></div>
 </details>
 </div>
@@ -1618,12 +1675,14 @@ and 'rhos_B3' (green).</p>
 <h4 class="doc doc-heading" id="gee_acolite.water_quality.pSDB_green">
 <code class="doc-symbol doc-symbol-heading doc-symbol-function"></code> <span class="doc doc-object-name doc-function-name">pSDB_green</span>
 <a class="headerlink" href="#gee_acolite.water_quality.pSDB_green" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">pSDB_green</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="ee.Image">Image</span></span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">pSDB_green</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n">median_radius</span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="ee.Image">Image</span></span>
 </span></code></pre></div>
 <div class="doc doc-contents first">
 <p>Compute pseudo-Satellite Derived Bathymetry using blue-green ratio.</p>
 <p>Implements log-ratio bathymetry algorithm using blue and green bands.
 Generally more sensitive in clearer waters compared to blue-red ratio.</p>
+<p>A median filter is applied to the Rrs bands before the ratio to reduce
+radiometric noise, following Caballero &amp; Stumpf (2019).</p>
 <p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
@@ -1652,6 +1711,23 @@ and 'Rrs_B3' (green).</p>
 <em>required</em>
 </td>
 </tr>
+<tr class="doc-section-item">
+<td>
+<code>median_radius</code>
+</td>
+<td>
+<code><span title="int">int</span></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Radius in pixels for the circular median kernel (default: 1 → 3×3).
+Set to 0 to disable smoothing.</p>
+</div>
+</td>
+<td>
+<code>1</code>
+</td>
+</tr>
 </tbody>
 </table>
 <p><span class="doc-section-title">Returns:</span></p>
@@ -1675,6 +1751,13 @@ and 'Rrs_B3' (green).</p>
 </tr>
 </tbody>
 </table>
+<details class="references" open="">
+<summary>References</summary>
+<p>Caballero, I., &amp; Stumpf, R. P. (2019). Retrieval of nearshore bathymetry
+from Sentinel-2A and 2B satellites in South Florida coastal waters.
+Estuarine, Coastal and Shelf Science, 226, 106277.
+https://doi.org/10.1016/j.ecss.2019.106277</p>
+</details>
 </div>
 </div><h2 id="product-catalog">Product Catalog<a class="headerlink" href="#product-catalog" title="Permanent link">¶</a></h2>
 <div class="doc doc-object doc-attribute">
@@ -1684,7 +1767,20 @@ and 'Rrs_B3' (green).</p>
 <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
 </span>
 <a class="headerlink" href="#gee_acolite.water_quality.PRODUCTS" title="Permanent link">¶</a></h3>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">PRODUCTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'spm_nechad2016'</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.spm_nechad2016_665" title="            spm_nechad2016_665 (gee_acolite.water_quality.spm_nechad2016_665)">spm_nechad2016_665</a></span><span class="p">,</span> <span class="s1">'spm_nechad2016_704'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.spm_nechad2016_704">spm_nechad2016_704</span></span><span class="p">,</span> <span class="s1">'spm_nechad2016_740'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.spm_nechad2016_740">spm_nechad2016_740</span></span><span class="p">,</span> <span class="s1">'tur_nechad2016'</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.tur_nechad2016_665" title="            tur_nechad2016_665 (gee_acolite.water_quality.tur_nechad2016_665)">tur_nechad2016_665</a></span><span class="p">,</span> <span class="s1">'tur_nechad2016_704'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.tur_nechad2016_704">tur_nechad2016_704</span></span><span class="p">,</span> <span class="s1">'tur_nechad2016_740'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.tur_nechad2016_740">tur_nechad2016_740</span></span><span class="p">,</span> <span class="s1">'chl_oc2'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.chl_oc2">chl_oc2</span></span><span class="p">,</span> <span class="s1">'chl_oc3'</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.chl_oc3" title="            chl_oc3 (gee_acolite.water_quality.chl_oc3)">chl_oc3</a></span><span class="p">,</span> <span class="s1">'chl_re_mishra'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.chl_re_mishra">chl_re_mishra</span></span><span class="p">,</span> <span class="s1">'pSDB_red'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.pSDB_red">pSDB_red</span></span><span class="p">,</span> <span class="s1">'pSDB_green'</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.pSDB_green" title="            pSDB_green (gee_acolite.water_quality.pSDB_green)">pSDB_green</a></span><span class="p">,</span> <span class="s1">'Rrs_*'</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.rrs">rrs</span></span><span class="p">}</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">PRODUCTS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="s2">"spm_nechad2016"</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.spm_nechad2016_665" title="            spm_nechad2016_665 (gee_acolite.water_quality.spm_nechad2016_665)">spm_nechad2016_665</a></span><span class="p">,</span>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="s2">"spm_nechad2016_704"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.spm_nechad2016_704">spm_nechad2016_704</span></span><span class="p">,</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="s2">"spm_nechad2016_740"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.spm_nechad2016_740">spm_nechad2016_740</span></span><span class="p">,</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="s2">"tur_nechad2016"</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.tur_nechad2016_665" title="            tur_nechad2016_665 (gee_acolite.water_quality.tur_nechad2016_665)">tur_nechad2016_665</a></span><span class="p">,</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="s2">"tur_nechad2016_704"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.tur_nechad2016_704">tur_nechad2016_704</span></span><span class="p">,</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="s2">"tur_nechad2016_740"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.tur_nechad2016_740">tur_nechad2016_740</span></span><span class="p">,</span>
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="s2">"chl_oc2"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.chl_oc2">chl_oc2</span></span><span class="p">,</span>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="s2">"chl_oc3"</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.chl_oc3" title="            chl_oc3 (gee_acolite.water_quality.chl_oc3)">chl_oc3</a></span><span class="p">,</span>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="s2">"chl_re_mishra"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.chl_re_mishra">chl_re_mishra</span></span><span class="p">,</span>
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="s2">"pSDB_red"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.pSDB_red">pSDB_red</span></span><span class="p">,</span>
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="s2">"pSDB_green"</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" href="#gee_acolite.water_quality.pSDB_green" title="            pSDB_green (gee_acolite.water_quality.pSDB_green)">pSDB_green</a></span><span class="p">,</span>
+</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>    <span class="s2">"Rrs_*"</span><span class="p">:</span> <span class="n"><span title="gee_acolite.water_quality.rrs">rrs</span></span><span class="p">,</span>
+</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="doc doc-contents first">
 </div>
