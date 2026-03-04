@@ -712,7 +712,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../architecture/data_flow/">
+<a class="md-nav__link" href="../../architecture/data_flow.md">
 <span class="md-ellipsis">
     
   
@@ -1178,7 +1178,7 @@ correction method optimized for Google Earth Engine with Sentinel-2 imagery.</p>
 </span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">corrected_images</span><span class="p">,</span> <span class="n">settings</span> <span class="o">=</span> <span class="n">ac_gee</span><span class="o">.</span><span class="n">correct</span><span class="p">(</span><span class="n">image_collection</span><span class="p">)</span>
 </span></code></pre></div>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-52">52</a></span>
 <span class="normal"><a href="#__codelineno-0-53">53</a></span>
 <span class="normal"><a href="#__codelineno-0-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acolite</span><span class="p">:</span> <span class="n">ModuleType</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1191,9 +1191,7 @@ correction method optimized for Google Earth Engine with Sentinel-2 imagery.</p>
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.correct">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">correct</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.correct" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">correct</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">images</span><span class="p">:</span> <span class="n"><span title="ee.ImageCollection">ImageCollection</span></span><span class="p">,</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="ee.ImageCollection">ImageCollection</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">correct</span><span class="p">(</span><span class="n">images</span><span class="p">:</span> <span class="n"><span title="ee.ImageCollection">ImageCollection</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="ee.ImageCollection">ImageCollection</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">]</span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Apply atmospheric correction to image collection.</p>
@@ -1261,7 +1259,7 @@ ACOLITE Dark Spectrum Fitting method.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-73">73</a></span>
 <span class="normal"><a href="#__codelineno-0-74">74</a></span>
 <span class="normal"><a href="#__codelineno-0-75">75</a></span>
@@ -1317,9 +1315,7 @@ ACOLITE Dark Spectrum Fitting method.</p>
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.l1_to_l2">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">l1_to_l2</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.l1_to_l2" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">l1_to_l2</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">images</span><span class="p">:</span> <span class="n"><span title="ee.List">List</span></span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="ee.ImageCollection">ImageCollection</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">l1_to_l2</span><span class="p">(</span><span class="n">images</span><span class="p">:</span> <span class="n"><span title="ee.List">List</span></span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="ee.ImageCollection">ImageCollection</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">]</span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Convert L1 TOA reflectance to L2 surface reflectance.</p>
@@ -1419,7 +1415,7 @@ parameter computation.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
 <span class="normal"><a href="#__codelineno-0-100">100</a></span>
 <span class="normal"><a href="#__codelineno-0-101">101</a></span>
@@ -1521,9 +1517,7 @@ parameter computation.</p>
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.dask_spectrum_fitting">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">dask_spectrum_fitting</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.dask_spectrum_fitting" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">dask_spectrum_fitting</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">],</span> <span class="n"><span title="dict">dict</span></span><span class="p">]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">dask_spectrum_fitting</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">],</span> <span class="n"><span title="dict">dict</span></span><span class="p">]</span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Perform dark spectrum fitting atmospheric correction.</p>
@@ -1617,7 +1611,7 @@ surface reflectance.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-147">147</a></span>
 <span class="normal"><a href="#__codelineno-0-148">148</a></span>
 <span class="normal"><a href="#__codelineno-0-149">149</a></span>
@@ -1717,15 +1711,7 @@ surface reflectance.</p>
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.estimate_aot_per_lut">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">estimate_aot_per_lut</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.estimate_aot_per_lut" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">estimate_aot_per_lut</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">pdark</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">lutd</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">rsrd</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">ttg</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">geometry</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">aot_skip_bands</span><span class="p">:</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"9"</span><span class="p">,</span> <span class="s2">"10"</span><span class="p">,</span> <span class="s2">"11"</span><span class="p">,</span> <span class="s2">"12"</span><span class="p">],</span>
-</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">estimate_aot_per_lut</span><span class="p">(</span><span class="n">pdark</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">lutd</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">rsrd</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">ttg</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">geometry</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">aot_skip_bands</span><span class="p">:</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'9'</span><span class="p">,</span> <span class="s1">'10'</span><span class="p">,</span> <span class="s1">'11'</span><span class="p">,</span> <span class="s1">'12'</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Estimate aerosol optical thickness (AOT) for each LUT model.</p>
@@ -1881,7 +1867,7 @@ Each entry contains: 'taua', 'taua_std', 'taua_cv', 'taua_bands',
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-194">194</a></span>
 <span class="normal"><a href="#__codelineno-0-195">195</a></span>
 <span class="normal"><a href="#__codelineno-0-196">196</a></span>
@@ -2073,12 +2059,7 @@ Each entry contains: 'taua', 'taua_std', 'taua_cv', 'taua_bands',
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.select_best_model">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">select_best_model</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.select_best_model" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">select_best_model</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">results</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">lutd</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">geometry</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">select_best_model</span><span class="p">(</span><span class="n">results</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">lutd</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">geometry</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">]</span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Select the best atmospheric model from AOT estimation results.</p>
@@ -2214,7 +2195,7 @@ fits the observed data based on the specified selection criterion
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-287">287</a></span>
 <span class="normal"><a href="#__codelineno-0-288">288</a></span>
 <span class="normal"><a href="#__codelineno-0-289">289</a></span>
@@ -2404,11 +2385,7 @@ fits the observed data based on the specified selection criterion
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.select_lut">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">select_lut</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.select_lut" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">select_lut</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">aot_skip_bands</span><span class="p">:</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"9"</span><span class="p">,</span> <span class="s2">"10"</span><span class="p">,</span> <span class="s2">"11"</span><span class="p">,</span> <span class="s2">"12"</span><span class="p">],</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">select_lut</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">aot_skip_bands</span><span class="p">:</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'9'</span><span class="p">,</span> <span class="s1">'10'</span><span class="p">,</span> <span class="s1">'11'</span><span class="p">,</span> <span class="s1">'12'</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]]</span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Select optimal LUT and compute atmospheric correction parameters.</p>
@@ -2524,7 +2501,7 @@ fits the observed data based on the specified selection criterion
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-379">379</a></span>
 <span class="normal"><a href="#__codelineno-0-380">380</a></span>
 <span class="normal"><a href="#__codelineno-0-381">381</a></span>
@@ -2718,9 +2695,7 @@ fits the observed data based on the specified selection criterion
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.compute_correction_with_fixed_aot">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">compute_correction_with_fixed_aot</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.compute_correction_with_fixed_aot" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">compute_correction_with_fixed_aot</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n">aot</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">lut_name</span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">compute_correction_with_fixed_aot</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n">aot</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">lut_name</span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">]]</span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Compute atmospheric correction parameters using fixed AOT and LUT.</p>
@@ -2868,7 +2843,7 @@ model. Useful for sensitivity analysis or when AOT is known a priori.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-473">473</a></span>
 <span class="normal"><a href="#__codelineno-0-474">474</a></span>
 <span class="normal"><a href="#__codelineno-0-475">475</a></span>
@@ -3153,7 +3128,7 @@ or linear intercept method.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-575">575</a></span>
 <span class="normal"><a href="#__codelineno-0-576">576</a></span>
 <span class="normal"><a href="#__codelineno-0-577">577</a></span>
@@ -3354,7 +3329,7 @@ the output image.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-634">634</a></span>
 <span class="normal"><a href="#__codelineno-0-635">635</a></span>
 <span class="normal"><a href="#__codelineno-0-636">636</a></span>
@@ -3514,7 +3489,7 @@ and acquisition time.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-675">675</a></span>
 <span class="normal"><a href="#__codelineno-0-676">676</a></span>
 <span class="normal"><a href="#__codelineno-0-677">677</a></span>
@@ -3657,7 +3632,7 @@ and acquisition time.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-706">706</a></span>
 <span class="normal"><a href="#__codelineno-0-707">707</a></span>
 <span class="normal"><a href="#__codelineno-0-708">708</a></span>
@@ -3766,7 +3741,7 @@ and acquisition time.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-730">730</a></span>
 <span class="normal"><a href="#__codelineno-0-731">731</a></span>
 <span class="normal"><a href="#__codelineno-0-732">732</a></span>
@@ -3814,13 +3789,7 @@ and acquisition time.</p>
 <h4 class="doc doc-heading" id="gee_acolite.correction.ACOLITE.deglint_alternative">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code> <span class="doc doc-object-name doc-function-name">deglint_alternative</span>
 <a class="headerlink" href="#gee_acolite.correction.ACOLITE.deglint_alternative" title="Permanent link">¶</a></h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">deglint_alternative</span><span class="p">(</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">bands</span><span class="p">:</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">],</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">glint_ave</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">glint_min</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">glint_max</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.08</span><span class="p">,</span>
-</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="ee.Image">Image</span></span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">deglint_alternative</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n"><span title="ee.Image">Image</span></span><span class="p">,</span> <span class="n">bands</span><span class="p">:</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">],</span> <span class="n">glint_ave</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="n">glint_min</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">glint_max</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.08</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="ee.Image">Image</span></span>
 </span></code></pre></div>
 <div class="doc doc-contents">
 <p>Remove residual sun glint from surface reflectance image.</p>
@@ -3948,7 +3917,7 @@ surface reflectance ratios.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite\correction.py</code></summary>
+<summary>Source code in <code>gee_acolite/correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-752">752</a></span>
 <span class="normal"><a href="#__codelineno-0-753">753</a></span>
 <span class="normal"><a href="#__codelineno-0-754">754</a></span>
