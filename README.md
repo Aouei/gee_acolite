@@ -134,6 +134,8 @@ And the original ACOLITE paper:
 
 This package is based on the ACOLITE software developed by RBINS (Royal Belgian Institute of Natural Sciences).
 
+This software was developed at the [Institute of Marine Sciences of Andalusia (ICMAN-CSIC)](https://www.icman.csic.es/), Spanish National Research Council (CSIC), Puerto Real, Spain.
+
 ## Contact
 
 - GitHub: [@Aouei](https://github.com/Aouei)
