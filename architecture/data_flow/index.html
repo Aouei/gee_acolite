@@ -7,11 +7,11 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Atmospheric correction with ACOLITE for Google Earth Engine" name="description"/>
 <meta content="Sergio" name="author"/>
-<link href="../../api/sensors/sentinel2/" rel="prev"/>
-<link href="../data_flow/" rel="next"/>
+<link href="../class_diagram/" rel="prev"/>
+<link href="../gee_integration/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
-<title>Class Diagram - GEE ACOLITE Documentation</title>
+<title>Data Flow - GEE ACOLITE Documentation</title>
 <link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -25,7 +25,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#class-diagram">
+<a class="md-skip" href="#data-flow">
           Skip to content
         </a>
 </div>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Class Diagram
+              Data Flow
             
           </span>
 </div>
@@ -482,13 +482,25 @@
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../class_diagram/">
+<span class="md-ellipsis">
+    
+  
+    Class Diagram
+  
+
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
 <span class="md-ellipsis">
     
   
-    Class Diagram
+    Data Flow
   
 
     
@@ -499,7 +511,7 @@
 <span class="md-ellipsis">
     
   
-    Class Diagram
+    Data Flow
   
 
     
@@ -512,29 +524,38 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#full-package-overview">
+<a class="md-nav__link" href="#full-pipeline">
 <span class="md-ellipsis">
       
-        Full Package Overview
+        Full Pipeline
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#acolite-class-detailed-methods">
+<a class="md-nav__link" href="#client-vs-server-breakdown">
 <span class="md-ellipsis">
       
-        ACOLITE Class — Detailed Methods
+        Client vs Server Breakdown
       
     </span>
 </a>
-<nav aria-label="ACOLITE Class — Detailed Methods" class="md-nav">
+<nav aria-label="Client vs Server Breakdown" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#method-responsibilities">
+<a class="md-nav__link" href="#server-side-operations-gee-cloud">
 <span class="md-ellipsis">
       
-        Method Responsibilities
+        Server-Side Operations (GEE Cloud)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-side-operations-local-python">
+<span class="md-ellipsis">
+      
+        Client-Side Operations (Local Python)
       
     </span>
 </a>
@@ -543,38 +564,56 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#water-quality-module-products-dictionary">
+<a class="md-nav__link" href="#aot-estimation-detail">
 <span class="md-ellipsis">
       
-        Water Quality Module — PRODUCTS Dictionary
+        AOT Estimation Detail
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#masking-pipeline">
+<a class="md-nav__link" href="#data-transformation-by-stage">
 <span class="md-ellipsis">
       
-        Masking Pipeline
+        Data Transformation by Stage
       
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#sentinel-2-band-configuration">
-<span class="md-ellipsis">
-      
-        Sentinel-2 Band Configuration
-      
-    </span>
-</a>
-<nav aria-label="Sentinel-2 Band Configuration" class="md-nav">
+<nav aria-label="Data Transformation by Stage" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#band-wavelengths-and-resolutions">
+<a class="md-nav__link" href="#stage-1-l1c-input">
 <span class="md-ellipsis">
       
-        Band Wavelengths and Resolutions
+        Stage 1 — L1C Input
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stage-2-toa-reflectance">
+<span class="md-ellipsis">
+      
+        Stage 2 — TOA Reflectance
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stage-3-surface-reflectance-l2">
+<span class="md-ellipsis">
+      
+        Stage 3 — Surface Reflectance (L2)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stage-4-water-quality-products">
+<span class="md-ellipsis">
+      
+        Stage 4 — Water Quality Products
       
     </span>
 </a>
@@ -583,28 +622,25 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#module-dependency-graph">
+<a class="md-nav__link" href="#band-naming-convention">
 <span class="md-ellipsis">
       
-        Module Dependency Graph
+        Band Naming Convention
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      
+        References
       
     </span>
 </a>
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../data_flow/">
-<span class="md-ellipsis">
-    
-  
-    Data Flow
-  
-
-    
-  </span>
-</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../gee_integration/">
@@ -675,29 +711,38 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#full-package-overview">
+<a class="md-nav__link" href="#full-pipeline">
 <span class="md-ellipsis">
       
-        Full Package Overview
+        Full Pipeline
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#acolite-class-detailed-methods">
+<a class="md-nav__link" href="#client-vs-server-breakdown">
 <span class="md-ellipsis">
       
-        ACOLITE Class — Detailed Methods
+        Client vs Server Breakdown
       
     </span>
 </a>
-<nav aria-label="ACOLITE Class — Detailed Methods" class="md-nav">
+<nav aria-label="Client vs Server Breakdown" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#method-responsibilities">
+<a class="md-nav__link" href="#server-side-operations-gee-cloud">
 <span class="md-ellipsis">
       
-        Method Responsibilities
+        Server-Side Operations (GEE Cloud)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-side-operations-local-python">
+<span class="md-ellipsis">
+      
+        Client-Side Operations (Local Python)
       
     </span>
 </a>
@@ -706,38 +751,56 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#water-quality-module-products-dictionary">
+<a class="md-nav__link" href="#aot-estimation-detail">
 <span class="md-ellipsis">
       
-        Water Quality Module — PRODUCTS Dictionary
+        AOT Estimation Detail
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#masking-pipeline">
+<a class="md-nav__link" href="#data-transformation-by-stage">
 <span class="md-ellipsis">
       
-        Masking Pipeline
+        Data Transformation by Stage
       
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#sentinel-2-band-configuration">
-<span class="md-ellipsis">
-      
-        Sentinel-2 Band Configuration
-      
-    </span>
-</a>
-<nav aria-label="Sentinel-2 Band Configuration" class="md-nav">
+<nav aria-label="Data Transformation by Stage" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#band-wavelengths-and-resolutions">
+<a class="md-nav__link" href="#stage-1-l1c-input">
 <span class="md-ellipsis">
       
-        Band Wavelengths and Resolutions
+        Stage 1 — L1C Input
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stage-2-toa-reflectance">
+<span class="md-ellipsis">
+      
+        Stage 2 — TOA Reflectance
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stage-3-surface-reflectance-l2">
+<span class="md-ellipsis">
+      
+        Stage 3 — Surface Reflectance (L2)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stage-4-water-quality-products">
+<span class="md-ellipsis">
+      
+        Stage 4 — Water Quality Products
       
     </span>
 </a>
@@ -746,10 +809,19 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#module-dependency-graph">
+<a class="md-nav__link" href="#band-naming-convention">
 <span class="md-ellipsis">
       
-        Module Dependency Graph
+        Band Naming Convention
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      
+        References
       
     </span>
 </a>
@@ -761,338 +833,492 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="class-diagram">Class Diagram<a class="headerlink" href="#class-diagram" title="Permanent link">¶</a></h1>
-<p>Accurate class and module structure of GEE ACOLITE, based on the actual source code.</p>
+<h1 id="data-flow">Data Flow<a class="headerlink" href="#data-flow" title="Permanent link">¶</a></h1>
+<p>Complete data flow through GEE ACOLITE, from raw Sentinel-2 L1C imagery to atmospheric correction and derived products.</p>
+<p>The critical architectural feature is the <strong>hybrid client/server model</strong>: image processing runs on GEE servers, while AOT estimation runs locally using ACOLITE's LUTs and numpy/scipy. The only synchronous data transfer per image is a single <code>getInfo()</code> call that retrieves the dark spectrum.</p>
 <hr/>
-<h2 id="full-package-overview">Full Package Overview<a class="headerlink" href="#full-package-overview" title="Permanent link">¶</a></h2>
-<div class="mermaid">classDiagram
-    namespace gee_acolite {
-        class ACOLITE {
-            +correct() tuple
-            +l1_to_l2() tuple
-            +dask_spectrum_fitting() tuple
-            +select_lut() tuple
-            +compute_pdark() dict
-            +estimate_aot_per_lut() dict
-            +select_best_model() tuple
-            +compute_correction_with_fixed_aot() tuple
-            +compute_rhos() Image
-            +deglint_alternative() Image
-            +get_ancillary_data() dict
-            +prepare_query() tuple
-            +prepare_earthdata_credentials() dict
-        }
-        class WaterQuality {
-            +compute_water_mask() Image
-            +compute_water_bands() Image
-            +spm_nechad2016_665() Image
-            +spm_nechad2016_704() Image
-            +spm_nechad2016_740() Image
-            +tur_nechad2016_665() Image
-            +chl_oc2() Image
-            +chl_oc3() Image
-            +chl_re_mishra() Image
-            +pSDB_green() Image
-            +pSDB_red() Image
-            +rrs() Image
-        }
-        class Bathymetry {
-            +optical_deep_water_model() Image
-            +calibrate_sdb() dict
-            +apply_calibration() Image
-            +multi_image() Image
-        }
-    }
+<h2 id="full-pipeline">Full Pipeline<a class="headerlink" href="#full-pipeline" title="Permanent link">¶</a></h2>
+<div class="mermaid">flowchart TB
+    Start([User: ROI + dates + settings]) --&gt; Search
 
-    namespace utils {
-        class Search {
-            +search() ImageCollection
-            +search_list() ImageCollection
-            +search_with_cloud_proba() ImageCollection
-            +join_s2_with_cloud_prob() ImageCollection
-        }
-        class L1Convert {
-            +l1_to_rrs() ImageCollection
-            +DN_to_rrs() Image
-            +get_mean_band_angle() Image
-            +resample() Image
-        }
-        class Masks {
-            +mask_negative_reflectance() Image
-            +toa_mask() Image
-            +cirrus_mask() Image
-            +non_water() Image
-            +add_cloud_bands() Image
-            +add_shadow_bands() Image
-            +add_cld_shdw_mask() Image
-            +cld_shdw_mask() Image
-        }
-    }
+    subgraph GEE_SEARCH["GEE Server: Image Search"]
+        Search["search()\nfilterBounds + filterDate + filterByTile"]
+        S2DB["COPERNICUS/S2_HARMONIZED\ncatalog"]
+        S2DB --&gt; Search
+    end
 
-    namespace sensors {
-        class Sentinel2 {
-            +list SENTINEL2_BANDS
-            +dict BAND_BY_SCALE
-        }
-    }
+    Search --&gt;|ee.ImageCollection L1C| L1Convert
 
-    ACOLITE --&gt; L1Convert : uses l1_to_rrs
-    ACOLITE --&gt; WaterQuality : uses compute_water_bands
-    ACOLITE --&gt; Masks : applies masks
-    WaterQuality --&gt; Masks : applies masks
-    WaterQuality --&gt; Sentinel2 : uses SENTINEL2_BANDS
-    L1Convert --&gt; Sentinel2 : uses BAND_BY_SCALE
+    subgraph GEE_L1["GEE Server: L1 Conversion"]
+        L1Convert["l1_to_rrs()\nDN / 10000 → TOA reflectance"]
+        Angles["DN_to_rrs()\nExtract SZA, SAA, VZA, VAA, RAA\nfrom image metadata"]
+        Resamp["resample()\nBilinear resampling\nto target scale"]
+        L1Convert --&gt; Angles --&gt; Resamp
+    end
+
+    Resamp --&gt;|ee.ImageCollection TOA + geometry| DSFLoop
+
+    subgraph DSFLoop["For each image: Dark Spectrum Fitting"]
+        subgraph GEE_DARK["GEE Server → Client"]
+            DarkSpec["compute_pdark()\nreduceRegion(Reducer.percentile or min)\n→ getInfo()"]
+        end
+
+        subgraph CLIENT["Client (numpy / scipy / ACOLITE LUTs)"]
+            AOT["estimate_aot_per_lut()\nnp.interp() LUT lookup per model\nAOT at 550nm per band"]
+            MODEL["select_best_model()\nRMSD / dtau / CV comparison\n→ best LUT + fixed AOT"]
+            PARAMS["compute_correction_with_fixed_aot()\nLoad best LUT\nCompute romix, dutott, astot, tg"]
+        end
+
+        subgraph GEE_CORR["GEE Server: Correction"]
+            RHOS["compute_rhos()\nImage expression:\nrhos = (rhot/tg - romix) / (dutott + astot*(rhot/tg - romix))"]
+            GLINT["deglint_alternative()\nResidual glint removal\n(optional)"]
+            NEG["mask_negative_reflectance()\nRemove rhos &lt; 0"]
+        end
+
+        DarkSpec --&gt; AOT --&gt; MODEL --&gt; PARAMS
+        PARAMS --&gt;|atmospheric params| RHOS
+        RHOS --&gt; GLINT --&gt; NEG
+    end
+
+    NEG --&gt;|rhos_B* bands| Quality
+
+    subgraph GEE_QC["GEE Server: Quality Masking"]
+        NonWater["non_water()\nB11 &lt; threshold"]
+        Cirrus["cirrus_mask()\nB10 &lt; threshold"]
+        Cloud["toa_mask()\nTOA &lt; threshold"]
+        Shadow["add_cld_shdw_mask()\n(optional, S2 Cloud Probability)"]
+        NonWater --&gt; Combine
+        Cirrus --&gt; Combine
+        Cloud --&gt; Combine
+        Shadow --&gt; Combine
+        Combine["Combined mask\nupdateMask()"]
+    end
+
+    Combine --&gt;|masked rhos_B*| Products
+
+    subgraph GEE_PROD["GEE Server: Water Quality Products"]
+        SPM["spm_nechad2016()\nA*R/(1-R/C)"]
+        TUR["tur_nechad2016()\nA*R/(1-R/C)"]
+        CHL["chl_oc3()\n10^poly(log(Rmax/G))"]
+        PSDB["pSDB_green/red()\nlog(B2)/log(B3|B4)"]
+        RRS["rrs()\nrhos/pi"]
+    end
+
+    Products --&gt;|ee.ImageCollection with all bands| Out([Output: L2 + products])
+
+    style GEE_SEARCH fill:#dcfce7,stroke:#16a34a
+    style GEE_L1 fill:#dcfce7,stroke:#16a34a
+    style GEE_DARK fill:#dcfce7,stroke:#16a34a
+    style CLIENT fill:#dbeafe,stroke:#3b82f6
+    style GEE_CORR fill:#dcfce7,stroke:#16a34a
+    style GEE_QC fill:#dcfce7,stroke:#16a34a
+    style GEE_PROD fill:#dcfce7,stroke:#16a34a
 </div>
 <hr/>
-<h2 id="acolite-class-detailed-methods">ACOLITE Class — Detailed Methods<a class="headerlink" href="#acolite-class-detailed-methods" title="Permanent link">¶</a></h2>
-<div class="mermaid">classDiagram
-    class ACOLITE {
-        +correct() tuple
-        +l1_to_l2() ImageCollection
-        +dask_spectrum_fitting() tuple
-        +select_lut() tuple
-        +compute_pdark() ndarray
-        +estimate_aot_per_lut() dict
-        +select_best_model() tuple
-        +compute_correction_with_fixed_aot() tuple
-        +compute_rhos() Image
-        +deglint_alternative() Image
-        +get_ancillary_data() dict
-    }
-
-    note for ACOLITE "Server-side: correct, l1_to_l2, compute_pdark, compute_rhos, deglint_alternative\nClient-side: estimate_aot_per_lut, select_best_model, dask_spectrum_fitting"
-</div>
-<h3 id="method-responsibilities">Method Responsibilities<a class="headerlink" href="#method-responsibilities" title="Permanent link">¶</a></h3>
+<h2 id="client-vs-server-breakdown">Client vs Server Breakdown<a class="headerlink" href="#client-vs-server-breakdown" title="Permanent link">¶</a></h2>
+<h3 id="server-side-operations-gee-cloud">Server-Side Operations (GEE Cloud)<a class="headerlink" href="#server-side-operations-gee-cloud" title="Permanent link">¶</a></h3>
+<p>All operations that return <code>ee.Image</code> or <code>ee.ImageCollection</code> without calling <code>.getInfo()</code> are lazy and executed on GEE servers:</p>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>Execution</th>
-<th>Description</th>
+<th>Operation</th>
+<th>Function</th>
+<th>GEE primitive</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>correct()</code></td>
-<td>Orchestration</td>
-<td>Main entry point: calls <code>l1_to_rrs</code> then <code>l1_to_l2</code></td>
+<td>Image catalog search</td>
+<td><code>search()</code></td>
+<td><code>filterBounds</code>, <code>filterDate</code>, <code>filter</code></td>
 </tr>
 <tr>
-<td><code>l1_to_l2()</code></td>
-<td>Orchestration</td>
-<td>Loops over images; calls DSF and <code>compute_rhos</code> per image</td>
+<td>DN → TOA conversion</td>
+<td><code>DN_to_rrs()</code></td>
+<td><code>image.divide(10000)</code></td>
 </tr>
 <tr>
-<td><code>dask_spectrum_fitting()</code></td>
-<td>Client</td>
-<td>Orchestrates DSF: calls <code>select_lut</code> then returns GEE image</td>
+<td>Geometry extraction</td>
+<td><code>get_mean_band_angle()</code></td>
+<td><code>image.get()</code>, <code>ee.Number</code></td>
 </tr>
 <tr>
-<td><code>select_lut()</code></td>
-<td>Hybrid</td>
-<td>Calls <code>compute_pdark</code> (server→client), then estimates AOT (client), then returns atmospheric params</td>
+<td>Resampling</td>
+<td><code>resample()</code></td>
+<td><code>resample('bilinear')</code>, <code>reproject()</code></td>
 </tr>
 <tr>
+<td>Dark spectrum extraction</td>
 <td><code>compute_pdark()</code></td>
-<td>Server → Client</td>
-<td>GEE <code>reduceRegion()</code> → <code>getInfo()</code> — only <code>getInfo()</code> per image</td>
+<td><code>reduceRegion()</code> → <strong><code>getInfo()</code></strong></td>
 </tr>
 <tr>
-<td><code>estimate_aot_per_lut()</code></td>
-<td>Client</td>
-<td>numpy/scipy LUT interpolation per atmospheric model</td>
-</tr>
-<tr>
-<td><code>select_best_model()</code></td>
-<td>Client</td>
-<td>RMSD/dtau/CV comparison across models</td>
-</tr>
-<tr>
-<td><code>compute_correction_with_fixed_aot()</code></td>
-<td>Client</td>
-<td>Alternative to DSF when AOT is known</td>
-</tr>
-<tr>
+<td>Surface reflectance</td>
 <td><code>compute_rhos()</code></td>
-<td>Server</td>
-<td>GEE image expression: correction formula applied to all bands</td>
+<td><code>image.expression()</code></td>
 </tr>
 <tr>
+<td>Negative mask</td>
+<td><code>mask_negative_reflectance()</code></td>
+<td><code>updateMask(image.gte(0))</code></td>
+</tr>
+<tr>
+<td>Water mask</td>
+<td><code>non_water()</code></td>
+<td><code>B11.lt(threshold)</code></td>
+</tr>
+<tr>
+<td>Cirrus mask</td>
+<td><code>cirrus_mask()</code></td>
+<td><code>B10.lt(threshold)</code></td>
+</tr>
+<tr>
+<td>Cloud mask</td>
+<td><code>toa_mask()</code></td>
+<td><code>band.lt(threshold)</code></td>
+</tr>
+<tr>
+<td>Cloud shadow</td>
+<td><code>add_cld_shdw_mask()</code></td>
+<td><code>directionalDistanceTransform</code>, <code>focal_min/max</code></td>
+</tr>
+<tr>
+<td>Water quality products</td>
+<td><code>spm_nechad2016*</code>, <code>chl_oc3</code>, etc.</td>
+<td><code>image.expression()</code>, <code>normalizedDifference()</code></td>
+</tr>
+<tr>
+<td>pSDB</td>
+<td><code>pSDB_green()</code>, <code>pSDB_red()</code></td>
+<td><code>log()</code> expressions</td>
+</tr>
+<tr>
+<td>Rrs</td>
+<td><code>rrs()</code></td>
+<td><code>image.divide(pi)</code></td>
+</tr>
+<tr>
+<td>Bathymetry mosaic</td>
+<td><code>multi_image()</code></td>
+<td><code>qualityMosaic()</code></td>
+</tr>
+<tr>
+<td>SDB calibration</td>
+<td><code>calibrate_sdb()</code></td>
+<td><code>sampleRegions()</code>, <code>Reducer.linearFit()</code></td>
+</tr>
+<tr>
+<td>Glint correction</td>
 <td><code>deglint_alternative()</code></td>
-<td>Server</td>
-<td>GEE: residual sun glint removal</td>
-</tr>
-<tr>
-<td><code>get_ancillary_data()</code></td>
-<td>Client</td>
-<td>NASA Earthdata API call</td>
+<td><code>image.subtract()</code>, <code>updateMask()</code></td>
 </tr>
 </tbody>
 </table>
-<hr/>
-<h2 id="water-quality-module-products-dictionary">Water Quality Module — PRODUCTS Dictionary<a class="headerlink" href="#water-quality-module-products-dictionary" title="Permanent link">¶</a></h2>
-<p>The <code>PRODUCTS</code> dict maps product names to their computation functions:</p>
-<div class="mermaid">graph LR
-    P["PRODUCTS dict"]
-    P --&gt; A[spm_nechad2016]
-    P --&gt; B[spm_nechad2016_704]
-    P --&gt; C[spm_nechad2016_740]
-    P --&gt; D[tur_nechad2016]
-    P --&gt; E[tur_nechad2016_704]
-    P --&gt; F[tur_nechad2016_740]
-    P --&gt; G[chl_oc2]
-    P --&gt; H[chl_oc3]
-    P --&gt; I[chl_re_mishra]
-    P --&gt; J[pSDB_green]
-    P --&gt; K[pSDB_red]
-    P --&gt; L["Rrs_B1 to Rrs_B12"]
-</div>
-<hr/>
-<h2 id="masking-pipeline">Masking Pipeline<a class="headerlink" href="#masking-pipeline" title="Permanent link">¶</a></h2>
-<div class="mermaid">flowchart TD
-    A[compute_water_mask] --&gt; B[non_water<br/>B11 less than threshold]
-    A --&gt; C[cirrus_mask<br/>B10 less than threshold]
-    A --&gt; D[toa_mask<br/>band less than threshold]
-    A --&gt; E[add_cld_shdw_mask<br/>optional]
-    B --&gt; F[Combined mask Image]
-    C --&gt; F
-    D --&gt; F
-    E --&gt; F
-
-    style A fill:#e1f5ff
-    style F fill:#e1ffe1
-</div>
-<hr/>
-<h2 id="sentinel-2-band-configuration">Sentinel-2 Band Configuration<a class="headerlink" href="#sentinel-2-band-configuration" title="Permanent link">¶</a></h2>
-<div class="mermaid">classDiagram
-    class Sentinel2Config {
-        +list SENTINEL2_BANDS
-        +dict BAND_BY_SCALE
-    }
-
-    note for Sentinel2Config "SENTINEL2_BANDS: B1 to B12 (13 bands)\nBAND_BY_SCALE: 10m to B2, 20m to B5, 60m to B1"
-</div>
-<h3 id="band-wavelengths-and-resolutions">Band Wavelengths and Resolutions<a class="headerlink" href="#band-wavelengths-and-resolutions" title="Permanent link">¶</a></h3>
+<h3 id="client-side-operations-local-python">Client-Side Operations (Local Python)<a class="headerlink" href="#client-side-operations-local-python" title="Permanent link">¶</a></h3>
+<p>Only these operations run locally and block execution until complete:</p>
 <table>
 <thead>
 <tr>
-<th>Band</th>
-<th>Wavelength (nm)</th>
-<th>Resolution</th>
-<th>Role</th>
+<th>Operation</th>
+<th>Function</th>
+<th>Library</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>B1</td>
-<td>443</td>
-<td>60m</td>
-<td>Coastal aerosol</td>
+<td>Settings parsing</td>
+<td><code>__load_settings()</code></td>
+<td>ACOLITE</td>
 </tr>
 <tr>
-<td>B2</td>
-<td>490</td>
-<td>10m</td>
-<td>Blue (pSDB numerator)</td>
+<td>LUT loading</td>
+<td><code>select_lut()</code></td>
+<td><code>acolite.aerlut.import_luts()</code></td>
 </tr>
 <tr>
-<td>B3</td>
-<td>560</td>
-<td>10m</td>
-<td>Green</td>
+<td>Gas transmittance</td>
+<td><code>select_lut()</code></td>
+<td><code>acolite.ac.gas_transmittance()</code></td>
 </tr>
 <tr>
-<td>B4</td>
-<td>665</td>
-<td>10m</td>
-<td>Red (SPM, Turbidity)</td>
+<td><strong>Dark spectrum retrieval</strong></td>
+<td><code>compute_pdark()</code> → <code>.getInfo()</code></td>
+<td><code>earthengine-api</code></td>
 </tr>
 <tr>
-<td>B5</td>
-<td>705</td>
-<td>20m</td>
-<td>Red Edge 1 (Chl-a NDCI)</td>
+<td>AOT estimation per LUT</td>
+<td><code>estimate_aot_per_lut()</code></td>
+<td><code>numpy.interp()</code></td>
 </tr>
 <tr>
-<td>B6</td>
-<td>740</td>
-<td>20m</td>
-<td>Red Edge 2</td>
+<td>Best model selection</td>
+<td><code>select_best_model()</code></td>
+<td><code>numpy</code>, <code>scipy</code></td>
 </tr>
 <tr>
-<td>B7</td>
-<td>783</td>
-<td>20m</td>
-<td>Red Edge 3</td>
+<td>Ancillary data fetch</td>
+<td><code>get_ancillary_data()</code></td>
+<td><code>acolite.ac.ancillary.get()</code></td>
 </tr>
 <tr>
-<td>B8</td>
-<td>842</td>
-<td>10m</td>
-<td>NIR (water mask, shadows)</td>
+<td>DSF orchestration</td>
+<td><code>dask_spectrum_fitting()</code></td>
+<td>Python</td>
 </tr>
 <tr>
-<td>B8A</td>
-<td>865</td>
-<td>20m</td>
-<td>Narrow NIR</td>
+<td>SDB calibration readout</td>
+<td><code>calibrate_sdb()</code> → <code>.getInfo()</code></td>
+<td><code>earthengine-api</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Performance bottleneck</p>
+<p>The only synchronous <code>getInfo()</code> call per image is in <code>compute_pdark()</code>. All other GEE operations are lazy and batched. This means <strong>processing time scales linearly with number of images</strong> (one <code>getInfo</code> per image).</p>
+</div>
+<hr/>
+<h2 id="aot-estimation-detail">AOT Estimation Detail<a class="headerlink" href="#aot-estimation-detail" title="Permanent link">¶</a></h2>
+<p>The core of the hybrid workflow — how a single global AOT is estimated from the image:</p>
+<div class="mermaid">sequenceDiagram
+    participant GEE as GEE Server
+    participant PY as Local Python
+    participant LUT as ACOLITE LUTs
+
+    GEE--&gt;&gt;PY: compute_pdark() → dark spectrum dict<br/>{B1: 0.032, B2: 0.028, B3: 0.041, ...}
+
+    Note over PY,LUT: For each atmospheric model (LUT)
+    PY-&gt;&gt;LUT: estimate_aot_per_lut()<br/>LUT indexed by [pressure, romix, raa, vza, sza, tau]
+    LUT--&gt;&gt;PY: interpolated tau_aot per band
+
+    PY-&gt;&gt;PY: select_best_model()<br/>Compute RMSD between dark_spectrum and LUT predictions<br/>Select model with min_drmsd (or min_dtau / taua_cv)
+
+    PY-&gt;&gt;LUT: compute_correction_with_fixed_aot()<br/>Load best LUT for selected model + AOT
+    LUT--&gt;&gt;PY: romix, dutott, astot, tg per band
+
+    PY--&gt;&gt;GEE: Atmospheric params as constants<br/>→ compute_rhos() server-side
+</div>
+<hr/>
+<h2 id="data-transformation-by-stage">Data Transformation by Stage<a class="headerlink" href="#data-transformation-by-stage" title="Permanent link">¶</a></h2>
+<h3 id="stage-1-l1c-input">Stage 1 — L1C Input<a class="headerlink" href="#stage-1-l1c-input" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Format</td>
+<td><code>ee.ImageCollection</code></td>
 </tr>
 <tr>
-<td>B9</td>
-<td>945</td>
-<td>60m</td>
-<td>Water vapour</td>
+<td>Band values</td>
+<td>Digital Numbers (DN), 0–10000</td>
 </tr>
 <tr>
-<td>B10</td>
-<td>1375</td>
-<td>60m</td>
-<td>Cirrus detection</td>
+<td>Bands</td>
+<td>B1–B12 (13 bands)</td>
 </tr>
 <tr>
-<td>B11</td>
-<td>1610</td>
-<td>20m</td>
-<td>SWIR 1 (water/land mask)</td>
+<td>Resolution</td>
+<td>10m / 20m / 60m (native)</td>
 </tr>
 <tr>
-<td>B12</td>
-<td>2190</td>
-<td>20m</td>
-<td>SWIR 2 (glint reference)</td>
+<td>Source</td>
+<td><code>COPERNICUS/S2_HARMONIZED</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="stage-2-toa-reflectance">Stage 2 — TOA Reflectance<a class="headerlink" href="#stage-2-toa-reflectance" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Band values</td>
+<td>TOA reflectance (DN / 10000), 0–1</td>
+</tr>
+<tr>
+<td>New bands</td>
+<td><code>sza</code>, <code>saa</code>, <code>vza</code>, <code>vaa</code>, <code>raa</code> (geometry angles)</td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>All resampled to <code>s2_target_res</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Geometry extraction:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Angle</th>
+<th>Source metadata property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Solar zenith (SZA)</td>
+<td><code>MEAN_SOLAR_ZENITH_ANGLE</code></td>
+</tr>
+<tr>
+<td>Solar azimuth (SAA)</td>
+<td><code>MEAN_SOLAR_AZIMUTH_ANGLE</code></td>
+</tr>
+<tr>
+<td>View zenith (VZA)</td>
+<td>Mean of <code>MEAN_INCIDENCE_ZENITH_ANGLE_B*</code> (13 bands)</td>
+</tr>
+<tr>
+<td>View azimuth (VAA)</td>
+<td>Mean of <code>MEAN_INCIDENCE_AZIMUTH_ANGLE_B*</code> (13 bands)</td>
+</tr>
+<tr>
+<td>Relative azimuth (RAA)</td>
+<td><code>|SAA - VAA|</code>, clamped to [0°, 180°]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="stage-3-surface-reflectance-l2">Stage 3 — Surface Reflectance (L2)<a class="headerlink" href="#stage-3-surface-reflectance-l2" title="Permanent link">¶</a></h3>
+<p>The atmospheric correction formula applied per band:</p>
+<div class="arithmatex">\[
+\rho_s(\lambda) = \frac{\rho_{TOA}(\lambda) / t_g(\lambda) - \rho_{mix}(\lambda)}{T_{up}(\lambda) + A_{sph}(\lambda) \cdot (\rho_{TOA}(\lambda) / t_g(\lambda) - \rho_{mix}(\lambda))}
+\]</div>
+<p>Where:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Parameter</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\rho_{TOA}\)</span></td>
+<td>Top-of-atmosphere reflectance</td>
+<td>GEE (Stage 2)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(t_g\)</span></td>
+<td>Gas transmittance</td>
+<td>ACOLITE LUT (client)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\rho_{mix}\)</span></td>
+<td>Path reflectance (<code>romix</code>)</td>
+<td>ACOLITE LUT (client)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(T_{up}\)</span></td>
+<td>Total upward transmittance (<code>dutott</code>)</td>
+<td>ACOLITE LUT (client)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A_{sph}\)</span></td>
+<td>Spherical albedo (<code>astot</code>)</td>
+<td>ACOLITE LUT (client)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output bands:</strong> <code>rhot_B*</code> (TOA preserved) + <code>rhos_B*</code> (surface reflectance)</p>
+<h3 id="stage-4-water-quality-products">Stage 4 — Water Quality Products<a class="headerlink" href="#stage-4-water-quality-products" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Formula</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPM Nechad</td>
+<td><code>A * rhos / (1 - rhos/C)</code></td>
+<td>mg/L</td>
+</tr>
+<tr>
+<td>Turbidity Nechad</td>
+<td><code>A * rhos / (1 - rhos/C)</code></td>
+<td>FNU</td>
+</tr>
+<tr>
+<td>Chl-a OC2</td>
+<td><code>10^poly(log10(B2/B3))</code></td>
+<td>mg/m³</td>
+</tr>
+<tr>
+<td>Chl-a OC3</td>
+<td><code>10^poly(log10(max(B1,B2)/B3))</code></td>
+<td>mg/m³</td>
+</tr>
+<tr>
+<td>Chl-a NDCI</td>
+<td><code>a + b*NDCI + c*NDCI²</code></td>
+<td>mg/m³</td>
+</tr>
+<tr>
+<td>pSDB green</td>
+<td><code>log(1000π·B2) / log(1000π·B3)</code></td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>pSDB red</td>
+<td><code>log(1000π·B2) / log(1000π·B4)</code></td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>Rrs</td>
+<td><code>rhos / π</code></td>
+<td>sr⁻¹</td>
 </tr>
 </tbody>
 </table>
 <hr/>
-<h2 id="module-dependency-graph">Module Dependency Graph<a class="headerlink" href="#module-dependency-graph" title="Permanent link">¶</a></h2>
-<div class="mermaid">graph TD
-    PKG[gee_acolite package]
-    CORR[correction.py]
-    WQ[water_quality.py]
-    BATH[bathymetry.py]
-    SEARCH[utils/search.py]
-    L1C[utils/l1_convert.py]
-    MSK[utils/masks.py]
-    S2[sensors/sentinel2.py]
-    AC[ACOLITE submodule]
-
-    PKG --&gt; CORR
-    PKG --&gt; WQ
-    PKG --&gt; BATH
-
-    CORR --&gt; L1C
-    CORR --&gt; MSK
-    CORR --&gt; WQ
-    CORR --&gt; AC
-
-    WQ --&gt; MSK
-    WQ --&gt; S2
-
-    L1C --&gt; S2
-
-    style AC fill:#fef3c7,stroke:#d97706
-    style PKG fill:#dbeafe,stroke:#3b82f6
-</div>
+<h2 id="band-naming-convention">Band Naming Convention<a class="headerlink" href="#band-naming-convention" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Prefix</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rhot_</code></td>
+<td>TOA reflectance (DN/10000)</td>
+<td><code>rhot_B2</code></td>
+</tr>
+<tr>
+<td><code>rhos_</code></td>
+<td>Surface reflectance (L2)</td>
+<td><code>rhos_B3</code></td>
+</tr>
+<tr>
+<td><code>Rrs_</code></td>
+<td>Remote sensing reflectance (rhos/pi)</td>
+<td><code>Rrs_B4</code></td>
+</tr>
+<tr>
+<td>product name</td>
+<td>Derived product</td>
+<td><code>spm_nechad2016</code>, <code>chl_oc3</code></td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="../class_diagram/">Class Diagram</a></li>
+<li><a href="../gee_integration/">GEE Integration</a></li>
+<li><a href="../../guide/configuration/">Configuration</a></li>
+</ul>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
