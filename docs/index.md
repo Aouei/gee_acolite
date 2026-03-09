@@ -154,3 +154,8 @@ See [Installation](guide/installation.md) for full setup instructions.
 ## License
 
 GPL-3.0-or-later
+
+---
+
+> This software was developed at the Institute of Marine Sciences of Andalusia (ICMAN-CSIC),
+> Spanish National Research Council (CSIC), Puerto Real, Spain.

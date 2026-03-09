@@ -31,24 +31,18 @@ GEE ACOLITE offers:
 
 ## History
 
-### Version 0.1.0 (2024)
+### Version 1.0.1
 
-- Initial implementation
+- Initial public release on PyPI
 - Support for Sentinel-2
-- DSF atmospheric correction
-- Basic water quality parameters
+- DSF atmospheric correction via ACOLITE
+- Water quality parameters (SPM, turbidity, Chl-a, Rrs)
 
-### Roadmap
+### Version 1.2.0
 
-**v0.2.0** (Planned)
-- Support for Landsat 8/9
-- Tiled mode for AOT
-- More bathymetry algorithms
-
-**v0.3.0** (Future)
-- Optimized temporal processing
-- Export to cloud-optimized formats
-- Interactive dashboard
+- Bathymetry improvements: pSDB median filter
+- Bathymetry calibration enhancements (`calibrate_sdb`, `apply_calibration`, `multi_image`)
+- ICMAN attribution
 
 ## Main Components
 
@@ -109,7 +103,7 @@ Google's platform for geospatial analysis:
 
 ### Lead Developer
 
-**Sergio** - Development and implementation
+**[Sergio (Aouei)](https://github.com/Aouei)** - Development and implementation
 
 ### Contributors
 
@@ -119,7 +113,6 @@ Google's platform for geospatial analysis:
 
 - **Dr. Quinten Vanhellemont** - ACOLITE development
 - **GEE Community** - Tools and support
-- **Users and testers** - Feedback and bug reports
 
 ## License
 
@@ -193,7 +186,6 @@ And also ACOLITE:
 
 - **Issues**: [GitHub Issues](https://github.com/Aouei/gee_acolite/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/Aouei/gee_acolite/discussions)
-- **Email**: [Project contact]
 
 ## Links
 
@@ -201,7 +193,7 @@ And also ACOLITE:
 
 - [GitHub Repository](https://github.com/Aouei/gee_acolite)
 - [Documentation](https://aouei.github.io/gee_acolite/)
-- [PyPI](https://pypi.org/project/gee-acolite/) _(coming soon)_
+- [PyPI](https://pypi.org/project/gee-acolite/)
 
 ### Related Resources
 
@@ -248,3 +240,6 @@ This project would not be possible without:
 ---
 
 **GEE ACOLITE** - Making aquatic atmospheric correction accessible and scalable.
+
+> This software was developed at the Institute of Marine Sciences of Andalusia (ICMAN-CSIC),
+> Spanish National Research Council (CSIC), Puerto Real, Spain.
