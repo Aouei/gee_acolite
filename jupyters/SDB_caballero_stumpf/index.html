@@ -2657,7 +2657,7 @@ are used to fit:</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
@@ -2690,7 +2690,7 @@ are used to fit:</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'  Slope        : </span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'  Intercept    : </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'  Correlation  : </span><span class="si">{</span><span class="n">cal_result</span><span class="p">[</span><span class="s2">"correlation"</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'  Equation     : depth = </span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> Ã— pSDB_green + (</span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'  Equation     : depth = </span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> — pSDB_green + (</span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-7">MAX_DEPTH = 10  # metres
 
@@ -2712,7 +2712,7 @@ print(f'  Pixels used  : {cal_result["num_pixels"]:,}')
 print(f'  Slope        : {slope:.4f}')
 print(f'  Intercept    : {intercept:.4f}')
 print(f'  Correlation  : {cal_result["correlation"]:.4f}')
-print(f'  Equation     : depth = {slope:.4f} Ã— pSDB_green + ({intercept:.4f})')</div>
+print(f'  Equation     : depth = {slope:.4f} — pSDB_green + ({intercept:.4f})')</div>
 </div>
 </div>
 </div>
@@ -2755,7 +2755,7 @@ print(f'  Equation     : depth = {slope:.4f} Ã— pSDB_green + ({intercept:.4f}
   Slope        : 74.1771
   Intercept    : -71.0190
   Correlation  : 0.9727
-  Equation     : depth = 74.1771 Ã— pSDB_green + (-71.0190)
+  Equation     : depth = 74.1771 — pSDB_green + (-71.0190)
 </pre>
 </div>
 </div>
@@ -3126,8 +3126,8 @@ make_map(
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="8-optical-deep-water-filter">8. Optical Deep Water filter<a class="anchor-link" href="#8-optical-deep-water-filter">¶</a></h2><p>The ODW model (Caballero &amp; Stumpf 2019) masks pixels in two situations:</p>
 <ul>
-<li><strong>Clear water</strong> â€” Rrs_blue or Rrs_green â‰¤ 0.003 (no retrievable signal)</li>
-<li><strong>Turbid water</strong> â€” depth estimate exceeds the turbidity-limited maximum:
+<li><strong>Clear water</strong> Rrs_blue or Rrs_green &lt; 0.003 (no retrievable signal)</li>
+<li><strong>Turbid water</strong> depth estimate exceeds the turbidity-limited maximum:
 $Y_{\max} = -0.251 \ln(R_{rs}^{\text{NIR}}) + 0.8$</li>
 </ul>
 </div>
@@ -3384,7 +3384,7 @@ make_map(
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
@@ -3397,12 +3397,10 @@ make_map(
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Imagen combinada: solo pÃ­xeles donde SDB_green_ODW e insitu tienen datos simultÃ¡neamente</span>
-<span class="n">validation_image</span> <span class="o">=</span> <span class="n">sdb_odw</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">insitu</span><span class="p">)</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">validation_image</span> <span class="o">=</span> <span class="n">sdb_odw</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span><span class="n">insitu</span><span class="p">)</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span>
     <span class="n">sdb_odw</span><span class="o">.</span><span class="n">mask</span><span class="p">()</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="n">insitu</span><span class="o">.</span><span class="n">mask</span><span class="p">())</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="n">insitu</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="p">)</span>
 
-<span class="c1"># numPixels=1e6 â†’ GEE devuelve todos los pÃ­xeles disponibles si hay menos de ese lÃ­mite</span>
 <span class="n">val_sample</span> <span class="o">=</span> <span class="n">validation_image</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
     <span class="n">region</span><span class="o">=</span><span class="n">roi</span><span class="p">,</span>
     <span class="n">scale</span><span class="o">=</span><span class="n">SCALE</span><span class="p">,</span>
@@ -3415,12 +3413,10 @@ make_map(
 <span class="n">df_val</span> <span class="o">=</span> <span class="n">geemap</span><span class="o">.</span><span class="n">ee_to_df</span><span class="p">(</span><span class="n">val_sample</span><span class="p">)[[</span><span class="s1">'SDB_green_ODW'</span><span class="p">,</span> <span class="s1">'depth'</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Validation pixels: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_val</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-11"># Imagen combinada: solo pÃ­xeles donde SDB_green_ODW e insitu tienen datos simultÃ¡neamente
-validation_image = sdb_odw.addBands(insitu).updateMask(
+<div class="clipboard-copy-txt" id="cell-11">validation_image = sdb_odw.addBands(insitu).updateMask(
     sdb_odw.mask().And(insitu.mask()).And(insitu.gt(0))
 )
 
-# numPixels=1e6 â†’ GEE devuelve todos los pÃ­xeles disponibles si hay menos de ese lÃ­mite
 val_sample = validation_image.sample(
     region=roi,
     scale=SCALE,
