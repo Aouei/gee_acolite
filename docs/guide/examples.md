@@ -159,26 +159,66 @@ print(df.head())
 
 ---
 
-## Example 5 — Export All Corrected Images to GEE Assets
+## Example 5 — Download Corrected Images as GeoTIFF
+
+Download corrected scenes locally using [geemap](https://geemap.org). Two options: a single best-pixel mosaic or one file per scene.
+
+### 5.1 — Single mosaic
 
 ```python
-image_list = corrected.toList(corrected.size())
-n = corrected.size().getInfo()
+import geemap
+from datetime import datetime, timedelta
+from gee_acolite.utils.search import search_list
+from gee_acolite import bathymetry
 
-for i in range(n):
-    img = ee.Image(image_list.get(i))
-    date = ee.Date(img.get('system:time_start')).format('YYYY-MM-dd').getInfo()
+bands = [
+    'Rrs_B1', 'Rrs_B2', 'Rrs_B3', 'Rrs_B4',
+    'Rrs_B5', 'Rrs_B6', 'Rrs_B7', 'Rrs_B8', 'Rrs_B8A',
+    'Rrs_B11', 'Rrs_B12',
+    'pSDB_green', 'pSDB_red',
+    'tur_nechad2016', 'chl_oc3',
+]
 
-    task = ee.batch.Export.image.toAsset(
-        image=img.clip(roi),
-        description=f'corrected_{date}',
-        assetId=f'projects/your-project/assets/gee_acolite/corrected_{date}',
-        region=roi,
-        scale=10,
-        maxPixels=1e9,
-    )
-    task.start()
-    print(f"Submitted: {date}")
+roi    = ee.Geometry.Rectangle([-0.40, 39.27, -0.28, 39.38])
+starts = ['2018-09-19', '2018-10-04', '2018-10-17']
+ends   = [
+    (datetime.strptime(d, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
+    for d in starts
+]
+
+corrector    = ACOLITE(ac, settings)
+collection   = search_list(roi, starts, ends, tile='30SYJ')
+corrected, _ = corrector.correct(collection)
+
+mosaic = bathymetry.multi_image(corrected)
+
+geemap.download_ee_image(
+    image=mosaic.select(bands),
+    filename='output/mosaic.tif',
+    region=roi,
+    crs='EPSG:32630',
+    scale=10,
+    dtype='float32',
+)
+```
+
+!!! tip "Masked pixels and NaN"
+    GEE exports masked pixels as `nodata`. When opening the result with rasterio or xarray, use `masked=True` or set `nodata=float('nan')` to avoid treating them as valid zeros or infinities.
+
+### 5.2 — One file per scene
+
+```python
+filenames = [f'{d.replace("-", "_")}.tif' for d in starts]
+
+geemap.download_ee_image_collection(
+    collection=corrected.select(bands),
+    out_dir='output/scenes/',
+    filenames=filenames,
+    region=roi,
+    crs='EPSG:32630',
+    scale=10,
+    dtype='float32',
+)
 ```
 
 ---

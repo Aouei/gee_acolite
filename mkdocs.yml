@@ -95,14 +95,10 @@ extra_javascript:
 
 nav:
     - Home: index.md
-    - User Guide:
-      - Installation: guide/installation.md
-      - Dependencies: guide/dependencies.md
-      - Quickstart: guide/quickstart.md
-      - Examples: guide/examples.md
-      - Configuration: guide/configuration.md
-      - Notebooks:
-        - Bathymetry (Caballero & Stumpf): jupyters/SDB_caballero_stumpf.ipynb
+    - Architecture:
+      - Class Diagram: architecture/class_diagram.md
+      - Data Flow: architecture/data_flow.md
+      - GEE Integration: architecture/gee_integration.md
     - API Reference:
       - Atmospheric Correction: api/correction.md
       - Water Quality: api/water_quality.md
@@ -112,11 +108,14 @@ nav:
         - L1 Conversion: api/utils/l1_convert.md
         - Masks: api/utils/masks.md
       - Sensors: api/sensors/sentinel2.md
-      - Architecture:
-        - Class Diagram: architecture/class_diagram.md
-        - Data Flow: architecture/data_flow.md
-        - GEE Integration: architecture/gee_integration.md
-        - SDB Workflow: architecture/sdb_workflow.md
+    - User Guide:
+      - Installation: guide/installation.md
+      - Dependencies: guide/dependencies.md
+      - Quickstart: guide/quickstart.md
+      - Examples: guide/examples.md
+      - Configuration: guide/configuration.md
+      - Notebooks:
+        - Bathymetry (Caballero & Stumpf): jupyters/SDB_caballero_stumpf.ipynb
     - Contribute: contributing.md
     - About: about.md
 

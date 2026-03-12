@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import json; nb=json.load\\(open\\(''c:/Users/sergi/Documents/repos/gee_acolite/docs/jupyters/SDB_caballero_stumpf.ipynb''\\)\\); cells=nb[''cells'']; print\\(f''Total cells: {len\\(cells\\)}''\\); outputs=[c for c in cells if c.get\\(''outputs''\\)]; print\\(f''Cells with outputs: {len\\(outputs\\)}''\\); maps=[c for c in cells if any\\(\"\"Map\"\" in str\\(o\\) or \"\"geemap\"\" in str\\(o\\) or \"\"folium\"\" in str\\(o\\) or \"\"iframe\"\" in str\\(o\\).lower\\(\\) for o in c.get\\(''outputs'',[]\\)\\)]; print\\(f''Cells with map outputs: {len\\(maps\\)}''\\); [print\\(f''  Cell type: {c[\"\"cell_type\"\"]}, output types: {[o[\"\"output_type\"\"] for o in c[\"\"outputs\"\"]]}''\\) for c in outputs[:5]]\")",
+      "Bash(python -c \":*)",
+      "Bash(python -c \"import json; nb=json.load\\(open\\(''docs/jupyters/SDB_caballero_stumpf.ipynb''\\)\\); [print\\(i, c[''id''], repr\\(''''.join\\(c[''source'']\\)[:80]\\)\\) for i,c in enumerate\\(nb[''cells'']\\)]\")",
+      "Bash(python fix_notebook.py)",
+      "Bash(python fix_notebook2.py)",
+      "Bash(python fix_legend.py)",
+      "Bash(rm fix_legend.py)"
+    ]
+  }
+}

@@ -170,125 +170,81 @@ flowchart LR
 
 ---
 
-## GEE Quotas and Limits
+## Export to GeoTIFF
 
-| Resource | Limit | Relevance |
-|----------|-------|-----------|
-| `getInfo()` memory | 256 MB per call | `compute_pdark()` returns << 1 KB — no issue |
-| `getInfo()` timeout | 5 minutes | Unlikely for `reduceRegion` on dark spectrum |
-| `reduceRegion` max pixels | 10⁸ (default) | Use `maxPixels=1e9` if needed |
-| Concurrent requests | 3000 | Lazy operations do not consume concurrent slots |
-| Export max pixels | 10⁹ (Drive/Asset) | Use `maxPixels=1e9` in export tasks |
+After correction, results live in GEE as lazy `ee.Image` / `ee.ImageCollection` objects. To work with them locally as GeoTIFFs, use [geemap](https://geemap.org).
 
-### Strategies to Stay Within Limits
+### Dependencies
 
 ```python
-# 1. Filter images before correction (reduces N × getInfo calls)
-images = images.filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 10))
+import geemap
+from datetime import datetime, timedelta
+from gee_acolite import ACOLITE
+from gee_acolite.utils.search import search_list
+from gee_acolite import bathymetry
+```
 
-# 2. Use lower scale for testing
-settings = {'s2_target_res': 60}  # 36× fewer pixels than 10m
+### Download a single mosaic
 
-# 3. Clip to actual ROI before export
-task = ee.batch.Export.image.toDrive(
-    image=result.clip(roi),   # avoids exporting empty tile borders
+Use `bathymetry.multi_image()` to collapse a corrected collection into a quality mosaic, then download it as a single GeoTIFF.
+
+```python
+bands = [
+    'Rrs_B1', 'Rrs_B2', 'Rrs_B3', 'Rrs_B4',
+    'Rrs_B5', 'Rrs_B6', 'Rrs_B7', 'Rrs_B8', 'Rrs_B8A',
+    'Rrs_B11', 'Rrs_B12',
+    'pSDB_green', 'pSDB_red',
+    'tur_nechad2016', 'chl_oc3',
+]
+
+roi    = ee.Geometry.Rectangle([...])
+starts = ['2018-09-19', '2018-10-04', '2018-10-17']
+ends   = [
+    (datetime.strptime(d, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
+    for d in starts
+]
+
+corrector    = ACOLITE(acolite=acolite, settings='settings.txt')
+collection   = search_list(roi, starts, ends, tile='29SND')
+corrected, _ = corrector.correct(collection)
+
+mosaic = bathymetry.multi_image(corrected)
+
+geemap.download_ee_image(
+    image=mosaic.select(bands),
+    filename='output/mosaic.tif',
+    region=roi,
+    crs='EPSG:32629',
     scale=10,
-    maxPixels=1e9,
-    ...
+    dtype='float32',
 )
 ```
 
----
+!!! tip "Masked pixels and NaN"
+    GEE exports masked pixels as `nodata`. When opening the result with rasterio or xarray, use `masked=True` or set `nodata=float('nan')` to avoid treating them as valid zeros or infinities.
 
-## Export Options
-
-```mermaid
-flowchart TD
-    Result["ee.ImageCollection\n(corrected + products)"]
-
-    Result --> Drive["Export to Google Drive\nee.batch.Export.image.toDrive()\n→ GeoTIFF"]
-    Result --> Asset["Export to GEE Asset\nee.batch.Export.image.toAsset()\n→ ee.Image / ee.ImageCollection"]
-    Result --> GCS["Export to Cloud Storage\nee.batch.Export.image.toCloudStorage()\n→ GeoTIFF in GCS bucket"]
-    Result --> GetInfo["Local download\n.getInfo() or .getDownloadURL()\n(small areas only)"]
-
-    Drive --> Local["Download to local machine"]
-    Asset --> Reuse["Reuse in GEE scripts"]
-    GCS --> Pipeline["External pipeline\n(Vertex AI, BigQuery, etc.)"]
-
-    style Result fill:#fef3c7,stroke:#d97706
-```
-
-### Recommended Asset Structure
-
-```
-projects/your-project/assets/
-└── gee_acolite/
-    ├── corrected/
-    │   ├── roi_2023-06-15        ← single corrected scene
-    │   └── roi_2023-07-20
-    ├── water_quality/
-    │   └── spm_timeseries_2023   ← exported time series
-    └── bathymetry/
-        ├── psdb_mosaic_2022      ← raw pSDB mosaic
-        └── sdb_calibrated_2022   ← calibrated depth map
-```
-
----
-
-## Best Practices
-
-### Minimise `getInfo()` Calls
+### Download an image collection (one file per scene)
 
 ```python
-# Avoid: multiple getInfo() calls in a loop
-for i in range(n):
-    val = image.select('spm_nechad2016').reduceRegion(...).getInfo()
+filenames = [f'{d.replace("-", "_")}.tif' for d in starts]
 
-# Prefer: batch all statistics into one call
-stats = corrected.map(
-    lambda img: img.set(
-        img.select('spm_nechad2016').reduceRegion(
-            reducer=ee.Reducer.mean(), geometry=roi, scale=10
-        )
-    )
+geemap.download_ee_image_collection(
+    collection=corrected.select(bands),
+    out_dir='output/scenes/',
+    filenames=filenames,
+    region=roi,
+    crs='EPSG:32629',
+    scale=10,
+    dtype='float32',
 )
-values = stats.aggregate_array('spm_nechad2016').getInfo()  # one call
 ```
 
-### Use `scale=60` for Testing
+### Choosing between the two
 
-```python
-# Quick test with 60m resolution (36× faster than 10m)
-settings = {'s2_target_res': 60}
-corrected, _ = ac_gee.correct(images)
-
-# Final run with 10m
-settings = {'s2_target_res': 10}
-corrected, _ = ac_gee.correct(images)
-```
-
-### Retry Logic for Transient Errors
-
-```python
-import time
-
-def safe_getinfo(ee_object, retries=3):
-    for attempt in range(retries):
-        try:
-            return ee_object.getInfo()
-        except ee.EEException as e:
-            if attempt < retries - 1:
-                time.sleep(2 ** attempt)
-            else:
-                raise
-```
+| Use case | Function |
+|----------|----------|
+| Single composite / best-pixel mosaic | `download_ee_image` + `multi_image()` |
+| Time series / individual scenes | `download_ee_image_collection` |
+| Large area or many scenes (async) | `ee.batch.Export.image.toDrive` |
 
 ---
-
-## References
-
-- [GEE Python API guide](https://developers.google.com/earth-engine/guides/python_install)
-- [GEE Best Practices](https://developers.google.com/earth-engine/guides/best_practices)
-- [GEE Quotas](https://developers.google.com/earth-engine/guides/usage)
-- [Data Flow](data_flow.md)
-- [Class Diagram](class_diagram.md)

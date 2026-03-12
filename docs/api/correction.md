@@ -7,29 +7,6 @@ Main module for atmospheric correction using the Dark Spectrum Fitting (DSF) met
 
 The `gee_acolite.correction` module implements the ACOLITE atmospheric correction optimized for Google Earth Engine. It uses the Dark Spectrum Fitting (DSF) method to estimate aerosol optical thickness (AOT) and correct atmospheric effects in Sentinel-2 images.
 
-## Class Diagram
-
-```mermaid
-classDiagram
-    class ACOLITE {
-        +correct() tuple
-        +l1_to_l2() ImageCollection
-        +dask_spectrum_fitting() dict
-        +select_lut() tuple
-        +compute_pdark() ndarray
-        +estimate_aot_per_lut() dict
-        +select_best_model() tuple
-        +compute_correction_with_fixed_aot() Image
-        +compute_rhos() Image
-        +deglint_alternative() Image
-        +get_ancillary_data() dict
-    }
-
-    ACOLITE --> ImageCollection : processes
-    ACOLITE --> Image : returns
-    ImageCollection --> Image : contains
-```
-
 ## Correction Flow
 
 ```mermaid
