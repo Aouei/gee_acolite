@@ -7,8 +7,8 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Atmospheric correction with ACOLITE for Google Earth Engine" name="description"/>
 <meta content="Sergio" name="author"/>
-<link href="../../api/sensors/sentinel2/" rel="prev"/>
-<link href="../data_flow/" rel="next"/>
+<link href="../.." rel="prev"/>
+<link href="../gee_integration/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
 <title>Class Diagram - GEE ACOLITE Documentation</title>
@@ -124,21 +124,30 @@
 
       </a>
 </li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="./">
+          
+  
+  
+  Architecture
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../api/correction/">
+          
+  
+  
+  API Reference
+
+        </a>
+</li>
 <li class="md-tabs__item">
 <a class="md-tabs__link" href="../../guide/installation/">
           
   
   
   User Guide
-
-        </a>
-</li>
-<li class="md-tabs__item md-tabs__item--active">
-<a class="md-tabs__link" href="../../api/correction/">
-          
-  
-  
-  API Reference
 
         </a>
 </li>
@@ -202,118 +211,181 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
 <span class="md-ellipsis">
     
   
-    User Guide
+    Architecture
   
 
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_2">
 <span class="md-nav__icon md-icon"></span>
             
   
-    User Guide
+    Architecture
   
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../guide/installation/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
 <span class="md-ellipsis">
     
   
-    Installation
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../guide/dependencies/">
-<span class="md-ellipsis">
-    
-  
-    Dependencies
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../guide/quickstart/">
-<span class="md-ellipsis">
-    
-  
-    Quickstart
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../guide/examples/">
-<span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../guide/configuration/">
-<span class="md-ellipsis">
-    
-  
-    Configuration
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Notebooks
+    Class Diagram
   
 
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_2_6_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_6">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Notebooks
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../jupyters/SDB_caballero_stumpf/">
+<a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     
   
-    Bathymetry (Caballero &amp; Stumpf)
+    Class Diagram
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-side-components">
+<span class="md-ellipsis">
+      
+        Client-Side Components
+      
+    </span>
+</a>
+<nav aria-label="Client-Side Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-method-responsibilities">
+<span class="md-ellipsis">
+      
+        Client Method Responsibilities
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-side-components">
+<span class="md-ellipsis">
+      
+        Server-Side Components
+      
+    </span>
+</a>
+<nav aria-label="Server-Side Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-method-responsibilities">
+<span class="md-ellipsis">
+      
+        Server Method Responsibilities
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-server-communication">
+<span class="md-ellipsis">
+      
+        Client ↔ Server Communication
+      
+    </span>
+</a>
+<nav aria-label="Client ↔ Server Communication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-transferred-at-each-bridge-point">
+<span class="md-ellipsis">
+      
+        Data transferred at each bridge point
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#module-dependency-graph">
+<span class="md-ellipsis">
+      
+        Module Dependency Graph
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#water-quality-products-registry">
+<span class="md-ellipsis">
+      
+        Water Quality — PRODUCTS Registry
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#masking-pipeline">
+<span class="md-ellipsis">
+      
+        Masking Pipeline
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sentinel-2-band-configuration">
+<span class="md-ellipsis">
+      
+        Sentinel-2 Band Configuration
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_flow.md">
+<span class="md-ellipsis">
+    
+  
+    Data Flow
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../gee_integration/">
+<span class="md-ellipsis">
+    
+  
+    GEE Integration
   
 
     
@@ -323,12 +395,9 @@
 </ul>
 </nav>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -339,7 +408,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
 <span class="md-nav__icon md-icon"></span>
             
@@ -385,9 +454,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+<label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -459,171 +528,121 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
 <span class="md-ellipsis">
     
   
-    Architecture
+    User Guide
   
 
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_3_6_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_3_6">
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
   
-    Architecture
+    User Guide
   
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guide/installation/">
 <span class="md-ellipsis">
     
   
-    Class Diagram
+    Installation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guide/dependencies/">
+<span class="md-ellipsis">
+    
+  
+    Dependencies
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guide/quickstart/">
+<span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guide/examples/">
+<span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guide/configuration/">
+<span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Notebooks
   
 
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<a class="md-nav__link md-nav__link--active" href="./">
-<span class="md-ellipsis">
-    
-  
-    Class Diagram
-  
-
-    
-  </span>
-</a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
+<nav aria-expanded="false" aria-labelledby="__nav_4_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
 <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#full-package-overview">
-<span class="md-ellipsis">
-      
-        Full Package Overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#acolite-class-detailed-methods">
-<span class="md-ellipsis">
-      
-        ACOLITE Class — Detailed Methods
-      
-    </span>
-</a>
-<nav aria-label="ACOLITE Class — Detailed Methods" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#method-responsibilities">
-<span class="md-ellipsis">
-      
-        Method Responsibilities
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#water-quality-module-products-dictionary">
-<span class="md-ellipsis">
-      
-        Water Quality Module — PRODUCTS Dictionary
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#masking-pipeline">
-<span class="md-ellipsis">
-      
-        Masking Pipeline
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#sentinel-2-band-configuration">
-<span class="md-ellipsis">
-      
-        Sentinel-2 Band Configuration
-      
-    </span>
-</a>
-<nav aria-label="Sentinel-2 Band Configuration" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#band-wavelengths-and-resolutions">
-<span class="md-ellipsis">
-      
-        Band Wavelengths and Resolutions
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#module-dependency-graph">
-<span class="md-ellipsis">
-      
-        Module Dependency Graph
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../data_flow/">
-<span class="md-ellipsis">
-    
+            
   
-    Data Flow
+    Notebooks
   
 
-    
-  </span>
-</a>
-</li>
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../gee_integration/">
+<a class="md-nav__link" href="../../jupyters/SDB_caballero_stumpf/">
 <span class="md-ellipsis">
     
   
-    GEE Integration
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../sdb_workflow.md">
-<span class="md-ellipsis">
-    
-  
-    SDB Workflow
+    Bathymetry (Caballero &amp; Stumpf)
   
 
     
@@ -675,29 +694,20 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#full-package-overview">
+<a class="md-nav__link" href="#client-side-components">
 <span class="md-ellipsis">
       
-        Full Package Overview
+        Client-Side Components
       
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#acolite-class-detailed-methods">
-<span class="md-ellipsis">
-      
-        ACOLITE Class — Detailed Methods
-      
-    </span>
-</a>
-<nav aria-label="ACOLITE Class — Detailed Methods" class="md-nav">
+<nav aria-label="Client-Side Components" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#method-responsibilities">
+<a class="md-nav__link" href="#client-method-responsibilities">
 <span class="md-ellipsis">
       
-        Method Responsibilities
+        Client Method Responsibilities
       
     </span>
 </a>
@@ -706,10 +716,63 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#water-quality-module-products-dictionary">
+<a class="md-nav__link" href="#server-side-components">
 <span class="md-ellipsis">
       
-        Water Quality Module — PRODUCTS Dictionary
+        Server-Side Components
+      
+    </span>
+</a>
+<nav aria-label="Server-Side Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-method-responsibilities">
+<span class="md-ellipsis">
+      
+        Server Method Responsibilities
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-server-communication">
+<span class="md-ellipsis">
+      
+        Client ↔ Server Communication
+      
+    </span>
+</a>
+<nav aria-label="Client ↔ Server Communication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-transferred-at-each-bridge-point">
+<span class="md-ellipsis">
+      
+        Data transferred at each bridge point
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#module-dependency-graph">
+<span class="md-ellipsis">
+      
+        Module Dependency Graph
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#water-quality-products-registry">
+<span class="md-ellipsis">
+      
+        Water Quality — PRODUCTS Registry
       
     </span>
 </a>
@@ -731,28 +794,6 @@
       
     </span>
 </a>
-<nav aria-label="Sentinel-2 Band Configuration" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#band-wavelengths-and-resolutions">
-<span class="md-ellipsis">
-      
-        Band Wavelengths and Resolutions
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#module-dependency-graph">
-<span class="md-ellipsis">
-      
-        Module Dependency Graph
-      
-    </span>
-</a>
 </li>
 </ul>
 </nav>
@@ -762,25 +803,96 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-diagram">Class Diagram<a class="headerlink" href="#class-diagram" title="Permanent link">¶</a></h1>
-<p>Accurate class and module structure of GEE ACOLITE, based on the actual source code.</p>
+<p>Accurate class and module structure of GEE ACOLITE. Organised by <strong>where each component lives</strong>: client (local Python process) or server (GEE cloud).</p>
 <hr/>
-<h2 id="full-package-overview">Full Package Overview<a class="headerlink" href="#full-package-overview" title="Permanent link">¶</a></h2>
+<h2 id="client-side-components">Client-Side Components<a class="headerlink" href="#client-side-components" title="Permanent link">¶</a></h2>
+<p>These classes and functions run in the <strong>local Python process</strong>. They block until complete and cannot be deferred to GEE.</p>
 <div class="mermaid">classDiagram
     namespace gee_acolite {
         class ACOLITE {
-            +correct() tuple
-            +l1_to_l2() tuple
-            +dask_spectrum_fitting() tuple
+            +get_ancillary_data() dict
             +select_lut() tuple
-            +compute_pdark() dict
             +estimate_aot_per_lut() dict
             +select_best_model() tuple
             +compute_correction_with_fixed_aot() tuple
+            +dask_spectrum_fitting() dict
+        }
+    }
+
+    namespace acolite_pkg {
+        class AcoliteLUTs {
+            +import_luts() dict
+            +import_rsky_luts() dict
+            +gas_transmittance() ndarray
+            +rsr_dict() dict
+        }
+        class AcoliteMisc {
+            +settings_parse() dict
+            +ancillary_get() dict
+        }
+    }
+
+    namespace numeric {
+        class NumPySciPy {
+            +interp() ndarray
+            +minimize() OptimizeResult
+        }
+    }
+
+    ACOLITE --&gt; AcoliteLUTs : loads LUTs + gas transmittance
+    ACOLITE --&gt; AcoliteMisc : parses settings + ancillary
+    ACOLITE --&gt; NumPySciPy : AOT interpolation + model selection
+</div>
+<h3 id="client-method-responsibilities">Client Method Responsibilities<a class="headerlink" href="#client-method-responsibilities" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__load_settings()</code></td>
+<td>Parse settings via <code>acolite.acolite.settings.parse()</code></td>
+</tr>
+<tr>
+<td><code>get_ancillary_data()</code></td>
+<td>Fetch pressure/wind/ozone from NASA Earthdata</td>
+</tr>
+<tr>
+<td><code>select_lut()</code></td>
+<td>Load LUT files from disk for each atmospheric model</td>
+</tr>
+<tr>
+<td><code>estimate_aot_per_lut()</code></td>
+<td><code>np.interp()</code> — AOT at 550 nm per model, per band</td>
+</tr>
+<tr>
+<td><code>select_best_model()</code></td>
+<td>RMSD / dtau / CV comparison → best LUT + fixed AOT</td>
+</tr>
+<tr>
+<td><code>compute_correction_with_fixed_aot()</code></td>
+<td>Extract <code>romix</code>, <code>dutott</code>, <code>astot</code>, <code>tg</code> from best LUT</td>
+</tr>
+<tr>
+<td><code>dask_spectrum_fitting()</code></td>
+<td>Orchestrates DSF: calls <code>select_lut</code> → returns atmospheric params</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="server-side-components">Server-Side Components<a class="headerlink" href="#server-side-components" title="Permanent link">¶</a></h2>
+<p>These classes and functions return <code>ee.Image</code> / <code>ee.ImageCollection</code>. They are <strong>lazy</strong> — no computation runs until <code>.getInfo()</code>, <code>.export()</code>, or tile rendering is triggered.</p>
+<div class="mermaid">classDiagram
+    namespace gee_acolite_server {
+        class ACOLITE_GEE {
+            +correct() tuple
+            +l1_to_l2() ImageCollection
+            +compute_pdark() dict
             +compute_rhos() Image
             +deglint_alternative() Image
-            +get_ancillary_data() dict
-            +prepare_query() tuple
-            +prepare_earthdata_credentials() dict
         }
         class WaterQuality {
             +compute_water_mask() Image
@@ -804,13 +916,7 @@
         }
     }
 
-    namespace utils {
-        class Search {
-            +search() ImageCollection
-            +search_list() ImageCollection
-            +search_with_cloud_proba() ImageCollection
-            +join_s2_with_cloud_prob() ImageCollection
-        }
+    namespace utils_server {
         class L1Convert {
             +l1_to_rrs() ImageCollection
             +DN_to_rrs() Image
@@ -827,6 +933,12 @@
             +add_cld_shdw_mask() Image
             +cld_shdw_mask() Image
         }
+        class Search {
+            +search() ImageCollection
+            +search_list() ImageCollection
+            +search_with_cloud_proba() ImageCollection
+            +join_s2_with_cloud_prob() ImageCollection
+        }
     }
 
     namespace sensors {
@@ -836,102 +948,152 @@
         }
     }
 
-    ACOLITE --&gt; L1Convert : uses l1_to_rrs
-    ACOLITE --&gt; WaterQuality : uses compute_water_bands
-    ACOLITE --&gt; Masks : applies masks
-    WaterQuality --&gt; Masks : applies masks
-    WaterQuality --&gt; Sentinel2 : uses SENTINEL2_BANDS
-    L1Convert --&gt; Sentinel2 : uses BAND_BY_SCALE
+    ACOLITE_GEE --&gt; L1Convert : l1_to_rrs()
+    ACOLITE_GEE --&gt; WaterQuality : compute_water_bands()
+    ACOLITE_GEE --&gt; Masks : masking pipeline
+    WaterQuality --&gt; Masks : water mask
+    WaterQuality --&gt; Sentinel2 : SENTINEL2_BANDS
+    L1Convert --&gt; Sentinel2 : BAND_BY_SCALE
 </div>
-<hr/>
-<h2 id="acolite-class-detailed-methods">ACOLITE Class — Detailed Methods<a class="headerlink" href="#acolite-class-detailed-methods" title="Permanent link">¶</a></h2>
-<div class="mermaid">classDiagram
-    class ACOLITE {
-        +correct() tuple
-        +l1_to_l2() ImageCollection
-        +dask_spectrum_fitting() tuple
-        +select_lut() tuple
-        +compute_pdark() ndarray
-        +estimate_aot_per_lut() dict
-        +select_best_model() tuple
-        +compute_correction_with_fixed_aot() tuple
-        +compute_rhos() Image
-        +deglint_alternative() Image
-        +get_ancillary_data() dict
-    }
-
-    note for ACOLITE "Server-side: correct, l1_to_l2, compute_pdark, compute_rhos, deglint_alternative\nClient-side: estimate_aot_per_lut, select_best_model, dask_spectrum_fitting"
-</div>
-<h3 id="method-responsibilities">Method Responsibilities<a class="headerlink" href="#method-responsibilities" title="Permanent link">¶</a></h3>
+<h3 id="server-method-responsibilities">Server Method Responsibilities<a class="headerlink" href="#server-method-responsibilities" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th>Execution</th>
-<th>Description</th>
+<th>GEE Primitive</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>correct()</code></td>
-<td>Orchestration</td>
-<td>Main entry point: calls <code>l1_to_rrs</code> then <code>l1_to_l2</code></td>
-</tr>
-<tr>
-<td><code>l1_to_l2()</code></td>
-<td>Orchestration</td>
-<td>Loops over images; calls DSF and <code>compute_rhos</code> per image</td>
-</tr>
-<tr>
-<td><code>dask_spectrum_fitting()</code></td>
-<td>Client</td>
-<td>Orchestrates DSF: calls <code>select_lut</code> then returns GEE image</td>
-</tr>
-<tr>
-<td><code>select_lut()</code></td>
-<td>Hybrid</td>
-<td>Calls <code>compute_pdark</code> (server→client), then estimates AOT (client), then returns atmospheric params</td>
+<td><code>correct()</code> / <code>l1_to_l2()</code></td>
+<td>Orchestration — calls <code>l1_to_rrs</code> then per-image DSF loop</td>
 </tr>
 <tr>
 <td><code>compute_pdark()</code></td>
-<td>Server → Client</td>
-<td>GEE <code>reduceRegion()</code> → <code>getInfo()</code> — only <code>getInfo()</code> per image</td>
-</tr>
-<tr>
-<td><code>estimate_aot_per_lut()</code></td>
-<td>Client</td>
-<td>numpy/scipy LUT interpolation per atmospheric model</td>
-</tr>
-<tr>
-<td><code>select_best_model()</code></td>
-<td>Client</td>
-<td>RMSD/dtau/CV comparison across models</td>
-</tr>
-<tr>
-<td><code>compute_correction_with_fixed_aot()</code></td>
-<td>Client</td>
-<td>Alternative to DSF when AOT is known</td>
+<td><code>reduceRegion(Reducer.percentile)</code> → <strong><code>getInfo()</code></strong> bridge</td>
 </tr>
 <tr>
 <td><code>compute_rhos()</code></td>
-<td>Server</td>
-<td>GEE image expression: correction formula applied to all bands</td>
+<td><code>image.expression()</code> — applies correction formula per band</td>
 </tr>
 <tr>
 <td><code>deglint_alternative()</code></td>
-<td>Server</td>
-<td>GEE: residual sun glint removal</td>
+<td><code>image.subtract()</code> + <code>updateMask()</code></td>
 </tr>
 <tr>
-<td><code>get_ancillary_data()</code></td>
-<td>Client</td>
-<td>NASA Earthdata API call</td>
+<td><code>non_water()</code> / <code>cirrus_mask()</code> / <code>toa_mask()</code></td>
+<td><code>B11.lt()</code> / <code>B10.lt()</code> / <code>band.lt()</code></td>
+</tr>
+<tr>
+<td><code>add_cld_shdw_mask()</code></td>
+<td><code>directionalDistanceTransform()</code>, <code>focal_min/max()</code></td>
+</tr>
+<tr>
+<td><code>spm_nechad2016*</code> / <code>tur_nechad2016*</code></td>
+<td><code>image.expression('A*R/(1-R/C)')</code></td>
+</tr>
+<tr>
+<td><code>chl_oc2()</code> / <code>chl_oc3()</code></td>
+<td><code>image.log()</code> + polynomial expression</td>
+</tr>
+<tr>
+<td><code>rrs()</code></td>
+<td><code>image.divide(math.pi)</code></td>
+</tr>
+<tr>
+<td><code>multi_image()</code></td>
+<td><code>qualityMosaic(band)</code></td>
 </tr>
 </tbody>
 </table>
 <hr/>
-<h2 id="water-quality-module-products-dictionary">Water Quality Module — PRODUCTS Dictionary<a class="headerlink" href="#water-quality-module-products-dictionary" title="Permanent link">¶</a></h2>
-<p>The <code>PRODUCTS</code> dict maps product names to their computation functions:</p>
+<h2 id="client-server-communication">Client ↔ Server Communication<a class="headerlink" href="#client-server-communication" title="Permanent link">¶</a></h2>
+<p>There are exactly <strong>two points</strong> where the client blocks waiting for GEE to return data:</p>
+<div class="mermaid">sequenceDiagram
+    participant Client as Local Python
+    participant GEE as GEE Server
+
+    Note over Client: DSF loop — per image
+
+    Client-&gt;&gt;GEE: compute_pdark()<br/>reduceRegion(percentile or min)
+    GEE--&gt;&gt;Client: .getInfo() → dark spectrum<br/>{ B1: 0.032, B2: 0.028, … }<br/>~13 floats, &lt; 1 KB
+
+    Note over Client: AOT estimation (numpy)<br/>Model selection (scipy)<br/>Extract atmospheric params
+
+    Client-&gt;&gt;GEE: compute_rhos(atm_params)<br/>image.expression(correction_formula)<br/>→ lazy ee.Image (no blocking)
+
+    Note over Client,GEE: ─── Bathymetry only ───
+
+    Client-&gt;&gt;GEE: calibrate_sdb()<br/>sampleRegions() + Reducer.linearFit()
+    GEE--&gt;&gt;Client: .getInfo() → { slope, offset }<br/>2 floats
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Performance note</p>
+<p><code>getInfo()</code> is called <strong>once per image</strong> in <code>compute_pdark()</code>. All other GEE operations are lazy and batched. Processing time scales <strong>linearly with the number of images</strong>.</p>
+</div>
+<h3 id="data-transferred-at-each-bridge-point">Data transferred at each bridge point<a class="headerlink" href="#data-transferred-at-each-bridge-point" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Direction</th>
+<th>Payload</th>
+<th>Blocking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>compute_pdark().getInfo()</code></td>
+<td>GEE → Client</td>
+<td>13 floats (dark spectrum)</td>
+<td>Yes, per image</td>
+</tr>
+<tr>
+<td><code>calibrate_sdb().getInfo()</code></td>
+<td>GEE → Client</td>
+<td>2 floats (slope, offset)</td>
+<td>Yes, once</td>
+</tr>
+<tr>
+<td><code>compute_rhos(atm_params)</code></td>
+<td>Client → GEE</td>
+<td>4 floats per band × 13 bands</td>
+<td>No (lazy)</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="module-dependency-graph">Module Dependency Graph<a class="headerlink" href="#module-dependency-graph" title="Permanent link">¶</a></h2>
+<div class="mermaid">graph TD
+    PKG[gee_acolite]
+    CORR[correction.py]
+    WQ[water_quality.py]
+    BATH[bathymetry.py]
+    SEARCH[utils/search.py]
+    L1C[utils/l1_convert.py]
+    MSK[utils/masks.py]
+    S2[sensors/sentinel2.py]
+    AC[ACOLITE submodule]
+
+    PKG --&gt; CORR
+    PKG --&gt; WQ
+    PKG --&gt; BATH
+
+    CORR --&gt; L1C
+    CORR --&gt; MSK
+    CORR --&gt; WQ
+    CORR --&gt; AC
+
+    WQ --&gt; MSK
+    WQ --&gt; S2
+
+    L1C --&gt; S2
+
+    style AC fill:#fef3c7,stroke:#d97706
+    style PKG fill:#dbeafe,stroke:#3b82f6
+</div>
+<hr/>
+<h2 id="water-quality-products-registry">Water Quality — PRODUCTS Registry<a class="headerlink" href="#water-quality-products-registry" title="Permanent link">¶</a></h2>
 <div class="mermaid">graph LR
     P["PRODUCTS dict"]
     P --&gt; A[spm_nechad2016]
@@ -945,16 +1107,16 @@
     P --&gt; I[chl_re_mishra]
     P --&gt; J[pSDB_green]
     P --&gt; K[pSDB_red]
-    P --&gt; L["Rrs_B1 to Rrs_B12"]
+    P --&gt; L["Rrs_B1 … Rrs_B12"]
 </div>
 <hr/>
 <h2 id="masking-pipeline">Masking Pipeline<a class="headerlink" href="#masking-pipeline" title="Permanent link">¶</a></h2>
 <div class="mermaid">flowchart TD
-    A[compute_water_mask] --&gt; B[non_water<br/>B11 less than threshold]
-    A --&gt; C[cirrus_mask<br/>B10 less than threshold]
-    A --&gt; D[toa_mask<br/>band less than threshold]
+    A[compute_water_mask] --&gt; B[non_water<br/>B11 &lt; threshold]
+    A --&gt; C[cirrus_mask<br/>B10 &lt; threshold]
+    A --&gt; D[toa_mask<br/>band &lt; threshold]
     A --&gt; E[add_cld_shdw_mask<br/>optional]
-    B --&gt; F[Combined mask Image]
+    B --&gt; F[Combined mask — updateMask]
     C --&gt; F
     D --&gt; F
     E --&gt; F
@@ -964,15 +1126,6 @@
 </div>
 <hr/>
 <h2 id="sentinel-2-band-configuration">Sentinel-2 Band Configuration<a class="headerlink" href="#sentinel-2-band-configuration" title="Permanent link">¶</a></h2>
-<div class="mermaid">classDiagram
-    class Sentinel2Config {
-        +list SENTINEL2_BANDS
-        +dict BAND_BY_SCALE
-    }
-
-    note for Sentinel2Config "SENTINEL2_BANDS: B1 to B12 (13 bands)\nBAND_BY_SCALE: 10m to B2, 20m to B5, 60m to B1"
-</div>
-<h3 id="band-wavelengths-and-resolutions">Band Wavelengths and Resolutions<a class="headerlink" href="#band-wavelengths-and-resolutions" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -1063,36 +1216,6 @@
 </tr>
 </tbody>
 </table>
-<hr/>
-<h2 id="module-dependency-graph">Module Dependency Graph<a class="headerlink" href="#module-dependency-graph" title="Permanent link">¶</a></h2>
-<div class="mermaid">graph TD
-    PKG[gee_acolite package]
-    CORR[correction.py]
-    WQ[water_quality.py]
-    BATH[bathymetry.py]
-    SEARCH[utils/search.py]
-    L1C[utils/l1_convert.py]
-    MSK[utils/masks.py]
-    S2[sensors/sentinel2.py]
-    AC[ACOLITE submodule]
-
-    PKG --&gt; CORR
-    PKG --&gt; WQ
-    PKG --&gt; BATH
-
-    CORR --&gt; L1C
-    CORR --&gt; MSK
-    CORR --&gt; WQ
-    CORR --&gt; AC
-
-    WQ --&gt; MSK
-    WQ --&gt; S2
-
-    L1C --&gt; S2
-
-    style AC fill:#fef3c7,stroke:#d97706
-    style PKG fill:#dbeafe,stroke:#3b82f6
-</div>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
