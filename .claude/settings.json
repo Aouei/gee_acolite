@@ -9,7 +9,10 @@
       "Bash(python fix_legend.py)",
       "Bash(rm fix_legend.py)",
       "Bash(xargs grep:*)",
-      "Bash(python3 -c \"import ee; help\\(ee.Image.sample\\)\")"
+      "Bash(python3 -c \"import ee; help\\(ee.Image.sample\\)\")",
+      "Bash(python3:*)",
+      "Bash(find c:/Users/sergi/Documents/repos/gee_acolite -name *.js -o -name *.html)",
+      "Bash(grep -r \"onClick\\\\|addEventListener\\\\|LatLng\\\\|Popup\" --include=*.py --include=*.ipynb c:/Users/sergi/Documents/repos/gee_acolite)"
     ]
   }
 }
