@@ -36,6 +36,12 @@ __pycache__/
 Thumbs.db
 *site*
 
+# MkDocs plugin cache (mkdocs-jupyter)
+.cache/
+
+# SDD / skill registry artifacts
+.atl/
+
 # Documentation sources must never be ignored by the broad patterns above
 # (e.g. *data* would otherwise match docs/architecture/data_flow.md)
 !docs/**
