@@ -35,3 +35,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *site*
+
+# Documentation sources must never be ignored by the broad patterns above
+# (e.g. *data* would otherwise match docs/architecture/data_flow.md)
+!docs/**
