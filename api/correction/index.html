@@ -10,9 +10,9 @@
 <link href="../../architecture/gee_integration/" rel="prev"/>
 <link href="../water_quality/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.7" name="generator"/>
 <title>Atmospheric Correction - GEE ACOLITE Documentation</title>
-<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.ec1eaa64.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -247,7 +247,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../architecture/data_flow.md">
+<a class="md-nav__link" href="../../architecture/data_flow/">
 <span class="md-ellipsis">
     
   
@@ -1131,7 +1131,7 @@ correction method optimized for Google Earth Engine with Sentinel-2 imagery.</p>
 </span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">corrected_images</span><span class="p">,</span> <span class="n">settings</span> <span class="o">=</span> <span class="n">ac_gee</span><span class="o">.</span><span class="n">correct</span><span class="p">(</span><span class="n">image_collection</span><span class="p">)</span>
 </span></code></pre></div>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-52">52</a></span>
 <span class="normal"><a href="#__codelineno-0-53">53</a></span>
 <span class="normal"><a href="#__codelineno-0-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acolite</span><span class="p">:</span> <span class="n">ModuleType</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1212,7 +1212,7 @@ ACOLITE Dark Spectrum Fitting method.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-73">73</a></span>
 <span class="normal"><a href="#__codelineno-0-74">74</a></span>
 <span class="normal"><a href="#__codelineno-0-75">75</a></span>
@@ -1368,7 +1368,7 @@ parameter computation.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
 <span class="normal"><a href="#__codelineno-0-100">100</a></span>
 <span class="normal"><a href="#__codelineno-0-101">101</a></span>
@@ -1564,7 +1564,7 @@ surface reflectance.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-147">147</a></span>
 <span class="normal"><a href="#__codelineno-0-148">148</a></span>
 <span class="normal"><a href="#__codelineno-0-149">149</a></span>
@@ -1820,7 +1820,7 @@ Each entry contains: 'taua', 'taua_std', 'taua_cv', 'taua_bands',
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-194">194</a></span>
 <span class="normal"><a href="#__codelineno-0-195">195</a></span>
 <span class="normal"><a href="#__codelineno-0-196">196</a></span>
@@ -2148,7 +2148,7 @@ fits the observed data based on the specified selection criterion
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-287">287</a></span>
 <span class="normal"><a href="#__codelineno-0-288">288</a></span>
 <span class="normal"><a href="#__codelineno-0-289">289</a></span>
@@ -2454,7 +2454,7 @@ fits the observed data based on the specified selection criterion
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-379">379</a></span>
 <span class="normal"><a href="#__codelineno-0-380">380</a></span>
 <span class="normal"><a href="#__codelineno-0-381">381</a></span>
@@ -2796,7 +2796,7 @@ model. Useful for sensitivity analysis or when AOT is known a priori.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-473">473</a></span>
 <span class="normal"><a href="#__codelineno-0-474">474</a></span>
 <span class="normal"><a href="#__codelineno-0-475">475</a></span>
@@ -3081,7 +3081,7 @@ or linear intercept method.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-575">575</a></span>
 <span class="normal"><a href="#__codelineno-0-576">576</a></span>
 <span class="normal"><a href="#__codelineno-0-577">577</a></span>
@@ -3282,7 +3282,7 @@ the output image.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-634">634</a></span>
 <span class="normal"><a href="#__codelineno-0-635">635</a></span>
 <span class="normal"><a href="#__codelineno-0-636">636</a></span>
@@ -3442,7 +3442,7 @@ and acquisition time.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-675">675</a></span>
 <span class="normal"><a href="#__codelineno-0-676">676</a></span>
 <span class="normal"><a href="#__codelineno-0-677">677</a></span>
@@ -3585,7 +3585,7 @@ and acquisition time.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-706">706</a></span>
 <span class="normal"><a href="#__codelineno-0-707">707</a></span>
 <span class="normal"><a href="#__codelineno-0-708">708</a></span>
@@ -3694,7 +3694,7 @@ and acquisition time.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-730">730</a></span>
 <span class="normal"><a href="#__codelineno-0-731">731</a></span>
 <span class="normal"><a href="#__codelineno-0-732">732</a></span>
@@ -3870,7 +3870,7 @@ surface reflectance ratios.</p>
 </tbody>
 </table>
 <details class="mkdocstrings-source">
-<summary>Source code in <code>gee_acolite/correction.py</code></summary>
+<summary>Source code in <code>gee_acolite\correction.py</code></summary>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-752">752</a></span>
 <span class="normal"><a href="#__codelineno-0-753">753</a></span>
 <span class="normal"><a href="#__codelineno-0-754">754</a></span>
@@ -4230,7 +4230,7 @@ surface reflectance ratios.</p>
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
-<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.6.1/dist/mermaid.esm.min.mjs";
