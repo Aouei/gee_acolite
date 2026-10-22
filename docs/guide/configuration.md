@@ -14,6 +14,30 @@ ac_gee = ACOLITE(ac, 'path/to/settings.txt')
 
 Settings files follow the ACOLITE format: `key=value` pairs, one per line.
 
+!!! info "Defaults are filled automatically"
+    `ACOLITE(ac, settings)` merges ACOLITE's `config/defaults.txt` with your settings before parsing, so
+    values such as `uoz_default`, `uwv_default` and `pressure_default` are always available as fallbacks
+    when ancillary data cannot be retrieved. This is required for ACOLITE 2025.01 and later, whose
+    `settings.parse()` no longer merges the defaults by itself.
+
+---
+
+## ACOLITE Version Compatibility
+
+Tested with ACOLITE 20231023 and 20260421. The settings gee_acolite reads keep the same name and default
+across the 2023.10, 2025.01 and 2026.04 manuals, with one exception: the setting that selects the
+atmospheric correction algorithm was renamed.
+
+| ACOLITE version | Setting name |
+|-----------------|--------------|
+| 2023.10 | `aerosol_correction` |
+| 2025.01 | `atmospheric_correction_option` |
+| 2026.04 | `atmospheric_correction_method` |
+
+!!! warning "The algorithm setting is ignored"
+    gee_acolite does not read any of the three names above. It only implements Dark Spectrum Fitting (DSF),
+    so passing `radcor` or `exponential` has no effect.
+
 ---
 
 ## Spatial Resolution
@@ -27,6 +51,12 @@ Settings files follow the ACOLITE format: `key=value` pairs, one per line.
 ## Dark Spectrum Fitting (DSF)
 
 These parameters control how the **single global AOT** is estimated per image.
+
+!!! warning "Always fixed DSF"
+    gee_acolite always runs the *fixed* DSF: one AOT and one aerosol model per image. `dsf_aot_estimate`
+    is not read, so `tiled`, `resolved`, `segmented` and the other ACOLITE options (including `optimise`,
+    `ancillary` and `ancillary_fixed` in 2026.04) have no effect, and neither do the tiling settings
+    (`dsf_tile_dimensions`, `dsf_min_tile_cover`).
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
