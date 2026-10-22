@@ -67,8 +67,15 @@ class ACOLITE(object):
         dict
             Parsed settings dictionary.
         """
-        # return self.acolite.acolite.settings.load(settings)
-        return self.acolite.acolite.settings.parse('S2A_MSI', settings = settings)
+        settings_api = self.acolite.acolite.settings
+
+        # ACOLITE >= 2025.01 no longer merges config/defaults.txt in parse(),
+        # so defaults (e.g. uoz_default) are filled explicitly here.
+        merged = settings_api.load('S2A_MSI')
+        user_settings = settings_api.read(settings) if isinstance(settings, str) else settings
+        merged.update(user_settings or {})
+
+        return settings_api.parse('S2A_MSI', settings = merged)
     
     def correct(self, images : ee.ImageCollection) -> Tuple[ee.ImageCollection, dict]:
         """
@@ -122,20 +129,19 @@ class ACOLITE(object):
         """
         corrected_images = []
 
-        if settings['aerosol_correction'] == 'dark_spectrum':
-            for index in range(size):
-                rhos, bands, glint_params = self.dask_spectrum_fitting(ee.Image(images.get(index)), settings)
-        
-                if settings['dsf_residual_glint_correction'] and settings['dsf_residual_glint_correction_method'] == 'alternative':
-                    rhos = self.deglint_alternative(rhos, 
-                                                    bands, 
-                                                    glint_params,
-                                                    glint_max=float(settings.get('glint_mask_rhos_threshold', 0.05)))
+        for index in range(size):
+            rhos, bands, glint_params = self.dask_spectrum_fitting(ee.Image(images.get(index)), settings)
+    
+            if settings['dsf_residual_glint_correction'] and settings['dsf_residual_glint_correction_method'] == 'alternative':
+                rhos = self.deglint_alternative(rhos, 
+                                                bands, 
+                                                glint_params,
+                                                glint_max=float(settings.get('glint_mask_rhos_threshold', 0.05)))
 
-                rhos = rhos.copyProperties(ee.Image(images.get(index)))
-                rhos = rhos.set('system:time_start', ee.Image(images.get(index)).get('system:time_start'))
+            rhos = rhos.copyProperties(ee.Image(images.get(index)))
+            rhos = rhos.set('system:time_start', ee.Image(images.get(index)).get('system:time_start'))
 
-                corrected_images.append(rhos)
+            corrected_images.append(rhos)
             
         corrected_images = ee.ImageCollection.fromImages(corrected_images)
 

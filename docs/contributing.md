@@ -278,7 +278,7 @@ Closes #[issue number]
 ### Build Locally
 
 ```bash
-pip install mkdocs mkdocs-material mkdocstrings[python] mkdocs-mermaid2-plugin
+pip install -e ".[dev]"
 
 # Live preview with auto-reload
 mkdocs serve
