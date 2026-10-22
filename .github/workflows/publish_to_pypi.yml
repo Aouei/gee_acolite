@@ -43,8 +43,9 @@ jobs:
     - name: Detect version bump type
       id: bump_type
       if: github.event_name == 'push'
+      env:
+        MSG: ${{ github.event.head_commit.message }}
       run: |
-        MSG="${{ github.event.head_commit.message }}"
         if echo "$MSG" | grep -q '\[release-major\]'; then
           echo "type=major" >> $GITHUB_OUTPUT
         elif echo "$MSG" | grep -q '\[release-minor\]'; then
@@ -93,6 +94,7 @@ jobs:
       with:
         tag_name: "v${{ steps.version.outputs.new }}"
         name: "v${{ steps.version.outputs.new }}"
+        generate_release_notes: true
         body: |
           ## gee_acolite v${{ steps.version.outputs.new }}
 
