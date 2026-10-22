@@ -44,6 +44,12 @@ GEE ACOLITE offers:
 - Bathymetry calibration enhancements (`calibrate_sdb`, `apply_calibration`, `multi_image`)
 - ICMAN attribution
 
+### Version 1.2.1
+
+- Support for ACOLITE 2025.01 and 2026.04, in addition to 2023.10 (settings defaults are now merged explicitly)
+- The atmospheric correction algorithm setting (`aerosol_correction` and its renamed successors) is ignored; only fixed DSF is run
+- Documentation of ACOLITE version compatibility
+
 ## Main Components
 
 ### ACOLITE Core
