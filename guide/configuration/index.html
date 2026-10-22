@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1112,6 +1112,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#acolite-version-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACOLITE Version Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#spatial-resolution" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1529,6 +1540,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#acolite-version-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACOLITE Version Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#spatial-resolution" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1786,6 +1808,45 @@
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">ac_gee</span> <span class="o">=</span> <span class="n">ACOLITE</span><span class="p">(</span><span class="n">ac</span><span class="p">,</span> <span class="s1">'path/to/settings.txt'</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Settings files follow the ACOLITE format: <code>key=value</code> pairs, one per line.</p>
+<div class="admonition info">
+<p class="admonition-title">Defaults are filled automatically</p>
+<p><code>ACOLITE(ac, settings)</code> merges ACOLITE's <code>config/defaults.txt</code> with your settings before parsing, so
+values such as <code>uoz_default</code>, <code>uwv_default</code> and <code>pressure_default</code> are always available as fallbacks
+when ancillary data cannot be retrieved. This is required for ACOLITE 2025.01 and later, whose
+<code>settings.parse()</code> no longer merges the defaults by itself.</p>
+</div>
+<hr />
+<h2 id="acolite-version-compatibility">ACOLITE Version Compatibility<a class="headerlink" href="#acolite-version-compatibility" title="Permanent link">&para;</a></h2>
+<p>Tested with ACOLITE 20231023 and 20260421. The settings gee_acolite reads keep the same name and default
+across the 2023.10, 2025.01 and 2026.04 manuals, with one exception: the setting that selects the
+atmospheric correction algorithm was renamed.</p>
+<table>
+<thead>
+<tr>
+<th>ACOLITE version</th>
+<th>Setting name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023.10</td>
+<td><code>aerosol_correction</code></td>
+</tr>
+<tr>
+<td>2025.01</td>
+<td><code>atmospheric_correction_option</code></td>
+</tr>
+<tr>
+<td>2026.04</td>
+<td><code>atmospheric_correction_method</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">The algorithm setting is ignored</p>
+<p>gee_acolite does not read any of the three names above. It only implements Dark Spectrum Fitting (DSF),
+so passing <code>radcor</code> or <code>exponential</code> has no effect.</p>
+</div>
 <hr />
 <h2 id="spatial-resolution">Spatial Resolution<a class="headerlink" href="#spatial-resolution" title="Permanent link">&para;</a></h2>
 <table>
@@ -1809,6 +1870,13 @@
 <hr />
 <h2 id="dark-spectrum-fitting-dsf">Dark Spectrum Fitting (DSF)<a class="headerlink" href="#dark-spectrum-fitting-dsf" title="Permanent link">&para;</a></h2>
 <p>These parameters control how the <strong>single global AOT</strong> is estimated per image.</p>
+<div class="admonition warning">
+<p class="admonition-title">Always fixed DSF</p>
+<p>gee_acolite always runs the <em>fixed</em> DSF: one AOT and one aerosol model per image. <code>dsf_aot_estimate</code>
+is not read, so <code>tiled</code>, <code>resolved</code>, <code>segmented</code> and the other ACOLITE options (including <code>optimise</code>,
+<code>ancillary</code> and <code>ancillary_fixed</code> in 2026.04) have no effect, and neither do the tiling settings
+(<code>dsf_tile_dimensions</code>, <code>dsf_min_tile_cover</code>).</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -2378,7 +2446,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
