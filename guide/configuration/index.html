@@ -1865,6 +1865,12 @@ so passing <code>radcor</code> or <code>exponential</code> has no effect.</p>
 <td><code>10</code></td>
 <td>Target spatial resolution in metres. All bands resampled to this. Valid: <code>10</code>, <code>20</code>, <code>60</code>.</td>
 </tr>
+<tr>
+<td><code>s2_resampling_method</code></td>
+<td><code>str</code></td>
+<td><code>'nearest'</code></td>
+<td>How coarser bands are brought to the target grid: <code>'nearest'</code> (pixel replication, equivalent to ACOLITE's reader when upsampling 20 m / 60 m to 10 m) or <code>'bilinear'</code> (interpolation, gee_acolite &lt;= 1.2.x behaviour). gee_acolite-only setting, not an ACOLITE setting.</td>
+</tr>
 </tbody>
 </table>
 <hr />
@@ -1923,8 +1929,31 @@ is not read, so <code>tiled</code>, <code>resolved</code>, <code>segmented</code
 <td><code>'min_drmsd'</code></td>
 <td>Model selection criterion: <code>'min_drmsd'</code>, <code>'min_dtau'</code>, or <code>'taua_cv'</code></td>
 </tr>
+<tr>
+<td><code>dsf_aot_compute</code></td>
+<td><code>str</code></td>
+<td><code>'min'</code></td>
+<td>How the AOT is taken from the lowest-AOT bands: <code>'min'</code> (AOT of the single lowest band, ACOLITE default), <code>'mean'</code> or <code>'median'</code> (over the <code>dsf_nbands</code> lowest bands)</td>
+</tr>
+<tr>
+<td><code>dsf_allow_lut_boundaries</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+<td><code>False</code> (ACOLITE default): a band whose dark spectrum falls outside the LUT range gets a NaN AOT and is ignored. <code>True</code>: the AOT is clamped to the LUT limits (gee_acolite &lt;= 1.2.x behaviour)</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">Behaviour change since 1.2.x: AOT parity with ACOLITE</p>
+<p>Versions up to 1.2.1 (including 1.2.0, used for the published paper) resampled the 20 m / 60 m bands
+bilinearly, subsampled the dark spectrum with <code>bestEffort</code>, clamped out-of-LUT bands to the lowest
+LUT AOT (0.001) and averaged the two lowest bands. This could lead to a different AOT and aerosol model
+than ACOLITE for the same L1 image. The defaults now follow ACOLITE 20231023 <code>dsf_aot_estimate=fixed</code>
+(<code>s2_resampling_method='nearest'</code>, true minimum dark spectrum, <code>dsf_aot_compute='min'</code>,
+<code>dsf_allow_lut_boundaries=False</code>). To reproduce the previous behaviour use
+<code>s2_resampling_method='bilinear'</code>, <code>dsf_aot_compute='mean'</code> and <code>dsf_allow_lut_boundaries=True</code>
+(the dark spectrum is always the true minimum).</p>
+</div>
 <h3 id="dark-spectrum-options">Dark Spectrum Options<a class="headerlink" href="#dark-spectrum-options" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1937,7 +1966,7 @@ is not read, so <code>tiled</code>, <code>resolved</code>, <code>segmented</code
 <tbody>
 <tr>
 <td><code>darkest</code></td>
-<td>0th percentile across all pixels</td>
+<td>Minimum over all valid (&gt; 0) pixels of the image footprint</td>
 <td>Clear water, fast (recommended)</td>
 </tr>
 <tr>
@@ -2329,8 +2358,23 @@ is not read, so <code>tiled</code>, <code>resolved</code>, <code>segmented</code
 <td><code>0.05</code></td>
 <td>Max surface reflectance for glint-free reference pixel</td>
 </tr>
+<tr>
+<td><code>glint_aot_floor</code></td>
+<td><code>float</code></td>
+<td><code>0.1</code></td>
+<td>Minimum AOT at which the sky-reflectance (glint) ratios are evaluated, as in ACOLITE (<code>gc_aot = max(0.1, AOT)</code>). Only the glint ratios use it; the atmospheric correction keeps the real AOT. <code>0</code>, <code>None</code> or <code>'none'</code> disable the floor (gee_acolite &lt;= 1.2.x behaviour). gee_acolite-only setting, not an ACOLITE setting.</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">Residual glint correction was silently disabled for low AOT in 1.2.x</p>
+<p>The sky-reflectance LUT is exactly 0 in B11/B12 for AOT &lt;= 0.05, so up to 1.2.1 (including 1.2.0, used for the
+published paper) the glint ratio was infinite and <strong>no glint was removed</strong> in scenes with AOT &lt;= 0.05, even with
+<code>dsf_residual_glint_correction=True</code>. For AOT between 0.05 and 0.1 the ratio was exaggerated (B2 ratio 4.95 at
+AOT 0.06, 1.65 at 0.08) and <strong>too much glint was removed</strong>. ACOLITE evaluates the ratio at <code>max(0.1, AOT)</code>;
+gee_acolite now does the same by default (<code>glint_aot_floor=0.1</code>). If the SWIR reference sky reflectance is still
+not finite and positive (degenerate LUT), the glint correction is skipped and a <code>UserWarning</code> is emitted.</p>
+</div>
 <hr />
 <h2 id="scenario-presets">Scenario Presets<a class="headerlink" href="#scenario-presets" title="Permanent link">&para;</a></h2>
 <h3 id="coastal-clear-waters">Coastal Clear Waters<a class="headerlink" href="#coastal-clear-waters" title="Permanent link">&para;</a></h3>

@@ -1011,7 +1011,7 @@
 <tr>
 <td>Resampling</td>
 <td><code>resample()</code></td>
-<td><code>resample('bilinear')</code>, <code>reproject()</code></td>
+<td><code>reproject()</code> (<code>nearest</code>, default) or <code>resample('bilinear')</code>, <code>reproject()</code></td>
 </tr>
 <tr>
 <td>Dark spectrum extraction</td>
@@ -1215,7 +1215,7 @@
 </tr>
 <tr>
 <td>Resolution</td>
-<td>All resampled to <code>s2_target_res</code></td>
+<td>All resampled to <code>s2_target_res</code> (<code>s2_resampling_method</code>: <code>nearest</code> by default, or <code>bilinear</code>)</td>
 </tr>
 </tbody>
 </table>

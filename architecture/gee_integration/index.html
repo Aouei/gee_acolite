@@ -957,12 +957,12 @@
 <tr>
 <td>Resampling</td>
 <td><code>resample()</code></td>
-<td><code>resample('bilinear')</code>, <code>reproject()</code></td>
+<td><code>reproject()</code> (<code>nearest</code>, default) or <code>resample('bilinear')</code>, <code>reproject()</code></td>
 </tr>
 <tr>
 <td>Dark spectrum (send)</td>
 <td><code>compute_pdark()</code></td>
-<td><code>reduceRegion(Reducer.percentile)</code></td>
+<td><code>reduceRegion(Reducer.min)</code> for <code>darkest</code> (<code>Reducer.percentile</code> for <code>percentile</code>)</td>
 </tr>
 <tr>
 <td>Surface reflectance</td>
