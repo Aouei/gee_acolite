@@ -50,6 +50,16 @@ GEE ACOLITE offers:
 - The atmospheric correction algorithm setting (`aerosol_correction` and its renamed successors) is ignored; only fixed DSF is run
 - Documentation of ACOLITE version compatibility
 
+### Version 1.3.0
+
+- ACOLITE parity of the fixed dark spectrum fitting (same AOT and aerosol model as ACOLITE 20231023 for the same L1 image):
+    - `s2_resampling_method` (new, default `'nearest'`): 20 m / 60 m bands are replicated, not bilinearly interpolated, when brought to the target grid. Use `'bilinear'` for the previous behaviour
+    - `dsf_spectrum_option='darkest'` now uses the true minimum over all valid pixels instead of a `bestEffort` subsample
+    - `dsf_allow_lut_boundaries` (new, default `False`): bands whose dark spectrum falls outside the LUT range get a NaN AOT and are ignored, instead of being clamped to the lowest LUT AOT. If no band is valid the AOT is 0.01, as in ACOLITE
+    - `dsf_aot_compute` (new, default `'min'`): the AOT is that of the lowest band, as in ACOLITE; `'mean'` and `'median'` are available
+- **Bug fix, residual sun glint correction**: the glint ratios (sky reflectance of each band relative to B11/B12) were evaluated at the selected AOT. The sky-reflectance LUT is exactly 0 in B11/B12 for AOT <= 0.05, so in 1.2.x (and earlier) the ratio was infinite and `dsf_residual_glint_correction` silently removed **no glint** for those scenes, while for AOT in (0.05, 0.1) it removed too much. The ratios are now evaluated at `max(glint_aot_floor, AOT)` with `glint_aot_floor=0.1` (ACOLITE 20231023 behaviour); the atmospheric correction keeps the real AOT. Setting `glint_aot_floor` to `0` restores the previous behaviour. If the SWIR reference is not finite and positive the glint correction is skipped with a warning. With the same L1 image, AOT and aerosol model, surface reflectance now matches ACOLITE 20231023 (validated on 15 images of three study sites with the same L1 baseline: median bias and RMSE below 1e-5 sr^-1, worst image 7e-5 sr^-1)
+- **Behaviour change**: the defaults differ from 1.2.x (the version used for the published paper), so AOT, aerosol model and surface reflectance can change for the same input. See *Configuration* for the settings that restore the previous behaviour
+
 ## Main Components
 
 ### ACOLITE Core

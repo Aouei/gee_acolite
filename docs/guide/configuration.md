@@ -45,6 +45,7 @@ atmospheric correction algorithm was renamed.
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `s2_target_res` | `int` | `10` | Target spatial resolution in metres. All bands resampled to this. Valid: `10`, `20`, `60`. |
+| `s2_resampling_method` | `str` | `'nearest'` | How coarser bands are brought to the target grid: `'nearest'` (pixel replication, equivalent to ACOLITE's reader when upsampling 20 m / 60 m to 10 m) or `'bilinear'` (interpolation, gee_acolite <= 1.2.x behaviour). gee_acolite-only setting, not an ACOLITE setting. |
 
 ---
 
@@ -66,12 +67,24 @@ These parameters control how the **single global AOT** is estimated per image.
 | `dsf_nbands` | `int` | `2` | Number of darkest bands used for AOT fitting |
 | `dsf_nbands_fit` | `int` | `3` | Bands used for RMSD model validation |
 | `dsf_model_selection` | `str` | `'min_drmsd'` | Model selection criterion: `'min_drmsd'`, `'min_dtau'`, or `'taua_cv'` |
+| `dsf_aot_compute` | `str` | `'min'` | How the AOT is taken from the lowest-AOT bands: `'min'` (AOT of the single lowest band, ACOLITE default), `'mean'` or `'median'` (over the `dsf_nbands` lowest bands) |
+| `dsf_allow_lut_boundaries` | `bool` | `False` | `False` (ACOLITE default): a band whose dark spectrum falls outside the LUT range gets a NaN AOT and is ignored. `True`: the AOT is clamped to the LUT limits (gee_acolite <= 1.2.x behaviour) |
+
+!!! warning "Behaviour change since 1.2.x: AOT parity with ACOLITE"
+    Versions up to 1.2.1 (including 1.2.0, used for the published paper) resampled the 20 m / 60 m bands
+    bilinearly, subsampled the dark spectrum with `bestEffort`, clamped out-of-LUT bands to the lowest
+    LUT AOT (0.001) and averaged the two lowest bands. This could lead to a different AOT and aerosol model
+    than ACOLITE for the same L1 image. The defaults now follow ACOLITE 20231023 `dsf_aot_estimate=fixed`
+    (`s2_resampling_method='nearest'`, true minimum dark spectrum, `dsf_aot_compute='min'`,
+    `dsf_allow_lut_boundaries=False`). To reproduce the previous behaviour use
+    `s2_resampling_method='bilinear'`, `dsf_aot_compute='mean'` and `dsf_allow_lut_boundaries=True`
+    (the dark spectrum is always the true minimum).
 
 ### Dark Spectrum Options
 
 | Option | Description | When to use |
 |--------|-------------|-------------|
-| `darkest` | 0th percentile across all pixels | Clear water, fast (recommended) |
+| `darkest` | Minimum over all valid (> 0) pixels of the image footprint | Clear water, fast (recommended) |
 | `percentile` | Nth percentile (configurable) | Slightly turbid or coastal waters |
 | `intercept` | Linear regression y-intercept on darkest N pixels | Heterogeneous scenes |
 
@@ -217,6 +230,15 @@ strict = {
 | `dsf_residual_glint_correction` | `bool` | `False` | Apply residual sun glint correction after DSF |
 | `dsf_residual_glint_correction_method` | `str` | `'alternative'` | Glint correction method (currently only `'alternative'`) |
 | `glint_mask_rhos_threshold` | `float` | `0.05` | Max surface reflectance for glint-free reference pixel |
+| `glint_aot_floor` | `float` | `0.1` | Minimum AOT at which the sky-reflectance (glint) ratios are evaluated, as in ACOLITE (`gc_aot = max(0.1, AOT)`). Only the glint ratios use it; the atmospheric correction keeps the real AOT. `0`, `None` or `'none'` disable the floor (gee_acolite <= 1.2.x behaviour). gee_acolite-only setting, not an ACOLITE setting. |
+
+!!! warning "Residual glint correction was silently disabled for low AOT in 1.2.x"
+    The sky-reflectance LUT is exactly 0 in B11/B12 for AOT <= 0.05, so up to 1.2.1 (including 1.2.0, used for the
+    published paper) the glint ratio was infinite and **no glint was removed** in scenes with AOT <= 0.05, even with
+    `dsf_residual_glint_correction=True`. For AOT between 0.05 and 0.1 the ratio was exaggerated (B2 ratio 4.95 at
+    AOT 0.06, 1.65 at 0.08) and **too much glint was removed**. ACOLITE evaluates the ratio at `max(0.1, AOT)`;
+    gee_acolite now does the same by default (`glint_aot_floor=0.1`). If the SWIR reference sky reflectance is still
+    not finite and positive (degenerate LUT), the glint correction is skipped and a `UserWarning` is emitted.
 
 ---
 

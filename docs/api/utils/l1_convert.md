@@ -26,7 +26,7 @@ flowchart TD
     D2 --> E
     D4 --> E
     E --> F["Add geometry bands<br/>sza, saa, vza, vaa, raa"]
-    F --> G["resample<br/>bilinear to target scale"]
+    F --> G["resample<br/>nearest (default) or bilinear to target scale"]
     G --> H[TOA Image + Geometry]
 
     style A fill:#e1f5ff

@@ -9,6 +9,7 @@ import numpy as np
 import scipy.stats
 import ee
 import os
+import warnings
 
 
 from typing import List, Tuple
@@ -96,8 +97,16 @@ class ACOLITE(object):
             Atmospherically corrected images with surface reflectance bands.
         settings : dict
             Processing settings used for correction.
+
+        Notes
+        -----
+        Settings read here: ``s2_target_res`` (default 10) and
+        ``s2_resampling_method`` (``'nearest'`` (default) or ``'bilinear'``),
+        the interpolation used to bring the 20 m / 60 m bands to the target grid.
         """
-        images = l1_to_rrs(images, self.settings.get('s2_target_res', 10))
+        images = l1_to_rrs(images,
+                           self.settings.get('s2_target_res', 10),
+                           resampling = self.settings.get('s2_resampling_method', 'nearest'))
         images, settings = self.l1_to_l2(images.toList(images.size()), images.size().getInfo(), self.settings)
 
         return images, settings
@@ -206,7 +215,16 @@ class ACOLITE(object):
         Uses dark spectrum fitting to estimate AOT at 550nm for each atmospheric
         model in the LUT dictionary. The method finds AOT values that best match
         observed dark spectrum reflectance with modeled path reflectance.
-        
+
+        This follows ACOLITE's fixed AOT estimation:
+
+        * a band whose (gas corrected) dark spectrum value falls outside the range
+          modeled by the LUT gets a NaN AOT and is dropped from the ranking, unless
+          ``dsf_allow_lut_boundaries`` is set, in which case it is clamped to the
+          LUT AOT limits (gee_acolite <= 1.2.x behaviour);
+        * the AOT is taken from the lowest-AOT bands according to ``dsf_aot_compute``;
+        * if no band yields a valid AOT the AOT is set to 0.01.
+
         Parameters
         ----------
         pdark : dict
@@ -220,7 +238,9 @@ class ACOLITE(object):
         geometry : dict
             Viewing geometry with keys 'raa', 'vza', 'sza', 'pressure'.
         settings : dict
-            Processing settings including 'dsf_nbands'.
+            Processing settings. Keys read: 'dsf_nbands', 'dsf_aot_compute'
+            ('min' (default), 'mean' or 'median'; mean/median use the 'dsf_nbands'
+            lowest bands) and 'dsf_allow_lut_boundaries' (default False).
         aot_skip_bands : list of str, optional
             Band numbers to skip in AOT estimation (default: ['9', '10', '11', '12']).
         
@@ -233,12 +253,18 @@ class ACOLITE(object):
         """
         results = {}
         nbands = settings['dsf_nbands']
-        
+        aot_compute = settings.get('dsf_aot_compute', 'min')
+
+        # ACOLITE: left, right = nan, nan unless dsf_allow_lut_boundaries
+        left = right = np.nan
+        if settings.get('dsf_allow_lut_boundaries', False):
+            left = right = None
+
         raa = geometry['raa']
         vza = geometry['vza']
         sza = geometry['sza']
         pressure = geometry['pressure']
-        
+
         for lut in lutd:
             taua_arr = None
             rhot_arr = None
@@ -254,13 +280,13 @@ class ACOLITE(object):
                                           raa, vza, sza, lutd[lut]['meta']['tau']))
 
                 # Dark spectrum value for this band
-                rhot = np.asarray([pdark['B{}'.format(b)]])
-                
+                rhot = np.asarray([pdark['B{}'.format(b)]], dtype=float)
+
                 # Gas correction
                 rhot /= ttg['tt_gas'][b]
-                
-                # Interpolate AOT from observed rhot
-                taua = np.interp(rhot, ret, lutd[lut]['meta']['tau'])
+
+                # Interpolate AOT from observed rhot (NaN outside the LUT range by default)
+                taua = np.interp(rhot, ret, lutd[lut]['meta']['tau'], left=left, right=right)
                 
                 if taua_arr is None:
                     rhot_arr = 1.0 * rhot
@@ -271,11 +297,27 @@ class ACOLITE(object):
 
                 taua_bands.append(b)
 
-            # Aggregate AOT from darkest bands
+            # Rank bands by AOT (np.argsort puts NaN last)
             bidx = np.argsort(taua_arr[:, 0])
-            taua = np.nanmean(taua_arr[bidx[0: nbands], 0])
-            taua_std = np.nanstd(taua_arr[bidx[0: nbands], 0])
-            taua_cv = taua_std / taua
+            lowest = taua_arr[bidx[0: nbands], 0]
+
+            # Aggregate AOT from the lowest bands
+            with warnings.catch_warnings():
+                warnings.simplefilter('ignore', category=RuntimeWarning)
+                if aot_compute == 'mean':
+                    taua = np.nanmean(lowest)
+                elif aot_compute == 'median':
+                    taua = np.nanmedian(lowest)
+                else:
+                    taua = taua_arr[bidx[0], 0]
+                taua_std = np.nanstd(lowest)
+
+            # ACOLITE fixed AOT fallback when no band gives a valid AOT
+            if not np.isfinite(taua):
+                taua = 0.01
+                taua_std = 0.0
+
+            taua_cv = taua_std / taua if taua > 0 else np.inf
 
             # Store results for this LUT
             results[lut] = {
@@ -348,8 +390,10 @@ class ACOLITE(object):
                     # Squared difference
                     rmsd_values.append((rhot_obs - rhot_model) ** 2)
                 
-                # Compute RMSD
-                results[lut]['rmsd'] = np.sqrt(np.mean(rmsd_values))
+                # Compute RMSD (a non-finite value, e.g. from a band without valid
+                # dark spectrum, can never win the model selection)
+                rmsd = np.sqrt(np.mean(rmsd_values))
+                results[lut]['rmsd'] = rmsd if np.isfinite(rmsd) else np.inf
             
             sel_par = 'rmsd'
             
@@ -379,7 +423,13 @@ class ACOLITE(object):
                 sel_val = results[lut][sel_par] * 1.0
                 sel_aot = results[lut]['taua'] * 1.0
                 sel_lut = '{}'.format(lut)
-        
+
+        # No model has a finite selection parameter: keep the first model
+        # (ACOLITE also keeps the first LUT as its initial selection)
+        if sel_lut is None:
+            sel_lut = '{}'.format(next(iter(results)))
+            sel_aot = results[sel_lut]['taua'] * 1.0
+
         return sel_lut, sel_aot, sel_par, sel_val
     
     def select_lut(self, image : ee.Image, settings : dict, aot_skip_bands : List[str] = ['9', '10', '11', '12']) -> Tuple[dict, dict, List[str]]:
@@ -463,16 +513,10 @@ class ACOLITE(object):
                         for b in rsrd['rsr_bands']}
         am.update({'tg': ttg['tt_gas']})
 
-        # Step 4: Compute glint correction parameters
+        # Step 4: Compute glint correction parameters (AOT floored as in ACOLITE)
         model = int(sel_lut[-1])
-        glint_wind = 20
-        glint_bands = ['11', '12']
-
-        glint_dict = {b: luti[model]['rgi'][b]((raa, vza, sza, glint_wind, sel_aot)) 
-                     for b in rsrd['rsr_bands']}
-        glint_ave = {b: glint_dict[b] / ((glint_dict[glint_bands[0]] + 
-                                         glint_dict[glint_bands[1]]) / 2) 
-                    for b in glint_dict}
+        glint_ave = self.compute_glint_ratios(luti, model, geometry, sel_aot,
+                                              rsrd['rsr_bands'], settings)
 
         return am, glint_ave, rsrd['rsr_bands']
     
@@ -565,26 +609,99 @@ class ACOLITE(object):
                         for b in rsrd['rsr_bands']}
         am.update({'tg': ttg['tt_gas']})
         
-        # Compute glint correction parameters
+        # Compute glint correction parameters (AOT floored as in ACOLITE)
         model = int(lut_name[-1])  # Extract model number from LUT name
-        glint_wind = 20
-        glint_bands = ['11', '12']
-        
-        glint_dict = {b: luti[model]['rgi'][b]((raa, vza, sza, glint_wind, aot)) 
-                     for b in rsrd['rsr_bands']}
-        glint_ave = {b: glint_dict[b] / ((glint_dict[glint_bands[0]] + 
-                                         glint_dict[glint_bands[1]]) / 2) 
-                    for b in glint_dict}
+        glint_ave = self.compute_glint_ratios(luti, model, geometry, aot,
+                                              rsrd['rsr_bands'], settings)
         
         return am, glint_ave, rsrd['rsr_bands']
     
+    @staticmethod
+    def _glint_aot_floor(settings: dict) -> float:
+        """
+        Return the AOT floor used to evaluate the glint ratios (0.0 = no floor).
+
+        Reads ``glint_aot_floor`` (default 0.1, the value ACOLITE hard-codes in
+        ``acolite_l2r.py``: ``gc_aot = max(0.1, ac_aot_550)``). ``0``, ``None`` and the
+        strings ``'none'`` / ``'false'`` disable the floor (legacy behaviour of
+        gee_acolite <= 1.2.x). Numeric strings are accepted because settings files are
+        text.
+        """
+        value = settings.get('glint_aot_floor', 0.1) if settings else 0.1
+        if value is None or value is False:
+            return 0.0
+        if isinstance(value, str):
+            if value.strip().lower() in ('', 'none', 'false', 'off'):
+                return 0.0
+            value = float(value)
+        return max(0.0, float(value))
+
+    def compute_glint_ratios(self, luti: dict, model: int, geometry: dict, aot: float,
+                             rsr_bands: List[str], settings: dict) -> dict:
+        """
+        Compute the per-band sky-glint (interface reflectance) ratios used by
+        :meth:`deglint_alternative`.
+
+        For each band the ratio is ``rsky(band) / mean(rsky(B11), rsky(B12))`` evaluated
+        with the sky-reflectance LUT at wind speed 20 m/s. As in ACOLITE
+        (``acolite_l2r.py`` ~1618) the LUT is evaluated at ``gc_aot = max(floor, aot)``
+        with ``floor = glint_aot_floor`` (default 0.1). Only the glint ratios use the
+        floored AOT; the atmospheric correction keeps the real selected AOT.
+
+        Why the floor matters: the rsky LUT is exactly 0 in B11/B12 for AOT <= 0.05, so
+        the legacy ratio (evaluated at the raw AOT) was infinite and
+        ``deglint_alternative`` skipped every band, i.e. the residual glint correction was
+        silently disabled. For AOT in (0.05, 0.1) the legacy ratio was exaggerated
+        (e.g. B2 ratio 4.95 at AOT 0.06 and 1.65 at 0.08 in the real LUT), which removed
+        too much glint.
+
+        Parameters
+        ----------
+        luti : dict
+            Sky-reflectance LUTs keyed by model number (``import_rsky_luts``).
+        model : int
+            Aerosol model number (1 or 2).
+        geometry : dict
+            Dict with 'raa', 'vza', 'sza'.
+        aot : float
+            Selected (or fixed) AOT at 550 nm.
+        rsr_bands : list of str
+            Band identifiers to evaluate (must include '11' and '12').
+        settings : dict
+            Processing settings. Key read: ``glint_aot_floor``.
+
+        Returns
+        -------
+        dict
+            Ratio per band. If the SWIR reference mean is not finite or not positive
+            (degenerate LUT) a ``UserWarning`` is emitted and every ratio is NaN, so
+            that ``deglint_alternative`` skips glint correction instead of receiving inf.
+        """
+        glint_wind = 20
+        glint_bands = ['11', '12']
+        gc_aot = max(self._glint_aot_floor(settings), float(aot))
+
+        glint_dict = {b: luti[model]['rgi'][b]((geometry['raa'], geometry['vza'], geometry['sza'],
+                                                glint_wind, gc_aot))
+                      for b in rsr_bands}
+        reference = (glint_dict[glint_bands[0]] + glint_dict[glint_bands[1]]) / 2
+
+        if not np.isfinite(reference) or reference <= 0:
+            warnings.warn(
+                f'Residual glint correction skipped: the SWIR reference sky reflectance is '
+                f'{float(reference):.4g} at AOT {gc_aot:.3f} (model {model}). Use a larger '
+                f'glint_aot_floor (ACOLITE uses 0.1).', UserWarning, stacklevel=2)
+            return {b: np.nan for b in glint_dict}
+
+        return {b: glint_dict[b] / reference for b in glint_dict}
+
     def compute_pdark(self, image : ee.Image, settings : dict):
         """
         Compute dark spectrum values from an image.
         
         Extracts dark pixel reflectance values for each band using one of
-        three methods: darkest pixels (0th percentile), percentile-based,
-        or linear intercept method.
+        three methods: darkest pixels (minimum over all valid pixels),
+        percentile-based, or linear intercept method.
         
         Parameters
         ----------
@@ -608,11 +725,15 @@ class ACOLITE(object):
 
         for band in obands_rhot:
             if settings.get('dsf_spectrum_option', 'darkest') == 'darkest':
-                band_data = image_to_reduce.select(band).reduceRegion(reducer = ee.Reducer.percentile([0]), 
-                                                        bestEffort = True, scale = 10, maxPixels = 1e8)
-                
+                # True minimum over every valid pixel (as ACOLITE). bestEffort is not
+                # used: it subsamples large tiles and raises the minimum.
+                band_data = image_to_reduce.select(band).reduceRegion(reducer = ee.Reducer.min(),
+                                                        scale = 10, maxPixels = 1e10, tileScale = 4)
+
                 if band_data:
-                    pdark_by_band[band] = band_data.getInfo()[band]
+                    value = band_data.getInfo()[band]
+                    # No valid pixel for this band: NaN, so it drops out of the AOT ranking
+                    pdark_by_band[band] = np.nan if value is None else value
                 else:
                     pdark_by_band[band] = 0.0
 

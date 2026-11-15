@@ -96,8 +96,8 @@ These return `ee.Image` or `ee.ImageCollection` objects. They are **lazy** — n
 | Image search | `search()` | `filterBounds`, `filterDate`, `filter` |
 | DN → TOA | `DN_to_rrs()` | `image.divide(10000)` |
 | Geometry angles | `get_mean_band_angle()` | `image.get()`, `ee.Number.parse()` |
-| Resampling | `resample()` | `resample('bilinear')`, `reproject()` |
-| Dark spectrum (send) | `compute_pdark()` | `reduceRegion(Reducer.percentile)` |
+| Resampling | `resample()` | `reproject()` (`nearest`, default) or `resample('bilinear')`, `reproject()` |
+| Dark spectrum (send) | `compute_pdark()` | `reduceRegion(Reducer.min)` for `darkest` (`Reducer.percentile` for `percentile`) |
 | Surface reflectance | `compute_rhos()` | `image.expression(correction_formula)` |
 | Negative mask | `mask_negative_reflectance()` | `updateMask(image.gte(0))` |
 | Water/land mask | `non_water()` | `B11.lt(threshold)` |

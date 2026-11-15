@@ -132,7 +132,7 @@ All operations that return `ee.Image` or `ee.ImageCollection` without calling `.
 | Image catalog search | `search()` | `filterBounds`, `filterDate`, `filter` |
 | DN → TOA conversion | `DN_to_rrs()` | `image.divide(10000)` |
 | Geometry extraction | `get_mean_band_angle()` | `image.get()`, `ee.Number` |
-| Resampling | `resample()` | `resample('bilinear')`, `reproject()` |
+| Resampling | `resample()` | `reproject()` (`nearest`, default) or `resample('bilinear')`, `reproject()` |
 | Dark spectrum extraction | `compute_pdark()` | `reduceRegion()` → **`getInfo()`** |
 | Surface reflectance | `compute_rhos()` | `image.expression()` |
 | Negative mask | `mask_negative_reflectance()` | `updateMask(image.gte(0))` |
@@ -212,7 +212,7 @@ sequenceDiagram
 |----------|-------|
 | Band values | TOA reflectance (DN / 10000), 0–1 |
 | New bands | `sza`, `saa`, `vza`, `vaa`, `raa` (geometry angles) |
-| Resolution | All resampled to `s2_target_res` |
+| Resolution | All resampled to `s2_target_res` (`s2_resampling_method`: `nearest` by default, or `bilinear`) |
 
 **Geometry extraction:**
 
