@@ -50,7 +50,7 @@ GEE ACOLITE offers:
 - The atmospheric correction algorithm setting (`aerosol_correction` and its renamed successors) is ignored; only fixed DSF is run
 - Documentation of ACOLITE version compatibility
 
-### Unreleased
+### Version 1.3.0
 
 - ACOLITE parity of the fixed dark spectrum fitting (same AOT and aerosol model as ACOLITE 20231023 for the same L1 image):
     - `s2_resampling_method` (new, default `'nearest'`): 20 m / 60 m bands are replicated, not bilinearly interpolated, when brought to the target grid. Use `'bilinear'` for the previous behaviour
