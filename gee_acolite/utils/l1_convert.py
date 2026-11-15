@@ -10,7 +10,10 @@ from functools import partial
 from gee_acolite.sensors.sentinel2 import SENTINEL2_BANDS, BAND_BY_SCALE
 
 
-def l1_to_rrs(images : ee.ImageCollection, scale: int) -> ee.ImageCollection:
+RESAMPLING_METHODS = ('nearest', 'bilinear')
+
+
+def l1_to_rrs(images : ee.ImageCollection, scale: int, resampling: str = 'nearest') -> ee.ImageCollection:
     """
     Convert L1C image collection from DN to TOA reflectance.
     
@@ -23,13 +26,19 @@ def l1_to_rrs(images : ee.ImageCollection, scale: int) -> ee.ImageCollection:
         Sentinel-2 L1C image collection with DN values.
     scale : int
         Target spatial resolution in meters (10, 20, or 60).
+    resampling : {'nearest', 'bilinear'}, optional
+        Resampling used to bring all bands to the reference band grid
+        (default: 'nearest'). See :func:`resample`.
     
     Returns
     -------
     ee.ImageCollection
         Collection with TOA reflectance and geometry metadata.
     """
-    resample_scale = partial(resample, band = BAND_BY_SCALE.get(scale, 'B2'))
+    if resampling not in RESAMPLING_METHODS:
+        raise ValueError(f"resampling must be one of {RESAMPLING_METHODS}, got {resampling!r}")
+
+    resample_scale = partial(resample, band = BAND_BY_SCALE.get(scale, 'B2'), resampling = resampling)
     return images.select(SENTINEL2_BANDS).map(DN_to_rrs).map(resample_scale)
 
 def DN_to_rrs(image : ee.Image) -> ee.Image:
@@ -104,12 +113,12 @@ def get_mean_band_angle(image : ee.Image, angle_name : str) -> ee.Number:
     
     return angle
 
-def resample(image : ee.Image, band: str) -> ee.Image:
+def resample(image : ee.Image, band: str, resampling: str = 'nearest') -> ee.Image:
     """
     Resample all bands to match a reference band's projection.
     
-    Applies bilinear resampling to align all bands to the spatial
-    resolution and projection of the specified reference band.
+    Aligns all bands to the spatial resolution and projection of the
+    specified reference band.
     
     Parameters
     ----------
@@ -117,10 +126,23 @@ def resample(image : ee.Image, band: str) -> ee.Image:
         Image with multiple bands at different resolutions.
     band : str
         Reference band name (e.g., 'B2' for 10m, 'B5' for 20m).
+    resampling : {'nearest', 'bilinear'}, optional
+        'nearest' (default) replicates coarser pixels (no interpolation). When
+        upsampling 20 m / 60 m bands to 10 m this is equivalent to the
+        ``average`` resampling used by ACOLITE's Sentinel-2 reader, and it keeps
+        the original band values (e.g. the band minima used by the dark spectrum).
+        'bilinear' interpolates between neighbouring pixels (behaviour of
+        gee_acolite <= 1.2.x); it smooths the coarser bands and raises their minima.
     
     Returns
     -------
     ee.Image
         Resampled image with all bands matching reference projection.
     """
-    return image.resample('bilinear').reproject(image.select(band).projection())
+    if resampling not in RESAMPLING_METHODS:
+        raise ValueError(f"resampling must be one of {RESAMPLING_METHODS}, got {resampling!r}")
+
+    if resampling == 'bilinear':
+        image = image.resample('bilinear')
+
+    return image.reproject(image.select(band).projection())
