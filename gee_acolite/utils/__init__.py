@@ -4,6 +4,8 @@ Utility functions for GEE ACOLITE processing
 
 from gee_acolite.utils.l1_convert import l1_to_rrs, DN_to_rrs, resample
 from gee_acolite.utils.masks import (
+    gaussian_smooth,
+    negative_reflectance_mask,
     mask_negative_reflectance,
     toa_mask,
     cirrus_mask,
@@ -26,6 +28,8 @@ __all__ = [
     "DN_to_rrs",
     "resample",
     # Masks
+    "gaussian_smooth",
+    "negative_reflectance_mask",
     "mask_negative_reflectance",
     "toa_mask",
     "cirrus_mask",

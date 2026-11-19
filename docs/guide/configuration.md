@@ -187,12 +187,19 @@ Automatically retrieve per-image atmospheric parameters from NASA Earthdata.
 |-----------|------|---------|-------------|
 | `l2w_mask_threshold` | `float` | `0.05` | SWIR B11 threshold. Pixels with B11 >= threshold masked as land. |
 | `l2w_mask_cirrus_threshold` | `float` | `0.005` | B10 (1375 nm) cirrus cloud threshold |
+| `l2w_mask_smooth` | `bool` | `True` | Gaussian-smooth the SWIR (B11) and cirrus (B10) bands before thresholding them, as ACOLITE does. `False` thresholds the raw bands (behaviour of 1.3.0 and earlier) |
+| `l2w_mask_smooth_sigma` | `float` | `3` | Standard deviation of that smoothing, in pixels of the output grid (3 pixels = 30 m when `s2_target_res=10`) |
+| `l2w_mask_negative_rhow` | `bool` | `True` | Mask a pixel in **every** water product when any surface-reflectance band in `l2w_mask_negative_wave_range` is negative, as ACOLITE does. `False` keeps only the per-band masking of 1.3.0 and earlier |
+| `l2w_mask_negative_wave_range` | `list` | `[400, 900]` | Wavelength range (nm) of the bands checked for negative reflectance (Sentinel-2: B1–B8A; B9 and the SWIR bands are outside) |
 | `l2w_mask_high_toa_threshold` | `float` | `0.3` | TOA reflectance cloud threshold |
 | `s2_cloud_proba` | `bool` | `False` | Use Sentinel-2 Cloud Probability dataset for enhanced masking |
 | `s2_cloud_proba__cloud_threshold` | `int` | `50` | Cloud probability threshold (0–100) |
 | `s2_cloud_proba__nir_dark_threshold` | `float` | `0.15` | NIR threshold for shadow detection |
 | `s2_cloud_proba__cloud_proj_distance` | `float` | `10` | Shadow projection distance (km) |
 | `s2_cloud_proba__buffer` | `int` | `50` | Buffer around detected cloud/shadow (m) |
+
+!!! note "`l2w_mask_mixed`"
+    ACOLITE 20231023 only sets the mixed-pixel flag for VIIRS, so `l2w_mask_mixed` has no effect for Sentinel-2 and is not implemented.
 
 ### Mask Presets
 

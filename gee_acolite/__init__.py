@@ -22,7 +22,13 @@ Import specific components directly from their modules:
     from gee_acolite.water_quality import compute_water_bands, compute_water_mask, PRODUCTS
 """
 
-__version__ = "0.1.0"
+try:
+    from importlib.metadata import PackageNotFoundError, version as _pkg_version
+
+    __version__ = _pkg_version("gee_acolite")
+except PackageNotFoundError:  # running from a source tree that is not installed
+    __version__ = "unknown"
+
 __author__ = "Sergio"
 __license__ = "GPL-3.0"
 

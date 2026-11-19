@@ -13,7 +13,7 @@ import numpy as np
 import ee
 
 import gee_acolite.utils.masks as masks
-from gee_acolite.sensors.sentinel2 import SENTINEL2_BANDS
+from gee_acolite.sensors.sentinel2 import SENTINEL2_BANDS, BAND_WAVELENGTHS
 
 
 def compute_water_mask(image: ee.Image, settings: dict) -> ee.Image:
@@ -21,10 +21,21 @@ def compute_water_mask(image: ee.Image, settings: dict) -> ee.Image:
     Create a comprehensive water mask for quality control.
     
     Combines multiple masking criteria to identify valid water pixels:
-    - Water/land classification
+    - Water/land classification (SWIR threshold)
     - Cirrus cloud contamination
     - High TOA reflectance (clouds, bright targets)
+    - Negative surface reflectance in any band of a wavelength range
     - Optional cloud probability mask
+
+    The SWIR, cirrus and negative-reflectance masks follow ACOLITE 20231023 and use the same settings:
+
+    - ``l2w_mask_smooth`` (default True) and ``l2w_mask_smooth_sigma`` (default 3 pixels): the SWIR and
+      cirrus bands are Gaussian-smoothed before they are thresholded.
+    - ``l2w_mask_negative_rhow`` (default True) and ``l2w_mask_negative_wave_range`` (default 400,900 nm):
+      a pixel is masked in every product when any surface-reflectance band in the range is negative.
+
+    ``l2w_mask_smooth=False`` and ``l2w_mask_negative_rhow=False`` restore the behaviour of v1.3.0.
+    ``l2w_mask_mixed`` is not implemented: ACOLITE 20231023 only sets that flag for VIIRS.
     
     Parameters
     ----------
@@ -38,16 +49,26 @@ def compute_water_mask(image: ee.Image, settings: dict) -> ee.Image:
     ee.Image
         Binary mask where valid water pixels = 1.
     """
+    smooth = bool(settings.get('l2w_mask_smooth', True))
+    sigma = float(settings.get('l2w_mask_smooth_sigma', 3))
+
     mask = masks.non_water(image, 
-                           threshold = settings.get('l2w_mask_threshold', 0.05))
+                           threshold = settings.get('l2w_mask_threshold', 0.05),
+                           smooth = smooth, sigma = sigma)
     mask = mask.updateMask(masks.cirrus_mask(image, 
-                                             threshold = settings.get('l2w_mask_cirrus_threshold', 0.005)))
+                                             threshold = settings.get('l2w_mask_cirrus_threshold', 0.005),
+                                             smooth = smooth, sigma = sigma))
     
     for band in SENTINEL2_BANDS:
         mask = mask.updateMask( masks.toa_mask(image, 
                                                 f'rhot_{band}', 
                                                 settings.get('l2w_mask_high_toa_threshold', 0.3)) )
         
+    if settings.get('l2w_mask_negative_rhow', True):
+        low, high = settings.get('l2w_mask_negative_wave_range', (400, 900))
+        negative_bands = [band for band in SENTINEL2_BANDS if float(low) <= BAND_WAVELENGTHS[band] <= float(high)]
+        mask = mask.updateMask(masks.negative_reflectance_mask(image, negative_bands))
+
     if settings.get('s2_cloud_proba', False):
         CLOUD_PROB_THRESHOLD = int(settings.get('s2_cloud_proba__cloud_threshold', 50))
         NIR_DARK_THRESHOLD = float(settings.get('s2_cloud_proba__nir_dark_threshold', 0.15))

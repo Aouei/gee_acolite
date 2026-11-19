@@ -60,6 +60,15 @@ GEE ACOLITE offers:
 - **Bug fix, residual sun glint correction**: the glint ratios (sky reflectance of each band relative to B11/B12) were evaluated at the selected AOT. The sky-reflectance LUT is exactly 0 in B11/B12 for AOT <= 0.05, so in 1.2.x (and earlier) the ratio was infinite and `dsf_residual_glint_correction` silently removed **no glint** for those scenes, while for AOT in (0.05, 0.1) it removed too much. The ratios are now evaluated at `max(glint_aot_floor, AOT)` with `glint_aot_floor=0.1` (ACOLITE 20231023 behaviour); the atmospheric correction keeps the real AOT. Setting `glint_aot_floor` to `0` restores the previous behaviour. If the SWIR reference is not finite and positive the glint correction is skipped with a warning. With the same L1 image, AOT and aerosol model, surface reflectance now matches ACOLITE 20231023 (validated on 15 images of three study sites with the same L1 baseline: median bias and RMSE below 1e-5 sr^-1, worst image 7e-5 sr^-1)
 - **Behaviour change**: the defaults differ from 1.2.x (the version used for the published paper), so AOT, aerosol model and surface reflectance can change for the same input. See *Configuration* for the settings that restore the previous behaviour
 
+### Version 1.3.1
+
+- ACOLITE parity of the L2W water mask (same valid pixels as ACOLITE 20231023 for the same L1 image). The masks use the same settings as ACOLITE and the same defaults:
+    - `l2w_mask_smooth` (new, default `True`) and `l2w_mask_smooth_sigma` (new, default `3`): the SWIR (B11) and cirrus (B10) bands are Gaussian-smoothed, as in ACOLITE, **before** they are thresholded. In 1.3.0 and earlier the raw bands were thresholded, which left a 1-3 pixel fringe of water pixels along the coast that GEE kept and ACOLITE masked
+    - `l2w_mask_negative_rhow` (new, default `True`) and `l2w_mask_negative_wave_range` (new, default `[400, 900]`): a pixel is masked in every water product when any surface-reflectance band in the range (Sentinel-2: B1-B8A) is negative. In 1.3.0 and earlier only the negative band was masked
+    - `l2w_mask_mixed` is not implemented: ACOLITE 20231023 only sets that flag for VIIRS, so it has no effect for Sentinel-2
+- Validation (Son Bou, Sentinel-2B 2019-05-15, same L1 baseline): the validity of Rrs_B2 differs from local ACOLITE 20231023 in 7 of 210,396 pixels with 1.3.1, against 2,809 with 1.3.0
+- **Behaviour change**: with the new defaults, pixels along the coast and pixels with a negative reflectance in any band are masked in every product, so the number of valid pixels, composites and validation statistics can change for the same input. `l2w_mask_smooth=False` and `l2w_mask_negative_rhow=False` restore the behaviour of 1.3.0
+
 ## Main Components
 
 ### ACOLITE Core
